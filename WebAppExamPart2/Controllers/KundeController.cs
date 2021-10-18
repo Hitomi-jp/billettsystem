@@ -49,6 +49,7 @@ namespace WebApplication24.Controllers
         } 
         
         [HttpGet]
+        [Route ("hentAlleBilletter")]
         public async Task<ActionResult<Billett>> HentAlleBilletter()
         {
             List<Billett> alleBilletter = await _kundeDB.HentAlleBilletter();
@@ -65,7 +66,7 @@ namespace WebApplication24.Controllers
             return Ok(billett);
 		 }
 
-        [HttpGet]
+        //[HttpGet]
         public async Task<ActionResult<Destinasjon>> HentAlleDestinasjon()
         {
             List<Destinasjon> alleDestinasjon = await _kundeDB.HentAlleDestinasjon();
@@ -159,7 +160,7 @@ namespace WebApplication24.Controllers
 
         }
 
-        [HttpGet]
+        //[HttpGet]
          public async Task<ActionResult> LoggInn(Bruker bruker) 
         {
             if (ModelState.IsValid)

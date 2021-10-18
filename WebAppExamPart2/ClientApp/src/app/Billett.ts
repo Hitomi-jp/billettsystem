@@ -7,6 +7,6 @@ export class Billett {
   ticketClass: string;
   departureDato: string;
   returnDato: string;
-  antallAdult: string;
-  antallChild: string;
+  antallAdult: number;
+  antallChild: number;
 }
