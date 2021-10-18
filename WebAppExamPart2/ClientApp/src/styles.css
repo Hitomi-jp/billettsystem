@@ -1,0 +1,231 @@
+body {
+  /* background-color: #EBECF0; */
+  font-size: 20px;
+}
+
+#homeContainer {
+  /* box-shadow: 2px 2px rgb(223, 223, 223); */
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 0 2em;
+}
+
+.header {
+  width: 100%;
+  height: 450px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#statement {
+  background-color: rgba(255, 255, 255, 0.6);
+  padding: 1.2em 3em;
+}
+
+  #statement h2 {
+    font-weight: 400;
+    font-size: 2rem;
+    letter-spacing: 1px;
+    margin: 0;
+    text-align: center;
+    color: rgb(53, 53, 53);
+  }
+
+.kjopButtonBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#buttonKjop {
+  font-size: 1.5rem;
+  font-weight: 400;
+  border: 1px solid rgb(94, 94, 94);
+  border-radius: 0;
+  background-color: #0f3257;
+  width: 200px;
+  padding: 12px;
+  color: white;
+}
+
+  #buttonKjop:hover {
+    background-color: rgb(33, 33, 33);
+    color: white;
+    border-radius: 0;
+  }
+
+#image {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  max-height: 500px;
+  margin: 0 auto;
+  align-items: center;
+  object-fit: cover;
+  object-position: center;
+  z-index: -1;
+}
+
+#kundene {
+  font-size: 12px;
+  width: auto;
+  margin-right: auto;
+  align-content: center;
+  table-layout: fixed;
+  border-collapse: collapse;
+  overflow-x: auto;
+}
+
+#lagreBody {
+  background-color: white;
+}
+
+.formContainer {
+  width: 100%;
+  max-width: 1600px;
+  margin: 3em auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+  .formContainer h3 {
+    margin-bottom: 2em;
+  }
+
+form {
+  width: 100%;
+  max-width: 600px; /* Login page */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2em 1em;
+  background: rgb(231, 231, 231);
+  background: radial-gradient( circle, rgba(231, 231, 231, 1) 0%, rgba(133, 218, 186, 1) 100% );
+  border-radius: 10px;
+}
+
+  form .reisemalTitle {
+    width: 100%;
+    padding: 0 10px;
+  }
+
+  form label {
+    font-weight: 400;
+  }
+
+.inputContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.inputBox {
+  flex: 1;
+  min-width: 350px;
+  padding: 10px;
+}
+
+.inputs {
+  display: flex;
+  flex-direction: column;
+}
+
+  .inputs input {
+    flex: 1;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    padding: 5px;
+  }
+
+.destinationGroup {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+  .destinationGroup .inputBox {
+    display: flex;
+    flex-direction: column;
+  }
+
+    .destinationGroup .inputBox select {
+      flex: 1;
+      border: 1px solid lightgray;
+      border-radius: 5px;
+      padding: 7px;
+    }
+
+.checkbox {
+  display: flex;
+  justify-content: space-around;
+}
+
+.checkboxTicketType {
+  width: 60%;
+  margin: 0 auto;
+}
+
+.feilDiv {
+  color: rgb(249, 70, 70);
+  font-size: 16px;
+  text-align: center;
+}
+
+.buttons {
+  width: 100%;
+  max-width: 300px;
+  margin-top: 1em;
+  display: flex;
+  justify-content: space-around;
+}
+
+#reg {
+  font-size: 20px;
+}
+
+#avbryt {
+  font-size: 20px;
+  background-color: white;
+  color: gray;
+  border: 1px solid gray;
+}
+
+  #avbryt:hover {
+    background-color: rgb(227, 227, 227);
+  }
+
+.utlopsDatoInputs {
+  display: flex;
+  justify-content: space-between;
+}
+
+#utlopsdatoManed,
+#utlopsdatoAr {
+  width: 45%;
+}
+
+#utlopsdatoManed {
+  margin-right: 3px;
+}
+
+#utlopsdatoAr {
+  margin-left: 3px;
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+#buttonKvittering {
+  width: 100px;
+}
+

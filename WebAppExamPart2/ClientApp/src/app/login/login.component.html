@@ -1,0 +1,33 @@
+<div>
+  <h2>Administrator Logge inn </h2>
+  <form [formGroup]="Skjema" (ngSubmit)="onSubmit()">
+    <table>
+      <tr>
+        <td>
+          <label>Brukernavn:</label>
+        </td>
+        <td>
+          <input type="text" formControlName="brukernavn">
+        </td>
+        <td *ngIf="this.Skjema.controls.brukernavn.status=='INVALID'">
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label>Passord:</label>
+        </td>
+        <td>
+          <input type="password" formControlName="passord">
+        </td>
+        <td *ngIf="this.Skjema.controls.passord.status=='INVALID'">
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <button type="submit" [disabled]="!Skjema.valid">Logge inn</button>
+        </td>
+      </tr>
+    </table>
+    *Passord består av minst 8 tegn i lengde, Små bokstaver, Store bokstaver, Siffer og Spesielle bokstaver
+  </form>
+</div>

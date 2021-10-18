@@ -1,0 +1,287 @@
+<!--
+<body id="lagreBody">
+  <div class="formContainer" id="kjopBillettForm">
+    <form>
+      <h2>Kjøp Billetter</h2>
+      <div class="reisemalTitle">
+        <span>Reisemål</span>
+      </div>
+      <div class="destinationGroup">
+        <div class="inputBox">
+          <label for="reiseMalFra"> Fra:</label>
+          <select id="reiseMalFra" onchange="hentGyldigDestinasjoner(this.value)">
+            <option value="disabled" selected disabled>Hvor vil du reise fra</option>
+          </select>
+        </div>
+        <div class="inputBox">
+          <label for="reiseMalTil"> Til:</label>
+          <select id="reiseMalTil" onchange="valideringReiseMal()"></select>
+        </div>
+      </div>
+      <div id="reisemalVelgFeil" class="feilDiv"></div>
+
+      <div class="inputContainer">
+        <div class="inputBox">
+          <div class="inputs">
+            <label for="antallAdult">Antall voksen: </label>
+            <input type="number" min="1" value="1" id="antallAdult" onchange="valideringAntallVoksen()" />
+          </div>
+          <div id="antallAdultFeil" class="feilDiv"></div>
+        </div>
+
+        <div class="inputBox">
+          <div class="inputs">
+            <label for="antallChild">Antall barn: </label>
+            <input type="number" min="0" value="0" id="antallChild" onchange="valideringAntallBarn()" />
+          </div>
+          <div id="antallChildFeil" class="feilDiv"></div>
+        </div>
+      </div>
+
+      <div class="inputContainer">
+        <div class="inputBox">
+          <label>Billettype: </label>
+          <div class="checkbox checkboxTicketType">
+            <div>
+              <input type="radio" id="single" value="En vei" name="turType" checked="checked" onclick="onTicketTypeChange()" />
+              <label for="single">En vei </label>
+            </div>
+            <div>
+              <input type="radio" id="turRetur" value="Retur" name="turType" onclick="onTicketTypeChange()" />
+              <label for="turRetur">Retur</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="inputBox">
+          <label>Klasset: </label>
+          <div class="checkbox">
+            <div>
+              <input type="radio" id="economy" value="Economy" name="klasset" checked="checked" />
+              <label for="economy">Economy</label>
+            </div>
+            <div>
+              <input type="radio" id="business" value="Business" name="klasset" />
+              <label for="business">Business</label>
+            </div>
+            <div>
+              <input type="radio" id="first_Class" value="Førsteklasse" name="klasset" />
+              <label for="first_Class">Førsteklasse</label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="inputContainer">
+        <div class="inputBox">
+          <div class="inputs">
+            <label for="avgang">Avgangsdato:</label>
+            <input type="date" id="avgang" onchange="onAvgangChange()" onkeydown="return false" />
+          </div>
+        </div>
+        <div class="inputBox">
+          <div class="inputs">
+            <label for="retur" id="returLabel">Returdato : </label>
+            <input type="date" id="retur" onkeydown="return false" />
+          </div>
+        </div>
+      </div>
+
+      <div class="inputContainer">
+        <div class="inputBox">
+          <div class="inputs">
+            <label for="fornavn">Fornavn: </label>
+            <input type="text" id="fornavn" class="fixed-width" onchange="valideringFornavn(this.value)" />
+          </div>
+          <div id="forNavnFeil" class="feilDiv"></div>
+        </div>
+
+        <div class="inputBox">
+          <div class="inputs">
+            <label for="etternavn">Etternavn: </label>
+            <input type="text" id="etternavn" class="fixed-width" onchange="valideringEtternavn(this.value)" />
+          </div>
+          <div id="etterNavnfeil" class="feilDiv"></div>
+        </div>
+      </div>
+
+      <div class="inputContainer">
+        <div class="inputBox">
+          <div class="inputs">
+            <label for="telfonner">Telefonnr: </label>
+            <input type="text" min="0" id="telfonnr" onchange="valideringTelfonnr(this.value)" />
+          </div>
+          <div id="telfonnrFeil" class="feilDiv"></div>
+        </div>
+        <div class="inputBox">
+          <div class="inputs">
+            <label for="epost">E-post: </label>
+            <input type="email" id="epost" onchange="valideringEpost(this.value)">
+          </div>
+          <div id="epostFeil" class="feilDiv"></div>
+        </div>
+      </div>
+
+      <div class="inputContainer">
+        <div class="inputBox">
+          <div class="inputs">
+            <label for="adresse">Adresse: </label>
+            <input type="text" id="adresse" onchange="valideringAdresse(this.value)" />
+          </div>
+          <div id="adresseFeil" class="feilDiv"></div>
+        </div>
+        <div class="inputBox">
+          <div class="inputs">
+            <label for="poststed">Poststed: </label>
+            <input type="text" id="poststed" onchange="validerPoststed(this.value)" />
+          </div>
+          <div id="poststedFeil" class="feilDiv"></div>
+        </div>
+      </div>
+
+      <div class="inputContainer postnrBox">
+        <div class="inputBox">
+          <div class="inputs">
+            <label for="postnr">Postnr: </label>
+            <input type="text" id="postnr" onchange="valideringPostnr(this.value)" />
+          </div>
+          <div id="postnrFeil" class="feilDiv"></div>
+        </div>
+        <div class="inputBox"></div>
+      </div>
+
+      <div class="buttons">
+        <input type="button" id="reg" value="Kjøp Billett" class="btn btn-primary" onclick="valideringOgLagreKunde()" />
+        <a href="index.html" id="avbryt" class="btn btn-primary">Avbryt</a>
+      </div>
+      <div id="feil"></div>
+    </form>
+  </div> -->
+<!-- ============ -->
+<!--<div class="formContainer hidden" id="kredittForm">
+    <form>
+      <h2>Kreditt Info</h2>
+      <div class="inputContainer">
+        <div class="inputBox">
+          <div class="inputs">
+            <label for="kortnummer">Kortnummer</label>
+            <input type="number" id="kortnummer" onchange="valideringKortnummer(this.value)" />
+          </div>
+          <div id="kortnummerFeil" class="feilDiv"></div>
+        </div>
+
+        <div class="inputBox">
+          <div class="inputs">
+            <label for="kortholdersNavn">Kortholders navn </label>
+            <input type="text" id="kortholdersNavn" onchange="valideringkortholdersNavn(this.value)" />
+          </div>
+          <div id="kortholdersNavnFeil" class="feilDiv"></div>
+        </div>
+      </div>
+
+      <div class="inputContainer">
+        <div class="inputBox">
+          <div class="inputs">
+            <label>Kortets utløpsdato</label>
+            <div class="utlopsDatoInputs">
+              <select id="utlopsdatoManed" placeholder="måned" onchange="valideringUtlopsDato()">
+                <option>01</option>
+                <option>02</option>
+                <option>03</option>
+                <option>04</option>
+                <option>05</option>
+                <option>06</option>
+                <option>07</option>
+                <option>08</option>
+                <option>09</option>
+                <option>10</option>
+                <option>11</option>
+                <option>12</option>
+              </select>
+              <input type="number" id="utlopsdatoAr" placeholder="år" onchange="valideringUtlopsDato()" />
+            </div>
+          </div>
+          <div id="utlopsdatoFeil" class="feilDiv"></div>
+        </div>
+
+        <div class="inputBox">
+          <div class="inputs">
+            <label for="cardVerificationCode">CVV/CVC/CID</label>
+            <input type="text" placeholder="123" id="cardVerificationCode" onchange="valideringCardVerificationCode(this.value)" />
+          </div>
+          <div id="cardVerificationCodeFeil" class="feilDiv"></div>
+        </div>
+      </div>
+      <div class="buttons">
+        <input type="button" id="reg" value="Betal" class="btn btn-primary" onclick="valideringOgLagreKredittInfo()" />
+        <button id="avbryt" class="btn btn-primary" onclick="hideKredittFrom()">Avbryt</button>
+      </div>
+      <div id="feil"></div>
+
+    </form>
+  </div>
+</body> -->
+<body id="lagreBody">
+  <div class="formContainer" id="kjopBillettForm">
+     <div class="col-md-12">
+       <form [formGroup]="skjema" (ngSubmit)="vedSubmit()">
+         <div class="formContainer">
+           <h2>Kjøp Billetter</h2>
+           <div class="reisemalTitle">
+             <span>Reisemål</span>
+           </div>
+           <div class="destinationGroup">
+             <div class="inputBox">
+               <label for="reiseMalFra"> Fra:</label>
+               <select id="reiseMalFra" (change)="hentGyldigDestinasjoner(this.value)">
+                 <option value="disabled" selected disabled>Hvor vil du reise fra</option>
+               </select>
+             </div>
+             <div class="inputBox">
+               <label for="reiseMalTil"> Til:</label>
+               <select id="reiseMalTil" (change)="valideringReiseMal()"></select>
+             </div>
+           </div>
+           <label>Fornavn</label>
+           <input class="form-control" formControlName="fornavn" />
+           <p class="alert alert-warning" [hidden]="skjema.controls.fornavn.valid || (skjema.controls.fornavn.pristine && !submitted)">
+             Fornavn er obligatorisk.
+           </p>
+         </div>
+           <div class="formContainer">
+             <label>Etternavn</label>
+             <input class="form-control" formControlName="etternavn" />
+             <p class="alert alert-warning" [hidden]="skjema.controls.etternavn.valid || (skjema.controls.etternavn.pristine && !submitted)">
+               Etternavn er obligatorisk.
+             </p>
+           </div>
+           <div class="formContainer">
+             <label>Adresse</label>
+             <input class="form-control" formControlName="adresse" />
+             <p class="alert alert-warning" [hidden]="skjema.controls.adresse.valid || (skjema.controls.adresse.pristine && !submitted)">
+               Adresse er obligatorisk.
+             </p>
+           </div>
+           <div class="formContainer">
+             <label>Postnr</label>
+             <input class="form-control" formControlName="postnr" />
+             <p class="alert alert-warning" [hidden]="skjema.controls.postnr.valid || (skjema.controls.postnr.pristine && !submitted)">
+               Postnr er obligatorisk (4 siffer)
+             </p>
+           </div>
+           <div class="formContainer">
+             <label>Poststed</label>
+             <input class="form-control" formControlName="poststed" />
+             <p class="alert alert-warning" [hidden]="skjema.controls.poststed.valid || (skjema.controls.poststed.pristine && !submitted)">
+               Poststed er obligatorisk.
+             </p>
+           </div>
+           <div class="formContainer">
+             <button type="submit" [disabled]="!skjema.valid" class="btn btn-primary">Registrer</button>
+             <button class="btn btn-default" routerLink="/liste">Tilbake</button>
+           </div>
+</form>
+</div>
+  </div>
+</body>
