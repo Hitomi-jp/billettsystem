@@ -24,10 +24,10 @@
       </tr>
       <tr>
         <td>
-          <button type="submit" [disabled]="!Skjema.valid">Logge inn</button>
+          <button type="submit" [disabled]="!Skjema.valid" (click)="loggIn()">Logge inn</button>
         </td>
       </tr>
     </table>
-    *Passord består av minst 8 tegn i lengde, Små bokstaver, Store bokstaver, Siffer og Spesielle bokstaver
+    *Passordet må bestå minimum 8 tegn, minst en bokstav og et tall
   </form>
 </div>

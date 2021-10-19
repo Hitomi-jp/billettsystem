@@ -1,23 +1,65 @@
 import { Component } from "@angular/core";
+import { NgModule } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { AppComponent } from '../app.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
+import { Bruker } from "../Bruker";
+import { Router } from "@angular/router";
 
+
+@NgModule({
+  declarations: [
+    LoginComponent,
+    ],
+  imports: [
+    BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
+    ReactiveFormsModule,
+    HttpClientModule,
+    HttpClient
+
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
 @Component({
 
   templateUrl: "login.component.html"
 })
 export class LoginComponent {
   Skjema: FormGroup;
+ // public laster: string;
+  /*validering = {
+    brukernavn:["", Validators.compose([Validators.required, Validators.pattern("[a-zA-ZøæåØÆÅ\\-. ]{2,30}")])
+    ],
+    password: ["", Validators.compose([Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&]).{8,}')])
+    ]
+  }*/
 
-  constructor(private fb: FormBuilder) {
-    this.Skjema = fb.group({
-      brukernavn: ["", Validators.required],
-      passord: ["", Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&]).{8,}')]
-      /*At least 8 characters in length
-           Lowercase letters
-           Uppercase letters
-           Numbers
-           Special characters */
+  constructor(private fb: FormBuilder, private _http: HttpClient, private router: Router) {
+    //this.Skjema = fb.group(this.validering);
+      this.Skjema = fb.group({
+        brukernavn: ["", Validators.compose([Validators.required, Validators.pattern("[a-zA-ZøæåØÆÅ\\-. ]{2,30}")])],
+        passord: ["", Validators.compose([Validators.required, Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{8,}')])]
+    
     });
+} 
+
+  loggIn() {
+    const bruker = new Bruker();
+    bruker.brukernavn = this.Skjema.value.brukernavn;
+    bruker.password = this.Skjema.value.passord;
+    this._http.post<boolean>("api/kunde/LoggInn", bruker)
+        .subscribe( retur => {
+          if (retur) {
+            this.router.navigate(['/fetch - data.component.html'])
+          }
+          return false;
+        },
+        error => alert("Feil brukernavn eller passord"),
+        () => console.log("ferdig get-/bruker")
+      );
   }
 
   onSubmit() {

@@ -47,8 +47,9 @@ namespace WebAppExamPart2.DAL
             //context.Billetter.Add(ticket2);
 
             var bruker = new Brukere();
+
             bruker.Brukernavn = "Tor";
-            string passord = "Tor2021";
+            string passord = "Tor2021host!";
             byte[] salt = KundeRepository.LagSalt();
             byte[] hash = KundeRepository.LagHash(passord, salt);
             bruker.Passord = hash;

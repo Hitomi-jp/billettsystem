@@ -62,6 +62,8 @@ namespace WebAppExamPart2
 
             app.UseRouting();
 
+            app.UseAuthentication();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

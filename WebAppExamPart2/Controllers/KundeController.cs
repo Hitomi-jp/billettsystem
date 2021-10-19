@@ -9,9 +9,11 @@ using WebAppExamPart2.DAL;
 using WebAppExamPart2.Models;
 using System.Collections;
 
-namespace WebApplication24.Controllers
+namespace WebAppExamPart2.Controllers
 {
+    [ApiController]
     [Route("api/[Controller]")]
+  
     public class KundeController : ControllerBase 
     {
         private readonly IKundeRepository _kundeDB;
@@ -23,7 +25,7 @@ namespace WebApplication24.Controllers
             _kundeDB = kundeDB;
             _kundeLog = kundeLog;
         }
-        [HttpPost]
+        //[HttpPost]
         public async Task<ActionResult<int>> Lagre(Kunde innKunde) //Kunde/Lagre
         {
             if (ModelState.IsValid)
@@ -56,6 +58,7 @@ namespace WebApplication24.Controllers
         }
 
         [HttpGet("{id}")]
+        [Route("/HentEnBillett")]
         public async Task<ActionResult<Billett>> HentEnBillett(int kundeId) {
             Billett billett = await _kundeDB.HentEnBillett(kundeId);
             if (billett == null) {
@@ -95,6 +98,7 @@ namespace WebApplication24.Controllers
         }
 
         [HttpGet("{id}")]
+        [Route("/HentEn")]
         public async Task<ActionResult> HentEn(int id)
         {
             if (ModelState.IsValid)
@@ -134,7 +138,7 @@ namespace WebApplication24.Controllers
             return Ok("Alle ble slettet");
         }
 
-        [HttpPost]
+        //[HttpPost]
          public async Task<ActionResult> LagreKreditt(Kreditt kredittInfo)
         {
                 bool returnOk = await _kundeDB.LagreKreditt(kredittInfo);
@@ -146,7 +150,7 @@ namespace WebApplication24.Controllers
                 return Ok("Kredittinfo ble lagret");
         }
 
-        [HttpPost]
+        //[HttpPost]
         public async Task<ActionResult> LagreBillett(Billett billett)
         {
             bool returnOk = await _kundeDB.LagreBillett(billett);
@@ -159,11 +163,15 @@ namespace WebApplication24.Controllers
 
         }
 
-        [HttpGet]
+        [HttpPost]
+        [Route("LoggInn")]
+
          public async Task<ActionResult> LoggInn(Bruker bruker) 
         {
+            Console.WriteLine(bruker);
             if (ModelState.IsValid)
             {
+                
                 bool returnOK = await _kundeDB.LoggInn(bruker);
                 if (!returnOK)
                 {

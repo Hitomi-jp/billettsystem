@@ -384,8 +384,11 @@ namespace WebAppExamPart2.DAL
                 if (ok)
                 {
                     return true;
+    
                 }
-                return false;
+                
+                else return false;
+               
             }
             catch (Exception e)
             {
