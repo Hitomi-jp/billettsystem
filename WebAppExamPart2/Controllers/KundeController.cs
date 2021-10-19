@@ -51,6 +51,7 @@ namespace WebAppExamPart2.Controllers
         } 
         
         [HttpGet]
+        [Route ("hentAlleBilletter")]
         public async Task<ActionResult<Billett>> HentAlleBilletter()
         {
             List<Billett> alleBilletter = await _kundeDB.HentAlleBilletter();
@@ -58,7 +59,6 @@ namespace WebAppExamPart2.Controllers
         }
 
         [HttpGet("{id}")]
-        [Route("/HentEnBillett")]
         public async Task<ActionResult<Billett>> HentEnBillett(int kundeId) {
             Billett billett = await _kundeDB.HentEnBillett(kundeId);
             if (billett == null) {
@@ -68,7 +68,7 @@ namespace WebAppExamPart2.Controllers
             return Ok(billett);
 		 }
 
-        [HttpGet]
+        //[HttpGet]
         public async Task<ActionResult<Destinasjon>> HentAlleDestinasjon()
         {
             List<Destinasjon> alleDestinasjon = await _kundeDB.HentAlleDestinasjon();
@@ -98,7 +98,6 @@ namespace WebAppExamPart2.Controllers
         }
 
         [HttpGet("{id}")]
-        [Route("/HentEn")]
         public async Task<ActionResult> HentEn(int id)
         {
             if (ModelState.IsValid)
@@ -163,9 +162,7 @@ namespace WebAppExamPart2.Controllers
 
         }
 
-        [HttpPost]
-        [Route("LoggInn")]
-
+        [HttpGet]
          public async Task<ActionResult> LoggInn(Bruker bruker) 
         {
             Console.WriteLine(bruker);

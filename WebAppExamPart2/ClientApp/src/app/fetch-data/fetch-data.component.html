@@ -1,0 +1,52 @@
+<h1 id="tableLabel">Billetter</h1>
+
+<p *ngIf="!Laster"><em>Loading...</em></p>
+
+<table class='table table-striped' aria-labelledby="tableLabel">
+  <thead>
+    <tr>
+      <th>Fronvn</th>
+      <th>Etternavn</th>
+      <th>Fra</th>
+      <th>Til</th>
+      <th>DepDato</th>
+      <th>DepDato</th>
+      <th>Antall Voksne</th>
+      <th>Antall Barn</th>
+      <th>Billetttype</th>
+      <th>Bellett klasset</th>
+      <th>Telefonnr</th>
+      <th>E-post</th>
+      <th>Addresse</th>
+      <th>Poststed</th>
+      <th>Postnr</th>
+      <th></th>
+      <th></th>
+
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor ="let kunde of alle">
+      <td>{{kunde.fornavn  }}</td>
+      <td>{{kunde.etternavn  }}</td>
+      <td>{{kunde.destinationFrom }}</td>
+      <td>{{kunde.destinationTo }}</td>
+      <td>{{kunde.departureDato }}</td>
+      <td>{{kunde.returnDato }}</td>
+      <td>{{kunde.antallAdult }}</td>
+      <td>{{kunde.antallChild }}</td>
+      <td>{{kunde.ticketType }}</td>
+      <td>{{kunde.ticketClass }}</td>
+      <td>{{kunde.telefonnr }}</td>
+      <td>{{kunde.epost }}</td>
+      <td>{{kunde.adresse }}</td>
+      <td>{{kunde.postnr }}</td>
+      <td>{{kunde.poststed }}</td>
+
+      <td><button class="btn btn-danger" (click)="sletteKunde(kunde.id)">Slett</button></td>
+      <td><button class="btn btn-success" [routerLink]="['/endre',kunde.id]">Endre</button></td>
+
+    </tr>
+  </tbody>
+</table>
+
