@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 namespace WebAppExamPart2.Models
 {
     public class Bruker
-    {
-        [RegularExpression(@"^[a-zA-ZøæåØÆÅ\\-. ]{2,30}$")]
+    { 
+        [RegularExpression(@"[a-zA-ZæøåÆØÅ. \-]{2,20}")]
         public String Brukernavn { get; set; }
-        [RegularExpression(@"^('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{8,}')$")]
+        [RegularExpression(@"[a-zA-Z0-9]{6,15}")]
         public String Passord { get; set; }
     }
 }

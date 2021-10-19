@@ -18,9 +18,10 @@ namespace WebAppExamPart2.DAL
         private ILogger<KundeRepository> _kundeLog;
 
 
-        public KundeRepository(KundeContext kundeDb)
+        public KundeRepository(KundeContext kundeDb, ILogger<KundeRepository> kundeLog)
         {
             _kundeDB = kundeDb;
+            _kundeLog = kundeLog;
 
         }
 
@@ -386,8 +387,7 @@ namespace WebAppExamPart2.DAL
                     return true;
     
                 }
-                
-                else return false;
+                return false;
                
             }
             catch (Exception e)

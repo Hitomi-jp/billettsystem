@@ -25,7 +25,7 @@ namespace WebAppExamPart2.Controllers
             _kundeDB = kundeDB;
             _kundeLog = kundeLog;
         }
-        //[HttpPost]
+        [HttpPost]
         public async Task<ActionResult<int>> Lagre(Kunde innKunde) //Kunde/Lagre
         {
             if (ModelState.IsValid)
@@ -68,12 +68,16 @@ namespace WebAppExamPart2.Controllers
             return Ok(billett);
 		 }
 
-        //[HttpGet]
+        [HttpGet]
+        [Route("hentAlleDestinasjon")]
         public async Task<ActionResult<Destinasjon>> HentAlleDestinasjon()
         {
             List<Destinasjon> alleDestinasjon = await _kundeDB.HentAlleDestinasjon();
             return Ok(alleDestinasjon);
         }
+
+        [HttpGet]
+        [Route("hentGyldigDestinasjoner")]
         public IEnumerable HentGyldigDestinasjoner(int destinasjonId)
         {
             IEnumerable destinasjoner = _kundeDB.HentGyldigDestinasjoner(destinasjonId);
@@ -137,7 +141,8 @@ namespace WebAppExamPart2.Controllers
             return Ok("Alle ble slettet");
         }
 
-        //[HttpPost]
+        [HttpPost]
+        [Route("lagreKreditt")]
          public async Task<ActionResult> LagreKreditt(Kreditt kredittInfo)
         {
                 bool returnOk = await _kundeDB.LagreKreditt(kredittInfo);
@@ -149,7 +154,8 @@ namespace WebAppExamPart2.Controllers
                 return Ok("Kredittinfo ble lagret");
         }
 
-        //[HttpPost]
+        [HttpPost]
+        [Route("lagreBillett")]
         public async Task<ActionResult> LagreBillett(Billett billett)
         {
             bool returnOk = await _kundeDB.LagreBillett(billett);
@@ -162,7 +168,8 @@ namespace WebAppExamPart2.Controllers
 
         }
 
-        [HttpGet]
+        [HttpPost]
+        [Route("loggInn")]
          public async Task<ActionResult> LoggInn(Bruker bruker) 
         {
             Console.WriteLine(bruker);

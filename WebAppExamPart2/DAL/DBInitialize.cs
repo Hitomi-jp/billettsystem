@@ -49,7 +49,7 @@ namespace WebAppExamPart2.DAL
             var bruker = new Brukere();
 
             bruker.Brukernavn = "Tor";
-            string passord = "Tor2021host!";
+            string passord ="Tor2021";
             byte[] salt = KundeRepository.LagSalt();
             byte[] hash = KundeRepository.LagHash(passord, salt);
             bruker.Passord = hash;

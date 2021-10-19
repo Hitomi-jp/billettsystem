@@ -41,7 +41,7 @@ export class LoginComponent {
     //this.Skjema = fb.group(this.validering);
       this.Skjema = fb.group({
         brukernavn: ["", Validators.compose([Validators.required, Validators.pattern("[a-zA-ZøæåØÆÅ\\-. ]{2,30}")])],
-        passord: ["", Validators.compose([Validators.required, Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{8,}')])]
+        passord: ["", Validators.compose([Validators.required, Validators.pattern("[a-zA-Z0-9]{6,15}")])]
     
     });
 } 
@@ -49,13 +49,12 @@ export class LoginComponent {
   loggIn() {
     const bruker = new Bruker();
     bruker.brukernavn = this.Skjema.value.brukernavn;
-    bruker.password = this.Skjema.value.passord;
-    this._http.post<boolean>("api/kunde/LoggInn", bruker)
+    bruker.passord = this.Skjema.value.passord;
+    this._http.post<boolean>("api/kunde/loggInn", bruker)
         .subscribe( retur => {
           if (retur) {
-            this.router.navigate(['/fetch - data.component.html'])
+            this.router.navigate(['/billett'])
           }
-          return false;
         },
         error => alert("Feil brukernavn eller passord"),
         () => console.log("ferdig get-/bruker")

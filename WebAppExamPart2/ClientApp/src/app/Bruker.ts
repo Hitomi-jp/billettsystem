@@ -1,6 +1,6 @@
 export class Bruker {
  
   brukernavn: string;
-  password: string;
+  passord: string;
   
 }
