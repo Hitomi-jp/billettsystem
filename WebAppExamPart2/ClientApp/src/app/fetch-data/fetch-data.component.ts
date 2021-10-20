@@ -8,32 +8,32 @@ import { Billett } from '../Billett';
 
 
 @Component({
-  //selector: 'app-fetch-data',
+  selector: 'app-fetch-data',
   templateUrl: './fetch-data.component.html'
 })
 export class FetchDataComponent {
   alleKunder: Kunde[]
   alleBilletter: Billett[]
   alle:any=[]
+  laster: boolean;
 
   constructor(private _http: HttpClient, private router: Router, private formBuilder: FormBuilder, modalService: NgbModal) { }
 
   ngOnInit() {
     this.hentAlleKunder();
-    this.hentAlleBilletter();
   }
 
   hentAlleKunder() {
+    this.laster = true;
     this._http.get<Kunde[]>("api/kunde/")
       .subscribe(kundene => {
         this.alleKunder = kundene;
+        this.hentAlleBilletter();
       },
         error => {
-          if (error === 401) {
-            this.router.navigate(['./login/login.component'])
+          if (error.status === 401) {
+            this.router.navigate(['/login'])
           }
-          console.log(error),
-            () => console.log(this.alleKunder)
         });
       };
 
@@ -44,14 +44,12 @@ export class FetchDataComponent {
         if (this.alleKunder && this.alleBilletter) {
           this.joinKundeOgBillett()
         }
-        
+        this.laster = false;
       },
         error => {
           if (error === 401) {
-            this.router.navigate(['./login/login.component'])
+            this.router.navigate(['/login'])
           }
-          console.log(error),
-            () => console.log(this.alleBilletter)
         });
   };
 
@@ -60,17 +58,10 @@ export class FetchDataComponent {
       this.alleBilletter.forEach((billett: Billett) => {
         if (kunde.id === billett.kundeId) {
           const data = { ...kunde, ...billett }
-          console.log(data)
           this.alle.push(data)
         }
       })
     })
-
-    error => {
-      if (error === 401) {
-        this.router.navigate(['./login/login.component'])
-      }
-    }
   }
 }
 

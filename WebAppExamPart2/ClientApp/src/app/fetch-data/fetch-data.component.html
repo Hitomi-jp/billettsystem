@@ -1,8 +1,8 @@
 <h1 id="tableLabel">Billetter</h1>
 
-<p *ngIf="!Laster"><em>Loading...</em></p>
+<p *ngIf="laster"><em>Loading...</em></p>
 
-<table class='table table-striped' aria-labelledby="tableLabel">
+<table *ngIf="!laster" class='table table-striped' aria-labelledby="tableLabel">
   <thead>
     <tr>
       <th>Fronvn</th>
