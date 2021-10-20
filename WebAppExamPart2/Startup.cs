@@ -29,6 +29,17 @@ namespace WebAppExamPart2
 
             services.AddScoped<IKundeRepository, KundeRepository>();
 
+            //For settion
+            services.AddSession(options =>
+                {
+                    options.Cookie.Name = ".AdventureWorks.Session";
+                    options.IdleTimeout = System.TimeSpan.FromSeconds(1800);
+                    options.Cookie.IsEssential = true;
+                });
+            //For session
+            services.AddDistributedMemoryCache();
+
+
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
@@ -64,12 +75,16 @@ namespace WebAppExamPart2
 
             app.UseAuthentication();
 
+            //For session
+            app.UseSession();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller}/{action=Index}/{id?}");
             });
+
 
             app.UseSpa(spa =>
             {

@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Billett } from '../Billett';
 
+
 @Component({
   //selector: 'app-fetch-data',
   templateUrl: './fetch-data.component.html'
@@ -27,11 +28,14 @@ export class FetchDataComponent {
       .subscribe(kundene => {
         this.alleKunder = kundene;
       },
-        error => console.log(error),
-        () => console.log(this.alleKunder)
-      );
-
-  };
+        error => {
+          if (error === 401) {
+            this.router.navigate(['./login/login.component'])
+          }
+          console.log(error),
+            () => console.log(this.alleKunder)
+        });
+      };
 
   hentAlleBilletter() {
     this._http.get<Billett[]>("api/kunde/hentAlleBilletter")
@@ -42,9 +46,13 @@ export class FetchDataComponent {
         }
         
       },
-        error => console.log(error),
-        () => console.log(this.alleBilletter)
-      );
+        error => {
+          if (error === 401) {
+            this.router.navigate(['./login/login.component'])
+          }
+          console.log(error),
+            () => console.log(this.alleBilletter)
+        });
   };
 
   joinKundeOgBillett() {
@@ -57,6 +65,12 @@ export class FetchDataComponent {
         }
       })
     })
+
+    error => {
+      if (error === 401) {
+        this.router.navigate(['./login/login.component'])
+      }
+    }
   }
 }
 

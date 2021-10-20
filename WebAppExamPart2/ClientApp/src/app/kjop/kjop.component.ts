@@ -51,7 +51,8 @@ export class KjopComponent {
       .subscribe(retur => {
         this.router.navigate(['/home']);
       },
-        error => console.log(error)
+
+       error => console.log(error)
       );
   };
 }
