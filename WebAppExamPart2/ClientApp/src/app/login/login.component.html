@@ -10,6 +10,8 @@
           <input type="text" formControlName="brukernavn">
         </td>
         <td *ngIf="this.Skjema.controls.brukernavn.status=='INVALID'">
+          <span id="brukernavenwarning" [hidden]="this.Skjema.controls.brukernavn.status=='VALID'">Må skrive Brukernavn</span>
+        
         </td>
       </tr>
       <tr>
@@ -18,8 +20,9 @@
         </td>
         <td>
           <input type="text" formControlName="passord">
-        </td>
+        </td>      
         <td *ngIf="this.Skjema.controls.passord.status=='INVALID'">
+          <span id="passordwarning" [hidden]="this.Skjema.controls.passord.status=='VALID'">Minst 6 ord og inneholde både tall,store/små bokstaver</span>
         </td>
       </tr>
       <tr>
@@ -28,6 +31,5 @@
         </td>
       </tr>
     </table>
-    *Passordet må bestå minimum 8 tegn, minst en bokstav og et tall
   </form>
 </div>

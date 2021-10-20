@@ -10,7 +10,7 @@ namespace WebAppExamPart2.Models
     { 
         [RegularExpression(@"[a-zA-ZæøåÆØÅ. \-]{2,20}")]
         public String Brukernavn { get; set; }
-        [RegularExpression(@"[a-zA-Z0-9]{6,15}")]
+        [RegularExpression(@"[a-zA-Z0-9]{6,}")]
         public String Passord { get; set; }
     }
 }

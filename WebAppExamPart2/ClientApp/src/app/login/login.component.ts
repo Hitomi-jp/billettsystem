@@ -41,7 +41,7 @@ export class LoginComponent {
     //this.Skjema = fb.group(this.validering);
       this.Skjema = fb.group({
         brukernavn: ["", Validators.compose([Validators.required, Validators.pattern("[a-zA-ZøæåØÆÅ\\-. ]{2,30}")])],
-        passord: ["", Validators.compose([Validators.required, Validators.pattern("[a-zA-Z0-9]{6,15}")])]
+        passord: ["", Validators.compose([Validators.required, Validators.pattern("[a-zA-Z0-9]{6,}")])]
     
     });
 } 
