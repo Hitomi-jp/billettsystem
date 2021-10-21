@@ -8,6 +8,9 @@ import { Kunde } from "../Kunde";
   templateUrl: "kjop.component.html"
 })
 export class KjopComponent {
+  destinasjoner;
+  gyldigDestinasjoner;
+  selectedFra;
 
   skjema: FormGroup;
 
@@ -34,7 +37,11 @@ export class KjopComponent {
     this.skjema = fb.group(this.validering);
   }
 
-  vedSubmit() {
+  ngOnInit() {
+    this.hentAlleDestinasjoner();
+  }
+
+  hentAlleDestinasjon() {
     this.regKunde();
   }
 
@@ -55,4 +62,29 @@ export class KjopComponent {
        error => console.log(error)
       );
   };
+
+  hentAlleDestinasjoner() {
+    this.http.get<any>("api/kunde/hentAlleDestinasjon")
+      .subscribe(destinasjonerList=> {
+        this.destinasjoner = destinasjonerList;
+      },
+      error => {
+        console.log(error)
+      });
+  };
+
+  hentGyldigDestinasjoner(id) {
+    this.http.get<any>("api/kunde/hentAlleDestinasjon", id)
+      .subscribe(gyldigDestinasjoner => {
+        this.gyldigDestinasjoner = gyldigDestinasjoner;
+        console.log(this.gyldigDestinasjoner)
+      },
+      error => {
+        console.log(error)
+      });
+  };
+
+  onFraDestinasjonChange() {
+    console.log(this.selectedFra)
+  }
 }

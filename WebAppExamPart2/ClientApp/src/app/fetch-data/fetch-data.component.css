@@ -1,0 +1,9 @@
+.table {
+  font-size: 12px;
+  width: auto;
+  margin-right: auto;
+  align-content: center;
+  table-layout: fixed;
+  border-collapse: collapse;
+  overflow-x: auto;
+}

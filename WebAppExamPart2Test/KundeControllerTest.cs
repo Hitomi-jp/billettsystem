@@ -6,11 +6,14 @@ using WebAppExamPart2.DAL;
 using WebAppExamPart2.Models;
 using Xunit;
 using System.Collections.Generic;
+using Microsoft.Extensions.Logging;
 
 namespace WebAppExamPart2Test
 {
     public class KundeControllerTest
     {
+        private readonly Mock<ILogger<KundeController>> mockLog = new Mock<ILogger<KundeController>>();
+
         [Fact]
         public async Task LagreOK()
         {
@@ -25,11 +28,10 @@ namespace WebAppExamPart2Test
                 Postnr = "0166",
                 Poststed = "Oslo"
             };
-            Console.WriteLine(innKunde.Id);
 
             var mock = new Mock<IKundeRepository>();
             mock.Setup(k => k.Lagre(innKunde)).ReturnsAsync(innKunde.Id);
-            var kundeController = new KundeController(mock.Object);
+            var kundeController = new KundeController(mock.Object, mockLog.Object);
             var resultat = await kundeController.Lagre(innKunde);
 
             Assert.Equal(innKunde.Id,resultat.Value);

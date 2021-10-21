@@ -95,10 +95,10 @@ namespace WebAppExamPart2.Controllers
         [Route("hentAlleDestinasjon")]
         public async Task<ActionResult<Destinasjon>> HentAlleDestinasjon()
         {
-            if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
-            {
-                return Unauthorized();
-            }
+            // if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
+            // {
+            //     return Unauthorized();
+            // }
             
             List<Destinasjon> alleDestinasjon = await _kundeDB.HentAlleDestinasjon();
             return Ok(alleDestinasjon);
