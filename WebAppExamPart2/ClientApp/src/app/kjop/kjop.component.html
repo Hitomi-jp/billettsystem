@@ -234,14 +234,16 @@
            <div class="destinationGroup">
              <div class="inputBox">
                <label for="reiseMalFra"> Fra:</label>
-               <select id="reiseMalFra" (change)="onFraDestinasjonChange(this)">
+               <select id="reiseMalFra" (change)="onFraDestinasjonChange($event)">
                  <option value="disabled" selected disabled>Hvor vil du reise fra</option>
-                 <option *ngFor="let destinasjon of destinasjoner" value="{{destinasjon.sted}}">{{destinasjon.sted}}</option> 
+                 <option *ngFor="let destinasjon of destinasjoner" value="{{destinasjon.id}}">{{destinasjon.sted}}</option> 
                </select>
              </div>
              <div class="inputBox">
                <label for="reiseMalTil"> Til:</label>
-               <select id="reiseMalTil" (change)="valideringReiseMal()"></select>
+               <select id="reiseMalTil">
+                <option *ngFor="let destinasjon of gyldigDestinasjoner" value="{{destinasjon.sted}}">{{destinasjon.sted}}</option> 
+               </select>
              </div>
            </div>
            <label>Fornavn</label>

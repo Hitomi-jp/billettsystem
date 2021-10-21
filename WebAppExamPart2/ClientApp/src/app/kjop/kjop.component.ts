@@ -10,9 +10,9 @@ import { Kunde } from "../Kunde";
 export class KjopComponent {
   destinasjoner;
   gyldigDestinasjoner;
-  selectedFra;
 
   skjema: FormGroup;
+
 
   validering = {
     id: [""],
@@ -73,8 +73,9 @@ export class KjopComponent {
       });
   };
 
-  hentGyldigDestinasjoner(id) {
-    this.http.get<any>("api/kunde/hentAlleDestinasjon", id)
+  hentGyldigDestinasjoner(destinasjonId) {
+    console.log(destinasjonId)
+    this.http.get<any>(`api/kunde/hentGyldigDestinasjoner?destinasjonId=${destinasjonId}`)
       .subscribe(gyldigDestinasjoner => {
         this.gyldigDestinasjoner = gyldigDestinasjoner;
         console.log(this.gyldigDestinasjoner)
@@ -84,7 +85,12 @@ export class KjopComponent {
       });
   };
 
-  onFraDestinasjonChange() {
-    console.log(this.selectedFra)
+  onFraDestinasjonChange(event: any){
+    const destinasjonId = event.target.value;
+    this.hentGyldigDestinasjoner(destinasjonId);
+  }
+
+  valieringReiseMal() {
+    console.log("validering")
   }
 }
