@@ -23,9 +23,13 @@ namespace WebAppExamPart2.Controllers
 
         private const string _loggetInn = "loggetInn";
 
-        public KundeController(IKundeRepository kundeDB, ILogger<KundeController> kundeLog)
+        public KundeController(IKundeRepository kundeDB)
         {
             _kundeDB = kundeDB;
+        }
+
+        public KundeController(ILogger<KundeController> kundeLog)
+        {
             _kundeLog = kundeLog;
         }
         [HttpPost]
