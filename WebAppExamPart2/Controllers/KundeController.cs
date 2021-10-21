@@ -32,13 +32,14 @@ namespace WebAppExamPart2.Controllers
         {
             _kundeLog = kundeLog;
         }
+
         [HttpPost]
         public async Task<ActionResult<int>> Lagre(Kunde innKunde) //Kunde/Lagre
         {
-            if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
+          /*  if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
             {
                 return Unauthorized();
-            }
+            }*/
 
             if (ModelState.IsValid)
             {

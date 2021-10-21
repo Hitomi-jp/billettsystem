@@ -25,13 +25,14 @@ namespace WebAppExamPart2Test
                 Postnr = "0166",
                 Poststed = "Oslo"
             };
+            Console.WriteLine(innKunde.Id);
 
             var mock = new Mock<IKundeRepository>();
             mock.Setup(k => k.Lagre(innKunde)).ReturnsAsync(innKunde.Id);
             var kundeController = new KundeController(mock.Object);
-            int resultat = await kundeController.Lagre(innKunde);
+            var resultat = await kundeController.Lagre(innKunde);
 
-            Assert.Equal(innKunde.Id,resultat);
+            Assert.Equal(innKunde.Id,resultat.Value);
         }
     }
 }
