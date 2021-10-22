@@ -6,6 +6,9 @@ import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { LoginComponent } from './login/login.component';
 import { KjopComponent } from './kjop/kjop.component';
+import { EndreComponent } from './endre/endre.component';
+import { KvitteringComponent } from './kvittering/kvittering.component';
+import { KredittComponent } from './kreditt/kreditt.component';
 import { HomeComponent } from './home/home.component';
 import { AppRoutingModule } from './app-routing.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -17,7 +20,10 @@ import { FetchDataComponent } from './fetch-data/fetch-data.component';
     NavMenuComponent,
     LoginComponent,
     KjopComponent,
+    EndreComponent,
     HomeComponent,
+    KvitteringComponent,
+    KredittComponent,
     FetchDataComponent
   ],
   imports: [

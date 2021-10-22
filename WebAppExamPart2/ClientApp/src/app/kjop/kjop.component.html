@@ -236,54 +236,135 @@
                <label for="reiseMalFra"> Fra:</label>
                <select id="reiseMalFra" (change)="onFraDestinasjonChange($event)">
                  <option value="disabled" selected disabled>Hvor vil du reise fra</option>
-                 <option *ngFor="let destinasjon of destinasjoner" value="{{destinasjon.id}}">{{destinasjon.sted}}</option> 
+                 <option *ngFor="let destinasjon of destinasjoner" value="{{destinasjon.id}}">{{destinasjon.sted}}</option>
                </select>
              </div>
              <div class="inputBox">
                <label for="reiseMalTil"> Til:</label>
                <select id="reiseMalTil">
-                <option *ngFor="let destinasjon of gyldigDestinasjoner" value="{{destinasjon.sted}}">{{destinasjon.sted}}</option> 
+                 <option *ngFor="let destinasjon of gyldigDestinasjoner" value="{{destinasjon.sted}}">{{destinasjon.sted}}</option>
                </select>
              </div>
            </div>
-           <label>Fornavn</label>
-           <input class="form-control" formControlName="fornavn" />
-           <p class="alert alert-warning" [hidden]="skjema.controls.fornavn.valid || (skjema.controls.fornavn.pristine && !submitted)">
-             Fornavn er obligatorisk.
-           </p>
-         </div>
-           <div class="formContainer">
-             <label>Etternavn</label>
-             <input class="form-control" formControlName="etternavn" />
-             <p class="alert alert-warning" [hidden]="skjema.controls.etternavn.valid || (skjema.controls.etternavn.pristine && !submitted)">
-               Etternavn er obligatorisk.
-             </p>
+
+           <div class="destinationGroup">
+             <div class="inputBox">
+               <label>Antall voksen</label>
+               <input type=number class="form-control" formControlantallVoksen="antallVoksen" min="1" value="1" />
+             </div>
+             <div class="inputBox">
+               <label>Antall barn</label>
+               <input type=number class="form-control" formControlantallBarn="antallBarn" min="0" value="0" />
+             </div>
            </div>
-           <div class="formContainer">
-             <label>Adresse</label>
-             <input class="form-control" formControlName="adresse" />
-             <p class="alert alert-warning" [hidden]="skjema.controls.adresse.valid || (skjema.controls.adresse.pristine && !submitted)">
-               Adresse er obligatorisk.
-             </p>
+
+           <div class="destinationGroup">
+             <div class="inputBox">
+               <label>Billettype</label>
+               <div>
+                 <input type="radio" id="single" value="En vei" name="turType" checked="checked" />
+                 <label for="single">En vei </label>
+                 <input type="radio" id="turRetur" value="Retur" name="turType" />
+                 <label for="turRetur">Retur</label>
+               </div>
+             </div>
+
+             <div class="inputBox">
+               <label>Klasset</label>
+               <div>
+                 <input type="radio" id="economy" value="Economy" name="klasset" checked="checked" />
+                 <label for="economy">Economy</label>
+                 <input type="radio" id="business" value="Business" name="klasset" />
+                 <label for="business">Business</label>
+                 <input type="radio" id="first_Class" value="Førsteklasse" name="klasset" />
+                 <label for="first_Class">Førsteklasse</label>
+               </div>
+             </div>
+             </div>
+
+
+             <div class="destinationGroup">
+               <div class="inputBox">
+                 <label>Avgang dato</label>
+                 <input type="date" class="form-control" formControlavgangDato="avgangDato" />
+               </div>
+               <div class="inputBox">
+                 <label>Retur dato</label>
+                 <input type="date" class="form-control" formControlreturDato="returDato" />
+               </div>
+             </div>
+
+             <div class="destinationGroup">
+               <div class="inputBox">
+                 <label>Fornavn</label>
+                 <input class="form-control" formControlName="fornavn" />
+                 <p class="alert alert-warning" [hidden]="skjema.controls.fornavn.valid || (skjema.controls.fornavn.pristine && !submitted)">
+                   Fornavn er obligatorisk.
+                 </p>
+               </div>
+               <div class="inputBox">
+                 <label>Etternavn</label>
+                 <input class="form-control" formControlEtterName="etternavn" />
+                 <p class="alert alert-warning" [hidden]="skjema.controls.etternavn.valid || (skjema.controls.etternavn.pristine && !submitted)">
+                   Etternavn er obligatorisk.
+                 </p>
+               </div>
+             </div>
+
+             <div class="destinationGroup">
+               <div class="inputBox">
+                 <label>Telefonnr</label>
+                 <input class="form-control" formControlTelefonnr="Telefonnr" />
+                 <p class="alert alert-warning" [hidden]="skjema.controls.Telefonnr.valid || (skjema.controls.Telefonnr.pristine && !submitted)">
+                   Telefonnr er obligatorisk.
+                 </p>
+               </div>
+               <div class="inputBox">
+                 <label>E-post</label>
+                 <input class="form-control" formControlEpost="epost" />
+                 <p class="alert alert-warning" [hidden]="skjema.controls.epost.valid || (skjema.controls.epost.pristine && !submitted)">
+                   E-post er obligatorisk.
+                 </p>
+               </div>
+             </div>
+
+             <div class="destinationGroup">
+               <div class="inputBox">
+                 <label>Adresse</label>
+                 <input class="form-control" formControlTelefonnr="adresse" />
+                 <p class="alert alert-warning" [hidden]="skjema.controls.adresse.valid || (skjema.controls.adresse.pristine && !submitted)">
+                   Adresse er obligatorisk.
+                 </p>
+               </div>
+               <div class="inputBox">
+                 <label>Poststed</label>
+                 <input class="form-control" formControlPoststed="poststed" />
+                 <p class="alert alert-warning" [hidden]="skjema.controls.poststed.valid || (skjema.controls.poststed.pristine && !submitted)">
+                   Poststed er obligatorisk.
+                 </p>
+               </div>
+             </div>
+
+             <div class="destinationGroup">
+               <div class="inputBox">
+                 <label>Postnr</label>
+                 <input class="form-control" formControlPostnr="postnr" />
+                 <p class="alert alert-warning" [hidden]="skjema.controls.postnr.valid || (skjema.controls.postnr.pristine && !submitted)">
+                   Postnr er obligatorisk.
+                 </p>
+               </div>
+               <div class="inputBox">
+
+               </div>
+             </div>
+
+             <div class="buttons">
+               <input type="button" id="reg" value="Kjøp Billett" class="btn btn-primary" onclick="valideringOgLagreKunde()" />
+               <a href="index.html" id="avbryt" class="btn btn-primary">Avbryt</a>
+             </div>
+
            </div>
-           <div class="formContainer">
-             <label>Postnr</label>
-             <input class="form-control" formControlName="postnr" />
-             <p class="alert alert-warning" [hidden]="skjema.controls.postnr.valid || (skjema.controls.postnr.pristine && !submitted)">
-               Postnr er obligatorisk (4 siffer)
-             </p>
-           </div>
-           <div class="formContainer">
-             <label>Poststed</label>
-             <input class="form-control" formControlName="poststed" />
-             <p class="alert alert-warning" [hidden]="skjema.controls.poststed.valid || (skjema.controls.poststed.pristine && !submitted)">
-               Poststed er obligatorisk.
-             </p>
-           </div>
-           <div class="formContainer">
-             <button type="submit" [disabled]="!skjema.valid" class="btn btn-primary">Registrer</button>
-             <button class="btn btn-default" routerLink="/liste">Tilbake</button>
-           </div>
+
 </form>
 </div>
   </div>

@@ -1,0 +1,72 @@
+<body id="lagreBody">
+  <div class="formContainer" id="kredittForm">
+    <div class="col-md-12">
+      <form [formGroup]="skjema" (ngSubmit)="vedSubmit()">
+        <div class="destinationGroup">
+          <div class="inputBox">
+            <label>Kortholdersnavn</label>
+            <input class="form-control" formControlKortholdersnavn="kortholdersnavn" />
+            <p class="alert alert-warning" [hidden]="skjema.controls.kortholdersnavn.valid || (skjema.controls.fornavn.pristine && !submitted)">
+              Kortholdersnavn er obligatorisk.
+            </p>
+          </div>
+          <div class="inputBox">
+            <label>Kortnr</label>
+            <input class="form-control" formControlKortnr="kortnr" />
+            <p class="alert alert-warning" [hidden]="skjema.controls.kortnr.valid || (skjema.controls.etternavn.pristine && !submitted)">
+              Kortnr er obligatorisk.
+            </p>
+          </div>
+        </div>
+
+        <div class="destinationGroup">
+          <div class="inputBox">
+
+            <label>CardVerificationCode">CVV/CVC/CID</label>
+            <input class="form-control" formControlcardVerificationCode="cardVerificationCode" />
+            <p class="alert alert-warning" [hidden]="skjema.controls.cardVerificationCode.valid || (skjema.controls.cardVerificationCode.pristine && !submitted)">
+              CardVerificationCode er obligatorisk.
+            </p>
+
+
+          </div>
+
+          <div class="inputBox">
+            <label>Utløpsdato</label>
+            <input class="form-control" formControlUtlopsDatoInputs="utlopsDatoInputs" />
+            <p class="alert alert-warning" [hidden]="skjema.controls.utlopsDatoInputs.valid || (skjema.controls.utlopsDatoInputs.pristine && !submitted)">
+              UtlopsDatoInputs er obligatorisk (2 siffer)
+            </p>
+
+          </div>
+        </div>
+    <div class="inputBox">
+      <label>Kortets utløpsdmonad</label>
+      <select id="utlopsdatoManed" placeholder="måned" onchange="valideringUtlopsDato()">
+        <option>01</option>
+        <option>02</option>
+        <option>03</option>
+        <option>04</option>
+        <option>05</option>
+        <option>06</option>
+        <option>07</option>
+        <option>08</option>
+        <option>09</option>
+        <option>10</option>
+        <option>11</option>
+        <option>12</option>
+      </select>
+
+    </div>
+
+
+
+            <div class="buttons">
+              <input type="button" id="reg" value="Betal" class="btn btn-primary" onclick="valideringOgLagreKredittInfo()" />
+              <button id="avbryt" class="btn btn-primary" onclick="hideKredittFrom()">Avbryt</button>
+            </div>
+            <div id="feil"></div>
+</form>
+    </div>
+  </div>
+</body>
