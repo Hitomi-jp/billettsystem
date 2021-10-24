@@ -1,4 +1,4 @@
-<div>
+<!--<div>
   <h2>Administrator Logge inn </h2>
   <form [formGroup]="Skjema" (ngSubmit)="onSubmit()">
     <table>
@@ -11,7 +11,7 @@
         </td>
         <td *ngIf="this.Skjema.controls.brukernavn.status=='INVALID'">
           <span id="brukernavenwarning" [hidden]="this.Skjema.controls.brukernavn.status=='VALID'">Må skrive Brukernavn</span>
-        
+
         </td>
       </tr>
       <tr>
@@ -20,7 +20,7 @@
         </td>
         <td>
           <input type="text" formControlName="passord">
-        </td>      
+        </td>
         <td *ngIf="this.Skjema.controls.passord.status=='INVALID'">
           <span id="passordwarning" [hidden]="this.Skjema.controls.passord.status=='VALID'">Minst 6 ord og inneholde både tall,store/små bokstaver</span>
         </td>
@@ -31,5 +31,29 @@
         </td>
       </tr>
     </table>
+  </form>
+</div>-->
+
+<div class="container">
+  <form [formGroup]="formGroup" (ngSubmit)="onSubmit()" class="form">
+
+    <mat-form-field floatLabel="never" class="form-element">
+      <input type="text" matInput placeholder="Brukernavn" formControlName="brukernavn">
+      <mat-error *ngIf="formGroup.controls['brukernavn'].invalid">
+        {{getError('brukernavn')}}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field floatLabel="never" class="form-element">
+      <input type="password" matInput placeholder="Passord" formControlName="passord">
+      <mat-error *ngIf="!formGroup.controls['passord'].valid">
+        {{getError('passord')}}
+      </mat-error>
+    </mat-form-field>
+
+    <div class="form-element">
+      <button mat-raised-button color="primary" type="submit" class="button" [disabled]="!formGroup.valid">Submit Form</button>
+    </div>
+
   </form>
 </div>

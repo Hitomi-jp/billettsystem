@@ -32,6 +32,7 @@
     <None Remove="ClientApp\src\app\Bruker.ts" />
     <None Remove="ClientApp\src\app\Destinasjon.ts" />
     <None Remove="ClientApp\src\app\Kreditt.ts" />
+    <None Remove="ClientApp\src\app\material.module.ts" />
     <None Remove="ClientApp\src\app\PostSteder.ts" />
   </ItemGroup>
 
@@ -53,6 +54,7 @@
     <TypeScriptCompile Include="ClientApp\src\app\Bruker.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\Destinasjon.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\Kreditt.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\material.module.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\PostSteder.ts" />
   </ItemGroup>
 

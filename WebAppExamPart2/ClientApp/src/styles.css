@@ -229,13 +229,6 @@ form {
   width: 100px;
 }
 
-#brukernavenwarning {
-  font-size: 15px;
-  margin: 10px;
-}
 
-#passordwarning {
-  font-size: 15px;
-  margin: 10px;
-}
-
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
