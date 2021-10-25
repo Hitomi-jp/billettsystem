@@ -70,6 +70,28 @@ namespace WebAppExamPart2.DAL
             context.Destinasjoner.Add(destinasjon10);
             context.Destinasjoner.Add(destinasjon11);
 
+            var strekning = new Strekning(){
+                Id = "Oslo-Kiel",
+                Fra = "Oslo",
+                Til = "Kiel"
+            };
+            context.Strekninger.Add(strekning);
+            
+            var rute = new Rute();
+            rute.BoatNavn = "ColorMagic";
+            rute.Id = 1;
+            rute.RuteFra = "Oslo";
+            rute.RuteTil = "Kiel";
+            rute.PrisEnvei = 500;
+            rute.PrisToVei = 1000;
+            rute.PrisRabattBarn = "20";
+            rute.PrisStandardLugar = 200;
+            rute.PrisPremiumLugar = 300;
+            rute.Avgang = "14:00";
+            rute.AntallDagerEnVei = 1;
+            rute.AntallDagerToVei = 2;
+            context.Ruter.Add(rute);
+
             context.SaveChanges();
         }
     }

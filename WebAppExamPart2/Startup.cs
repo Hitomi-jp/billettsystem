@@ -28,6 +28,7 @@ namespace WebAppExamPart2
             services.AddDbContext<KundeContext>(options => options.UseSqlite("Data source=Kunde.db"));
 
             services.AddScoped<IKundeRepository, KundeRepository>();
+            services.AddScoped<IRuteRepository, RuteRepository>();
 
             //For settion
             services.AddSession(options =>

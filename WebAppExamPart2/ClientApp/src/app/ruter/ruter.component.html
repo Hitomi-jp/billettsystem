@@ -1,0 +1,130 @@
+<h1 id="tableLabel">Ruter</h1>
+
+<p *ngIf="laster"><em>Loading...</em></p>
+
+<div id="tableContainer" class="table" *ngIf="visRuterListe">
+    <table>
+        <thead>
+            <tr>
+                <th>Båtnavn</th>
+                <th>Fra</th>
+                <th>Til</th>
+                <th>Pris en-vei</th>
+                <th>Pris to-vei</th>
+                <th>Rabatt til Barn (%)</th>
+                <th>Pris standard lugar</th>
+                <th>Pris premium lugar</th>
+                <th>Avgang tid</th>
+                <th>Antall Dager (En-vei)</th>
+                <th>Antall Dager (To-vei)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let rute of alleRuter">
+                <td>{{ rute.boatNavn }}</td>
+                <td>{{ rute.ruteFra }}</td>
+                <td>{{ rute.ruteTil }}</td>
+                <td>{{ rute.prisEnvei }} kr</td>
+                <td>{{ rute.prisToVei }} kr</td>
+                <td>{{ rute.prisRabattBarn }}</td>
+                <td>{{ rute.prisStandardLugar }}</td>
+                <td>{{ rute.prisPremiumLugar }}</td>
+                <td>{{ rute.avgang }}</td>
+                <td>{{ rute.antallDagerEnVei }}</td>
+                <td>{{ rute.antallDagerToVei }}</td>
+                <td><button class="btn btn-danger" (click)="slettEnRute(rute.id)">Slett</button></td>
+                <td><button class="btn btn-success" (click)="hentEnRute(rute.id)">Endre</button></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<button class="btn btn-success" *ngIf="visRuterListe" (click)="visRegistrerRuteForm()">Registrer Rute</button>
+
+
+<div class="container">
+    <div *ngIf="visForm">
+        <form [formGroup]="skjema" (ngSubmit)="vedSubmit()">
+            <div class="form-group">
+                <label>Båtnavn</label>
+                <input class="form-control" formControlName="boatNavn" />
+                <p class="alert alert-warning" [hidden]="skjema.controls.boatNavn.valid || (skjema.controls.boatNavn.pristine && !submitted)">
+                    Båtnavn til er obligatorisk.
+                </p>
+            </div>
+            <div class="form-group">
+                <label>Fra</label>
+                <input class="form-control" formControlName="ruteFra" />
+                <p class="alert alert-warning" [hidden]="skjema.controls.ruteFra.valid || (skjema.controls.ruteFra.pristine && !submitted)">
+                    Rute til er obligatorisk.
+                </p>
+            </div>
+            <div class="form-group">
+                <label>Til</label>
+                <input class="form-control" formControlName="ruteTil" />
+                <p class="alert alert-warning" [hidden]="skjema.controls.ruteTil.valid || (skjema.controls.ruteTil.pristine && !submitted)">
+                    Rute til er obligatorisk.
+                </p>
+            </div>
+            <div class="form-group">
+                <label>Pris en-vei (NOK)</label>
+                <input class="form-control" type="number" formControlName="prisEnvei" />
+                <p class="alert alert-warning" [hidden]="skjema.controls.prisEnvei.valid || (skjema.controls.prisEnvei.pristine && !submitted)">
+                    Pris en-vei er obligatorisk.
+                </p>
+            </div>
+            <div class="form-group">
+                <label>Pris to-vei (NOK)</label>
+                <input class="form-control" type="number" formControlName="prisToVei" />
+                <p class="alert alert-warning" [hidden]="skjema.controls.prisToVei.valid || (skjema.controls.prisToVei.pristine && !submitted)">
+                    Pris to-vei er obligatorisk
+                </p>
+            </div>
+            <div class="form-group">
+                <label>Rabatt til Barn (%)</label>
+                <input class="form-control" type="number" formControlName="prisRabattBarn" />
+                <p class="alert alert-warning" [hidden]="skjema.controls.prisRabattBarn.valid || (skjema.controls.prisRabattBarn.pristine && !submitted)">
+                    Pris rabatt til barn er obligatorisk.
+                </p>
+            </div>
+            <div class="form-group">
+                <label>Pris Standard Lugar (NOK)</label>
+                <input class="form-control" type="number" formControlName="prisStandardLugar" />
+                <p class="alert alert-warning" [hidden]="skjema.controls.prisStandardLugar.valid || (skjema.controls.prisStandardLugar.pristine && !submitted)">
+                    Pris for standard luger er obligatorisk
+                </p>
+            </div><div class="form-group">
+                <label>Pris Premium Lugar (NOK)</label>
+                <input class="form-control" type="number" formControlName="prisPremiumLugar" />
+                <p class="alert alert-warning" [hidden]="skjema.controls.prisPremiumLugar.valid || (skjema.controls.prisPremiumLugar.pristine && !submitted)">
+                    Pris for premium lugar er obligatorisk
+                </p>
+            </div>
+            <div class="form-group">
+                <label>Avgang</label>
+                <input class="form-control" type="time" min="02:00" max="25:00" formControlName="avgang" (change)="vedAvgangChange()" />
+                <p class="alert alert-warning" [hidden]="skjema.controls.avgang.valid || (skjema.controls.avgang.pristine && !submitted)">
+                    Avgang er obligatorisk.
+                </p>
+            </div>
+            <div class="form-group">
+                <label>Antall Dager En-vei</label>
+                <input class="form-control" type="number" min="1" formControlName="antallDagerEnVei" />
+                <p class="alert alert-warning" [hidden]="skjema.controls.antallDagerEnVei.valid || (skjema.controls.antallDagerEnVei.pristine && !submitted)">
+                    Antall dager en-vei er obligatorisk.
+                </p>
+            </div>
+            <div class="form-group">
+                <label>Antall Dager To-vei</label>
+                <input class="form-control" type="number" min="1" formControlName="antallDagerToVei" />
+                <p class="alert alert-warning" [hidden]="skjema.controls.antallDagerToVei.valid || (skjema.controls.antallDagerToVei.pristine && !submitted)">
+                    Antall dager to-vei er obligatorisk.
+                </p>
+            </div>
+            <div class="form-group">
+                <button type="submit" *ngIf="visFormLagre" [disabled]="!skjema.valid" class="btn btn-primary">Registrer</button>
+                <button type="submit" *ngIf="!visFormLagre" [disabled]="!skjema.valid" class="btn btn-primary">Endre</button>
+                <button class="btn btn-default" (click)="tilbakeTilListe()">Tilbake</button>
+            </div>
+        </form>
+    </div>
+</div>

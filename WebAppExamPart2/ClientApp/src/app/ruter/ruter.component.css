@@ -1,0 +1,9 @@
+#tableContainer {
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+table th {
+    font-size: 12px;
+    min-width: 100px;
+}

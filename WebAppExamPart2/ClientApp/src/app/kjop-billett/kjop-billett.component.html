@@ -1,0 +1,33 @@
+<h1 id="tableLabel">Kjop</h1>
+
+<p *ngIf="laster"><em>Loading...</em></p>
+
+<div class="container">
+    <div *ngIf="visForm">
+        <form [formGroup]="skjema" (ngSubmit)="vedSubmit()">
+            <div class="form-group">
+                <label>Destinasjon</label>
+                <select id="reiseMalFra" formControlName="reiseMal">
+                    <option value="disabled" selected disabled >Hvor vil du reise fra</option>
+                    <option *ngFor="let strekning of alleStrekninger" value="{{strekning.id}}">{{strekning.id}}</option>
+                  </select>
+                <p class="alert alert-warning" [hidden]="skjema.controls.reiseMal.valid || (skjema.controls.reiseMal.pristine && !submitted)">
+                    Destinasjon er obligatorisk.
+                </p>
+            </div>
+            <div class="formGroup">
+                <label>Når vil du reise</label>
+                <input type="date" value="{{dagsDato}}" min="{{dagsDato}}" formControlavgangDato="reiseDato" />
+                <p class="alert alert-warning" [hidden]="skjema.controls.reiseDato.valid || (skjema.controls.reiseDato.pristine && !submitted)">
+                    Destinasjon er obligatorisk.
+                </p>
+            </div>
+            
+            <!-- <div class="form-group">
+                <button type="submit" *ngIf="visFormLagre" [disabled]="!skjema.valid" class="btn btn-primary">Registrer</button>
+                <button type="submit" *ngIf="!visFormLagre" [disabled]="!skjema.valid" class="btn btn-primary">Endre</button>
+                <button class="btn btn-default" (click)="tilbakeTilListe()">Tilbake</button>
+            </div> -->
+        </form>
+    </div>
+</div>
