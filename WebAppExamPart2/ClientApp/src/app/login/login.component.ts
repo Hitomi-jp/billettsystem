@@ -78,6 +78,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { Bruker } from "../Bruker";
 import { Router } from "@angular/router";
+import { MaterialModule } from '../material.module'
 
 @NgModule({
   declarations: [
@@ -87,7 +88,8 @@ import { Router } from "@angular/router";
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     ReactiveFormsModule,
     HttpClientModule,
-    HttpClient
+    HttpClient,
+    MaterialModule
 
   ],
   providers: [],

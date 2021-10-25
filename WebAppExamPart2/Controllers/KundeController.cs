@@ -1,21 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using WebAppExamPart2.DAL;
 using WebAppExamPart2.Models;
-using System.Collections;
-using Microsoft.AspNetCore.Http;
 
 namespace WebAppExamPart2.Controllers
 {
     [ApiController]
     [Route("api/[Controller]")]
-  
-    public class KundeController : ControllerBase 
+
+    public class KundeController : ControllerBase
     {
         private readonly IKundeRepository _kundeDB;
 
@@ -29,14 +27,13 @@ namespace WebAppExamPart2.Controllers
             _kundeLog = kundeLog;
         }
 
-
         [HttpPost]
         public async Task<ActionResult<int>> Lagre(Kunde innKunde) //Kunde/Lagre
         {
-          /*  if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
-            {
-                return Unauthorized();
-            }*/
+            /*  if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
+              {
+                  return Unauthorized();
+              }*/
 
             if (ModelState.IsValid)
             {
@@ -62,10 +59,10 @@ namespace WebAppExamPart2.Controllers
             }
             List<Kunde> alleKunder = await _kundeDB.HentAlle();
             return Ok(alleKunder);
-        } 
-        
+        }
+
         [HttpGet]
-        [Route ("hentAlleBilletter")]
+        [Route("hentAlleBilletter")]
         public async Task<ActionResult<Billett>> HentAlleBilletter()
         {
             if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
@@ -77,19 +74,21 @@ namespace WebAppExamPart2.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Billett>> HentEnBillett(int kundeId) {
+        public async Task<ActionResult<Billett>> HentEnBillett(int kundeId)
+        {
             if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
             {
                 return Unauthorized();
             }
 
             Billett billett = await _kundeDB.HentEnBillett(kundeId);
-            if (billett == null) {
+            if (billett == null)
+            {
                 _kundeLog.LogInformation("Kunne ikke finne kunden");
                 return NotFound("Kunne ikke finne kunden");
             }
             return Ok(billett);
-		 }
+        }
 
         [HttpGet]
         [Route("hentAlleDestinasjon")]
@@ -99,7 +98,7 @@ namespace WebAppExamPart2.Controllers
             // {
             //     return Unauthorized();
             // }
-            
+
             List<Destinasjon> alleDestinasjon = await _kundeDB.HentAlleDestinasjon();
             return Ok(alleDestinasjon);
         }
@@ -121,8 +120,8 @@ namespace WebAppExamPart2.Controllers
             }
 
             if (ModelState.IsValid)
-            { 
-            bool returnOk = await _kundeDB.Endre(endreKunde);
+            {
+                bool returnOk = await _kundeDB.Endre(endreKunde);
                 if (!returnOk)
                 {
                     _kundeLog.LogInformation("Kunne ikke endre kunden");
@@ -182,7 +181,8 @@ namespace WebAppExamPart2.Controllers
             }
 
             bool returnOk = await _kundeDB.SlettAlle();
-               if (!returnOk) { 
+            if (!returnOk)
+            {
                 _kundeLog.LogInformation("Kunne ikke slette alle");
                 return NotFound("Kunne ikke slette alle");
             }
@@ -191,7 +191,7 @@ namespace WebAppExamPart2.Controllers
 
         [HttpPost]
         [Route("lagreKreditt")]
-         public async Task<ActionResult> LagreKreditt(Kreditt kredittInfo)
+        public async Task<ActionResult> LagreKreditt(Kreditt kredittInfo)
         {
             if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
             {
@@ -199,12 +199,12 @@ namespace WebAppExamPart2.Controllers
             }
 
             bool returnOk = await _kundeDB.LagreKreditt(kredittInfo);
-                if (!returnOk)
-                {
-                    _kundeLog.LogInformation("Kunne ikke lagre kredittinfo");
-                    return BadRequest("Kunne ikke lagre kredittinfo");
-                }
-                return Ok("Kredittinfo ble lagret");
+            if (!returnOk)
+            {
+                _kundeLog.LogInformation("Kunne ikke lagre kredittinfo");
+                return BadRequest("Kunne ikke lagre kredittinfo");
+            }
+            return Ok("Kredittinfo ble lagret");
         }
 
         [HttpPost]
@@ -223,21 +223,19 @@ namespace WebAppExamPart2.Controllers
                 return BadRequest("Kunne ikke lagre Billett");
             }
             return Ok("Billett ble lagret");
-
         }
 
         [HttpPost]
         [Route("loggInn")]
-         public async Task<ActionResult> LoggInn(Bruker bruker) 
+        public async Task<ActionResult> LoggInn(Bruker bruker)
         {
             Console.WriteLine(bruker);
             if (ModelState.IsValid)
             {
-                
                 bool returnOK = await _kundeDB.LoggInn(bruker);
                 if (!returnOK)
                 {
-                    _kundeLog.LogInformation("Innloggingen feilet for bruker"+bruker.Brukernavn);
+                    _kundeLog.LogInformation("Innloggingen feilet for bruker" + bruker.Brukernavn);
                     HttpContext.Session.SetString(_loggetInn, "");
                     return Ok(false);
                 }
@@ -248,10 +246,11 @@ namespace WebAppExamPart2.Controllers
             return BadRequest("Feil i inputvalidering på server");
         }
 
+        [HttpGet]
+        [Route("api/kunde/loggut")]
         public void LoggUt()
         {
             HttpContext.Session.SetString(_loggetInn, "");
         }
-
     }
 }

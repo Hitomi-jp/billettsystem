@@ -38,21 +38,21 @@
   <form [formGroup]="formGroup" (ngSubmit)="onSubmit()" class="form">
 
     <mat-form-field floatLabel="never" class="form-element">
-      <input type="text" matInput placeholder="Brukernavn" formControlName="brukernavn">
+      <input type="text" matInput placeholder="Brukernavn" formControlName="brukernavn" required>
       <mat-error *ngIf="formGroup.controls['brukernavn'].invalid">
         {{getError('brukernavn')}}
       </mat-error>
     </mat-form-field>
 
     <mat-form-field floatLabel="never" class="form-element">
-      <input type="password" matInput placeholder="Passord" formControlName="passord">
+      <input type="password" matInput placeholder="Passord" formControlName="passord" required>
       <mat-error *ngIf="!formGroup.controls['passord'].valid">
         {{getError('passord')}}
       </mat-error>
     </mat-form-field>
 
     <div class="form-element">
-      <button mat-raised-button color="primary" type="submit" class="button" [disabled]="!formGroup.valid">Submit Form</button>
+      <button mat-raised-button color="primary" type="submit" class="button" [disabled]="!formGroup.valid">Logge Inn</button>
     </div>
 
   </form>

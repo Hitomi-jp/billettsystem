@@ -3,11 +3,9 @@
 <p *ngIf="laster"><em>Loading...</em></p>
 
 <div class="table">
-  <table
-    *ngIf="!laster"
-    class="table table-striped"
-    aria-labelledby="tableLabel"
-  >
+  <table *ngIf="!laster"
+         class="table table-striped"
+         aria-labelledby="tableLabel">
     <thead>
       <tr>
         <th>Fronvn</th>
@@ -60,4 +58,6 @@
       </tr>
     </tbody>
   </table>
+  <button class="btn btn-success" [routerLink]="['/login']"></button>
+
 </div>
