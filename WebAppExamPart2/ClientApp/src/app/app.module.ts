@@ -14,8 +14,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MaterialModule } from './material.module'
+import { MaterialModule } from './material.module';
 import { LogoutComponent } from './logout/logout.component';
+import { RuterComponent } from './ruter/ruter.component';
+import { KjopBillettComponent } from './kjop-billett/kjop-billett.component';
 
 @NgModule({
   declarations: [
@@ -27,8 +29,10 @@ import { LogoutComponent } from './logout/logout.component';
     HomeComponent,
     KvitteringComponent,
     KredittComponent,
-    FetchDataComponent, 
-    LogoutComponent
+    FetchDataComponent,
+    LogoutComponent,
+    RuterComponent,
+    KjopBillettComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

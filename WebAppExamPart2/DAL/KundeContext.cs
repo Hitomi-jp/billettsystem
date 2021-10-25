@@ -43,6 +43,9 @@ namespace WebAppExamPart2.DAL
         public DbSet<Kreditt> Kreditt { get; set; }
         public DbSet<Destinasjon> Destinasjoner { get; set; }
         public DbSet<Brukere> Brukere { get; set; }
+        public DbSet<Rute> Ruter { get; set; }
+
+        public DbSet<Strekning> Strekninger { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

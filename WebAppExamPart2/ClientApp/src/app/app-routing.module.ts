@@ -7,15 +7,18 @@ import { HomeComponent } from './home/home.component';
 import { KvitteringComponent } from './kvittering/kvittering.component';
 import { KredittComponent } from './kreditt/kreditt.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
+import { RuterComponent } from './ruter/ruter.component';
+import { KjopBillettComponent } from './kjop-billett/kjop-billett.component';
 
 const appRoots: Routes = [
-  { path: 'kjop', component: KjopComponent },
+  { path: 'kjop', component: KjopBillettComponent },
   { path: 'endre', component: EndreComponent },
   { path: 'home', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'billett', component: FetchDataComponent },
   { path: 'kvittering', component: KvitteringComponent },
   { path: 'kreditt', component: KredittComponent },
+  { path: 'ruter', component: RuterComponent },
   { path: '', redirectTo: 'home', pathMatch: 'full' }
 ]
 
