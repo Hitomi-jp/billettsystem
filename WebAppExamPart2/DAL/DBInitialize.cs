@@ -70,11 +70,7 @@ namespace WebAppExamPart2.DAL
             context.Destinasjoner.Add(destinasjon10);
             context.Destinasjoner.Add(destinasjon11);
 
-            var strekning = new Strekning(){
-                Id = "Oslo-Kiel",
-                Fra = "Oslo",
-                Til = "Kiel"
-            };
+            var strekning = new Strekning { StrekningId = "Oslo-Kiel", Fra = "Oslo", Til = "Kiel" };
             context.Strekninger.Add(strekning);
             
             var rute = new Rute();

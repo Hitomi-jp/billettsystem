@@ -60,7 +60,7 @@ export class RuterComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.hentAlleRuter()
+    this.sjekkIsLoggetInn()
   }
 
   vedAvgangChange() {
@@ -72,6 +72,21 @@ export class RuterComponent implements OnInit {
     } else {
       this.endreRute()
     }
+  }
+
+  sjekkIsLoggetInn() {
+    this._http.get<any>("api/Rute/sjekkAdminLoggetInn")
+    .subscribe(isLoggetInn => {
+      if (isLoggetInn) {
+        this.hentAlleRuter()
+      }
+      else {
+        this.router.navigate(['/login'])
+      }
+    },
+      error => {
+        console.log(error)
+      }); 
   }
 
   visRegistrerRuteForm() {
@@ -103,9 +118,9 @@ export class RuterComponent implements OnInit {
     nyRute.prisEnvei = this.skjema.value.prisEnvei;
     nyRute.prisToVei = this.skjema.value.prisToVei;
     let rabatt = this.skjema.value.prisRabattBarn.toString();
-    if (this.skjema.value.prisRabattBarn < 10) {
-      rabatt = this.skjema.value.prisRabattBarn.toString().padStart(2, 0);
-    }
+    // if (this.skjema.value.prisRabattBarn < 10) {
+    //   rabatt = this.skjema.value.prisRabattBarn.toString().padStart(2, 0);
+    // }
     nyRute.prisRabattBarn = rabatt;
     nyRute.prisStandardLugar = this.skjema.value.prisStandardLugar;
     nyRute.prisPremiumLugar = this.skjema.value.prisPremiumLugar;

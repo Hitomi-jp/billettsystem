@@ -1,0 +1,39 @@
+#funnetRuterContainer {
+    width: 100%;
+}
+#funnetRuter {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+
+.ruteChoice {
+    outline: 1px solid black
+}
+
+.inputBox {
+    padding-left: 1em;
+    position: relative;
+}
+
+.utlopsFlex {
+    display: flex;
+    justify-content: space-between;
+}
+
+.utlopsDatoBox {
+    position: relative;
+    width: 48%;
+}
+
+.requiredStar {
+    position: absolute;
+    color: red;
+    left: 0;
+}
+
+.starUtlopsDato {
+    top: 0;
+    left: -10%;
+}
+

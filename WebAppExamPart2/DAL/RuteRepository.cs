@@ -40,7 +40,7 @@ namespace WebAppExamPart2.DAL
                 var sjekStrekning = await _kundeDb.Strekninger.FindAsync(innRute.RuteFra + "-" + innRute.RuteTil);
                 if (sjekStrekning == null) {
                     var nyStrekning = new Strekning(){
-                        Id = innRute.RuteFra + "-" + innRute.RuteTil,
+                        StrekningId = innRute.RuteFra + "-" + innRute.RuteTil,
                         Fra = innRute.RuteFra,
                         Til = innRute.RuteTil
                     };
@@ -136,7 +136,7 @@ namespace WebAppExamPart2.DAL
                 var sjekStrekning = await _kundeDb.Strekninger.FindAsync(enRute.RuteFra + "-" + enRute.RuteTil);
                 if (sjekStrekning == null) {
                     var nyStrekning = new Strekning(){
-                        Id = enRute.RuteFra + "-" + enRute.RuteTil,
+                        StrekningId = enRute.RuteFra + "-" + enRute.RuteTil,
                         Fra = enRute.RuteFra,
                         Til = enRute.RuteTil
                     };
@@ -172,7 +172,7 @@ namespace WebAppExamPart2.DAL
             {
                 List<Strekning> alleStrekninger = await _kundeDb.Strekninger.Select(strekning => new Strekning
                 {
-                    Id = strekning.Id,
+                    StrekningId = strekning.StrekningId,
                     Fra = strekning.Fra,
                     Til = strekning.Til
                 }).ToListAsync();
