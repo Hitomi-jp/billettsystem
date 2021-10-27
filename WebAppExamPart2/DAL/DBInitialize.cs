@@ -50,8 +50,8 @@ namespace WebAppExamPart2.DAL
 
             bruker.Brukernavn = "Tor";
             string passord ="Tor2021";
-            byte[] salt = KundeRepository.LagSalt();
-            byte[] hash = KundeRepository.LagHash(passord, salt);
+            byte[] salt = RuteRepository.LagSalt();
+            byte[] hash = RuteRepository.LagHash(passord, salt);
             bruker.Passord = hash;
             bruker.Salt = salt;
             context.Brukere.Add(bruker);

@@ -225,7 +225,7 @@ namespace WebAppExamPart2.Controllers
             return Ok();
         }
 
-        [HttpPost]
+        /*[HttpPost]
         [Route("loggInn")]
         public async Task<ActionResult> LoggInn(Bruker bruker)
         {
@@ -251,6 +251,6 @@ namespace WebAppExamPart2.Controllers
         public void LoggUt()
         {
             HttpContext.Session.SetString(_loggetInn, "");
-        }
+        }*/
     }
 }

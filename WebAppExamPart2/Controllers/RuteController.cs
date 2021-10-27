@@ -15,16 +15,19 @@ namespace WebAppExamPart2.Controllers
     [Route("api/[Controller]")]
     public class RuteController : ControllerBase
     {
+        private readonly IRuteRepository _kundeDB;
+
         private readonly IRuteRepository _ruteRepo;
 
         private ILogger<RuteController> _ruteLogger;
 
         private const string _loggetInn = "loggetInn";
 
-        public RuteController(IRuteRepository ruteRepo, ILogger<RuteController> ruteLogger)
+        public RuteController(IRuteRepository ruteRepo, ILogger<RuteController> ruteLogger, IRuteRepository kundeDB)
         {
             _ruteRepo = ruteRepo;
             _ruteLogger = ruteLogger;
+            _kundeDB = kundeDB;
         }
 
 
@@ -130,6 +133,36 @@ namespace WebAppExamPart2.Controllers
                 return false;
             }
             return true;
+        }
+
+        [HttpPost]
+        [Route("loggInn")]
+        public async Task<ActionResult> LoggInn(Bruker bruker)
+        {
+            Console.WriteLine(bruker);
+            if (ModelState.IsValid)
+            {
+                bool returnOK = await _kundeDB.LoggInn(bruker);
+                if (!returnOK)
+                {
+                    _ruteLogger.LogInformation("Innloggingen feilet for bruker" + bruker.Brukernavn);
+                    HttpContext.Session.SetString(_loggetInn, "");
+                    return Ok(false);
+                }
+                HttpContext.Session.SetString(_loggetInn, "LoggetInn");
+                return Ok(true);
+            }
+            _ruteLogger.LogInformation("Feil i inputvalidering");
+            return BadRequest("Feil i inputvalidering på server");
+        }
+
+        [HttpGet]
+        [Route("loggut")]
+        public bool LoggUt()
+        {
+            HttpContext.Session.SetString(_loggetInn, "");
+            return true;
+
         }
     }
 }

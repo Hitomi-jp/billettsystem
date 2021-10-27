@@ -360,7 +360,7 @@ namespace WebAppExamPart2.DAL
             }
         }
 
-        public static byte[] LagHash(string passord, byte[] salt)
+        /*public static byte[] LagHash(string passord, byte[] salt)
         {
             return KeyDerivation.Pbkdf2(
                                 password: passord,
@@ -368,17 +368,17 @@ namespace WebAppExamPart2.DAL
                                 prf: KeyDerivationPrf.HMACSHA512,
                                 iterationCount: 1000,
                                 numBytesRequested: 32);
-        }
+        }*/
 
-        public static byte[] LagSalt()
+       /* public static byte[] LagSalt()
         {
             var csp = new RNGCryptoServiceProvider();
             var salt = new byte[24];
             csp.GetBytes(salt);
             return salt;
-        }
+        }*/
 
-        public async Task<bool> LoggInn(Bruker bruker)
+       /* public async Task<bool> LoggInn(Bruker bruker)
         {
             try
             {
@@ -398,6 +398,6 @@ namespace WebAppExamPart2.DAL
                 _kundeLog.LogInformation(e.Message);
                 return false;
             }
-        }
+        }*/
     }
 }

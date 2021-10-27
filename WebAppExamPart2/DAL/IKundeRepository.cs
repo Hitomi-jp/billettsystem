@@ -21,6 +21,6 @@ namespace WebAppExamPart2.DAL
         Task<Billett> HentEnBillett(int kundeId);
         Task<List<Destinasjon>> HentAlleDestinasjon();
         IEnumerable HentGyldigDestinasjoner(int destinasjonId);
-        Task<bool> LoggInn(Bruker bruker);
+        //Task<bool> LoggInn(Bruker bruker);
     }
 }

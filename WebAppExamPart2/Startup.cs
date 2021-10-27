@@ -34,7 +34,7 @@ namespace WebAppExamPart2
             services.AddSession(options =>
                 {
                     options.Cookie.Name = ".AdventureWorks.Session";
-                    options.IdleTimeout = System.TimeSpan.FromSeconds(1800);
+                    options.IdleTimeout = System.TimeSpan.FromSeconds(10);
                     options.Cookie.IsEssential = true;
                 });
             //For session

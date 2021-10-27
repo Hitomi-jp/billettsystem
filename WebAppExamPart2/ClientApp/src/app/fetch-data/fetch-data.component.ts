@@ -11,7 +11,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from '../app.component';
 
-
 @Component({
   selector: 'app-fetch-data',
   templateUrl: './fetch-data.component.html',
@@ -33,11 +32,10 @@ import { AppComponent } from '../app.component';
   bootstrap: [AppComponent]
 })
 
-
 export class FetchDataComponent {
   alleKunder: Kunde[]
   alleBilletter: Billett[]
-  alle:any=[]
+  alle: any = []
   laster: boolean;
 
   constructor(private _http: HttpClient, private router: Router, private formBuilder: FormBuilder, modalService: NgbModal) { }
@@ -58,7 +56,7 @@ export class FetchDataComponent {
             this.router.navigate(['/login'])
           }
         });
-      };
+  };
 
   hentAlleBilletter() {
     this._http.get<Billett[]>("api/kunde/hentAlleBilletter")
@@ -87,4 +85,3 @@ export class FetchDataComponent {
     })
   }
 }
-

@@ -8,7 +8,8 @@ import { KvitteringComponent } from './kvittering/kvittering.component';
 import { KredittComponent } from './kreditt/kreditt.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { RuterComponent } from './ruter/ruter.component';
-import { KjopBillettComponent } from './kjop-billett/kjop-billett.component';
+import { KjopBillettComponent } from './kjop-billett/kjop-billett.component';
+import { LogoutComponent } from './logout/logout.component'
 
 const appRoots: Routes = [
   { path: 'kjop', component: KjopBillettComponent },
@@ -19,6 +20,7 @@ const appRoots: Routes = [
   { path: 'kvittering', component: KvitteringComponent },
   { path: 'kreditt', component: KredittComponent },
   { path: 'ruter', component: RuterComponent },
+  { path: 'logout', component: LogoutComponent },
   { path: '', redirectTo: 'home', pathMatch: 'full' }
 ]
 

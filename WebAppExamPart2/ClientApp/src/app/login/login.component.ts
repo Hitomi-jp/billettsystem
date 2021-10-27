@@ -139,11 +139,11 @@ export class LoginComponent {
     const bruker = new Bruker();
     bruker.brukernavn = this.formGroup.value.brukernavn;
     bruker.passord = this.formGroup.value.passord;
-    this._http.post<boolean>("api/kunde/loggInn", bruker)
+    this._http.post<boolean>("api/rute/loggInn", bruker)
       .subscribe(retur => {
         if (retur) {
           console.log(retur);
-          this.router.navigate(['/billett']);
+          this.router.navigate(['/ruter']);
           console.log("Ferdig get-brukren")
         }
 
