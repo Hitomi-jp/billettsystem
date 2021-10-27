@@ -62,8 +62,8 @@
             <div class="ruteChoice" *ngFor="let funnetRute of funnetRuter" (click)="vedFunnetRuteClick(funnetRute)">
                 <p>{{funnetRute.boatNavn}}</p>
                 <p>Pris: {{funnetRute.totalPris}}</p>
-                <p>Avgang: {{billett.dato}} kl: {{funnetRute.avgang}}</p>
-                <p>Ankomst: {{billett.ankomst}} kl: {{funnetRute.avgang}}</p>
+                <p>Avgang: {{billett.departureDato}} kl: {{funnetRute.avgang}}</p>
+                <p>Ankomst: {{billett.returnDato}} kl: {{funnetRute.avgang}}</p>
             </div>
         </div>
     </div>
@@ -214,7 +214,7 @@
               </div>
 
               <div class="form-group">
-                  <button class="btn btn-primary" [disabled]="!kredittSkjema.valid" (click)="vedLagre()">Lagre</button>
+                  <button class="btn btn-primary" [disabled]="!kredittSkjema.valid" (click)="lagreKunde()">Lagre</button>
                   <button class="btn btn-default" (click)="vedKredittTilbake()">Tilbake</button>
               </div>
         </form>

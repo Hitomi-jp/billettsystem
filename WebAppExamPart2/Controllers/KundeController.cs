@@ -193,10 +193,10 @@ namespace WebAppExamPart2.Controllers
         [Route("lagreKreditt")]
         public async Task<ActionResult> LagreKreditt(Kreditt kredittInfo)
         {
-            if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
-            {
-                return Unauthorized();
-            }
+            // if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
+            // {
+            //     return Unauthorized();
+            // }
 
             bool returnOk = await _kundeDB.LagreKreditt(kredittInfo);
             if (!returnOk)
@@ -204,17 +204,17 @@ namespace WebAppExamPart2.Controllers
                 _kundeLog.LogInformation("Kunne ikke lagre kredittinfo");
                 return BadRequest("Kunne ikke lagre kredittinfo");
             }
-            return Ok("Kredittinfo ble lagret");
+            return Ok();
         }
 
         [HttpPost]
         [Route("lagreBillett")]
         public async Task<ActionResult> LagreBillett(Billett billett)
         {
-            if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
-            {
-                return Unauthorized();
-            }
+            // if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
+            // {
+            //     return Unauthorized();
+            // }
 
             bool returnOk = await _kundeDB.LagreBillett(billett);
             if (!returnOk)
@@ -222,7 +222,7 @@ namespace WebAppExamPart2.Controllers
                 _kundeLog.LogInformation("Kunne ikke lagre Billett");
                 return BadRequest("Kunne ikke lagre Billett");
             }
-            return Ok("Billett ble lagret");
+            return Ok();
         }
 
         [HttpPost]

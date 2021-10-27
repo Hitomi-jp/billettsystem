@@ -3,6 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Rute } from '../ruter/Rute';
+import { Billett } from '../Billett';
+import { Kunde } from '../Kunde';
+import { Kreditt } from '../Kreditt';
 type Strekning = {
   strekningId: string;
   fra: string;
@@ -32,8 +35,35 @@ export class KjopBillettComponent implements OnInit {
   funnetRuter: any[];
   valgtRute: any;
   dagsDato: string;
-  billett: any = {};
   billettPris: number = 0;
+  billett: Billett = {
+    kundeId: null,
+    destinationFrom: "",
+    destinationTo: "",
+    ticketType: "",
+    lugarType: "Standard",
+    departureDato: "",
+    returnDato: "",
+    antallAdult: 0,
+    antallChild: 0,
+    pris: 0
+  };
+  kunde: Kunde = {
+    fornavn: "",
+    etternavn: "",
+    telfonnr: "",
+    epost: "",
+    adresse: "",
+    postnr: "",
+    poststed: "",
+  };
+  kreditt: Kreditt = {
+    kundeId: 0,
+    kortnummer: "",
+    kortHolderNavn: "",
+    kortUtlopsdato: "",
+    cvc: ""
+  };
 
   validering = {
     reiseMalFra: [
@@ -99,7 +129,6 @@ export class KjopBillettComponent implements OnInit {
 
   }
 
-
   constructor(private _http: HttpClient, private router: Router, private fb: FormBuilder) {
     this.skjema = fb.group(this.validering);
     this.lugarSkjema = fb.group(this.lugarValidering);
@@ -149,19 +178,56 @@ export class KjopBillettComponent implements OnInit {
         });
   };
 
+  lagreKunde() {
+    this._http.post<any>("api/kunde/", this.kunde)
+    .subscribe(kundeId => {
+      this.billett.kundeId = kundeId;
+      this.lagreBillett() 
+    },
+      error => {
+        console.log(error)
+      }); 
+  }
+
+  lagreBillett() {
+    this._http.post<any>("api/kunde/lagreBillett", this.billett)
+    .subscribe(ruter => {
+      this.lagreKreditt()
+    },
+      error => {
+        console.log(error)
+      }); 
+  }
+
+  lagreKreditt() {
+    this.kreditt.kundeId = this.billett.kundeId;
+    this.kreditt.kortnummer = this.kredittSkjema.value.kortnr;
+    this.kreditt.kortHolderNavn = this.kredittSkjema.value.kortholdersnavn;
+    this.kreditt.kortUtlopsdato = this.kredittSkjema.value.utlopsAar + "/" + this.kredittSkjema.value.utlopsMaaned;
+    this.kreditt.cvc = this.kredittSkjema.value.cardVerificationCode;
+
+    this._http.post<any>("api/kunde/lagreKreditt", this.kreditt)
+    .subscribe(response => {
+      console.log(response)
+      this.router.navigate(['/kvittering'])
+  
+    },
+      error => {
+        console.log(error)
+      }); 
+  }
+
   finneRuter() {
-    this.billett.fra = this.skjema.value.reiseMalFra;
-    this.billett.til = this.skjema.value.reiseMalTil;
-    this.billett.dato = this.skjema.value.reiseDato;
-    this.billett.antallVoksen = this.skjema.value.antallVoksen;
-    this.billett.antallBarn = this.skjema.value.antallBarn;
-    this.billett.billettType = this.skjema.value.billettType;
-    console.log(this.billett.fra + " " + this.billett.til)
-    console.log(this.billett)
+    this.billett.destinationFrom = this.skjema.value.reiseMalFra;
+    this.billett.destinationTo = this.skjema.value.reiseMalTil;
+    this.billett.departureDato = this.skjema.value.reiseDato;
+    this.billett.antallAdult = this.skjema.value.antallVoksen;
+    this.billett.antallChild = this.skjema.value.antallBarn;
+    this.billett.ticketType = this.skjema.value.billettType;
 
     const filteredRuter = [];
     this.alleRuter.forEach(rute => {
-      if (rute.ruteFra === this.billett.fra && rute.ruteTil === this.billett.til) {
+      if (rute.ruteFra === this.billett.destinationFrom && rute.ruteTil === this.billett.destinationTo) {
         filteredRuter.push(rute)
       }
     })
@@ -217,10 +283,18 @@ export class KjopBillettComponent implements OnInit {
     this.visRuteUtvalg = false;
     this.visLugarUtvalg = false;
     this.visKundeSkjema = true;
-    // this.hideRuteOgLugarUtvalg()
+    this.billett.pris = this.billettPris;
   }
 
   vedKundeNeste() {
+    this.kunde.fornavn = this.kundeSkjema.value.fornavn;
+    this.kunde.etternavn = this.kundeSkjema.value.etternavn;
+    this.kunde.telfonnr = this.kundeSkjema.value.telefonnr;
+    this.kunde.epost = this.kundeSkjema.value.epost;
+    this.kunde.adresse = this.kundeSkjema.value.adresse;
+    this.kunde.postnr = this.kundeSkjema.value.postnr;
+    this.kunde.poststed = this.kundeSkjema.value.poststed;
+
     this.visKundeSkjema = false;
     this.visKredittSkjema = true;
   }
@@ -232,9 +306,6 @@ export class KjopBillettComponent implements OnInit {
     this.visKundeSkjema = false;
   }
 
-  vedLagre() {
-    console.log("lagre ordre")
-  }
 
   vedKredittTilbake() {
     this.visKredittSkjema = false;
@@ -255,14 +326,15 @@ export class KjopBillettComponent implements OnInit {
   }
 
   oppdaterPrisMedLugar() {
+    this.billett.lugarType = this.lugarSkjema.value.lugar;
     this.billettPris += this.lugarSkjema.value.lugar === 'Standard' ? this.valgtRute.prisStandardLugar : this.valgtRute.prisPremiumLugar
     this.billettPris -= this.lugarSkjema.value.lugar === 'Standard' ? this.valgtRute.prisPremiumLugar : this.valgtRute.prisStandardLugar
   }
   
   opdaterAnkomstDato() {
     this.funnetRuter.forEach(rute => {
-      const antallDager = this.billett.billettType === 'En vei' ? rute.antallDagerEnVei : rute.antallDagerToVei
-      rute.ankomst = this.getAnkomstDato(this.billett.dato, antallDager)
+      const antallDager = this.billett.ticketType === 'En vei' ? rute.antallDagerEnVei : rute.antallDagerToVei
+      rute.ankomst = this.getAnkomstDato(this.billett.departureDato, antallDager)
     })
   }
   
@@ -270,18 +342,18 @@ export class KjopBillettComponent implements OnInit {
   getPrisUtenLugar(rute) {
     let totalPris = 0;
     let veiPris = 0;
-    if (this.billett.billettType === 'En vei') {
-      veiPris += this.billett.antallVoksen * rute.prisEnvei;
-      if (this.billett.antallBarn > 0) {
+    if (this.billett.ticketType === 'En vei') {
+      veiPris += this.billett.antallAdult * rute.prisEnvei;
+      if (this.billett.antallChild > 0) {
         let rabattBarn = parseInt(rute.prisRabattBarn)
         console.log(rabattBarn)
-        veiPris += (this.billett.antallBarn * rute.prisEnvei) - ((this.billett.antallBarn * rute.prisEnvei)*(rabattBarn/100)) ;
+        veiPris += (this.billett.antallChild * rute.prisEnvei) - ((this.billett.antallChild * rute.prisEnvei)*(rabattBarn/100)) ;
       }
     } else {
-      veiPris += this.billett.antallVoksen * rute.prisToVei;
-      if (this.billett.antallBarn > 0) {
+      veiPris += this.billett.antallAdult * rute.prisToVei;
+      if (this.billett.antallChild > 0) {
         let rabattBarn = parseInt(rute.prisRabattBarn)
-        veiPris += (this.billett.antallBarn * rute.prisToVei) - ((this.billett.antallBarn * rute.prisToVei)*(rabattBarn/100)) ;
+        veiPris += (this.billett.antallChild * rute.prisToVei) - ((this.billett.antallChild * rute.prisToVei)*(rabattBarn/100)) ;
       }
     }
     totalPris += veiPris;
@@ -305,6 +377,6 @@ export class KjopBillettComponent implements OnInit {
   getAnkomstDato(avgang, antallDager) {
     let date = new Date(avgang)
     date.setDate(date.getDate() + antallDager);
-    this.billett.ankomst = this.getDate(date);
+    this.billett.returnDato = this.getDate(date);
   }
 }

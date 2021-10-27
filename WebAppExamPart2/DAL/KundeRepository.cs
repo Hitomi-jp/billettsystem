@@ -90,11 +90,12 @@ namespace WebAppExamPart2.DAL
                 nyBillett.KundeId = innBillett.KundeId;
                 nyBillett.DestinationTo = innBillett.DestinationTo;
                 nyBillett.TicketType = innBillett.TicketType;
-                nyBillett.TicketClass = innBillett.TicketClass;
+                nyBillett.LugarType = innBillett.LugarType;
                 nyBillett.AntallAdult = innBillett.AntallAdult;
                 nyBillett.AntallChild = innBillett.AntallChild;
                 nyBillett.DepartureDato = innBillett.DepartureDato;
                 nyBillett.ReturnDato = innBillett.ReturnDato;
+                nyBillett.Pris = innBillett.Pris;
        
 
                 _kundeDB.Billetter.Add(nyBillett);
@@ -314,11 +315,12 @@ namespace WebAppExamPart2.DAL
                     DestinationFrom = innBillett.DestinationFrom,
                     DestinationTo = innBillett.DestinationTo,
                     TicketType = innBillett.TicketType,
-                    TicketClass = innBillett.TicketClass,
+                    LugarType = innBillett.LugarType,
                     AntallAdult = innBillett.AntallAdult,
                     AntallChild = innBillett.AntallChild,
                     DepartureDato = innBillett.DepartureDato,
                     ReturnDato = innBillett.ReturnDato,
+                    Pris = innBillett.Pris,
     
 
                 }).ToListAsync();
@@ -342,11 +344,12 @@ namespace WebAppExamPart2.DAL
                     DestinationTo = enBillett.DestinationTo,
                     DestinationFrom = enBillett.DestinationFrom,
                     TicketType = enBillett.TicketType,
-                    TicketClass = enBillett.TicketClass,
+                    LugarType = enBillett.LugarType,
                     DepartureDato = enBillett.DepartureDato,
                     ReturnDato = enBillett.ReturnDato,
                     AntallAdult = enBillett.AntallAdult,
-                    AntallChild = enBillett.AntallChild
+                    AntallChild = enBillett.AntallChild,
+                    Pris = enBillett.Pris
 
                 };
                 return hentetBillett;

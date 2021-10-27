@@ -1,16 +1,8 @@
 export class Kunde {
-    id: number;
+    id?: number;
     fornavn: string;
     etternavn: string;
-    fra: string;
-    til: string;
-    depDato: string;
-    returDato: string;
-    antallVoksen: number;
-    antallBarn: number;
-    billetteType: string;
-    billettKlasset: string;
-    telefonnr: string;
+    telfonnr: string;
     epost: string;
     adresse: string;
     postnr: string;
