@@ -30,7 +30,7 @@ namespace WebAppExamPart2.Models
         [RegularExpression(@"[0-9]+")]
         public int PrisToVei { get; set; }
 
-        [RegularExpression(@"[0-9]{2}")]
+        [RegularExpression(@"[0-9]{1,2}")]
         public string PrisRabattBarn { get; set; }
 
         [RegularExpression(@"[0-9]+")]

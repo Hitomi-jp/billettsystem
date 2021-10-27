@@ -52,9 +52,9 @@ namespace WebAppExamPart2.Controllers
         [HttpGet]
         public async Task<ActionResult<Rute>> HentAlleRuter()
         {
-            if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn))) {
-                return Unauthorized();
-            }
+            // if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn))) {
+            //     return Unauthorized();
+            // }
             List<Rute> alleRuter = await _ruteRepo.HentAlleRuter();
             return Ok(alleRuter);
         }
@@ -63,9 +63,9 @@ namespace WebAppExamPart2.Controllers
         [HttpGet("{ruteId}")]
         public async Task<ActionResult<Rute>> HentEnRute(int ruteId)
         {
-            if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn))) {
-                return Unauthorized();
-            }
+            // if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn))) {
+            //     return Unauthorized();
+            // }
             Rute enRute = await _ruteRepo.HentEnRute(ruteId);
             if (enRute == null) {
                 _ruteLogger.LogInformation("Kunnde ikke finen ruten");
@@ -78,9 +78,9 @@ namespace WebAppExamPart2.Controllers
         [HttpPut]
         public async Task<ActionResult<bool>> EndreRute(Rute endreRute)
         {
-            if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn))) {
-                return Unauthorized();
-            }
+            // if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn))) {
+            //     return Unauthorized();
+            // }
             if (ModelState.IsValid)
             {
                 bool endreOk = await _ruteRepo.EndreRute(endreRute);
@@ -115,11 +115,21 @@ namespace WebAppExamPart2.Controllers
         [Route("hentAlleStrekninger")]
         public async Task<ActionResult<Rute>> HentAlleStrekninger()
         {
-            if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn))) {
-                return Unauthorized();
-            }
+            // if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn))) {
+            //     return Unauthorized();
+            // }
             List<Strekning> alleStrekninger = await _ruteRepo.HentAlleStrekninger();
             return Ok(alleStrekninger);
+        }
+        
+        [HttpGet]
+        [Route("sjekkAdminLoggetInn")]
+        public  bool SjekkLoggetInn() {
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
+            {
+                return false;
+            }
+            return true;
         }
     }
 }

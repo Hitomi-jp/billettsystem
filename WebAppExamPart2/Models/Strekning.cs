@@ -11,11 +11,11 @@ namespace WebAppExamPart2.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public string Id { get; set; }
+        public string StrekningId { get; set; }
 
-        public string Fra;
+        public string Fra {get; set; }
 
-        public string Til;
+        public string Til { get; set; }
         
     }
 }

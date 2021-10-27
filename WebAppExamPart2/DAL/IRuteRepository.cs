@@ -16,5 +16,6 @@ namespace WebAppExamPart2.DAL
         Task<List<Strekning>> HentAlleStrekninger();
 
         Task<bool> SlettEnStrekning (string strekningId);
+
     }
 }
