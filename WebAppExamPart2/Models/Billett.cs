@@ -18,7 +18,7 @@ namespace WebAppExamPart2.Models
 
         public string TicketType { get; set; } 
 
-        public string TicketClass { get; set; } 
+        public string LugarType { get; set; } 
 
         public string DepartureDato { get; set; }
 
@@ -28,5 +28,7 @@ namespace WebAppExamPart2.Models
         public int AntallAdult { get; set; }
 
         public int AntallChild { get; set; }
+
+        public int Pris { get; set; }
     }
 }
