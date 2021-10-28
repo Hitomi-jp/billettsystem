@@ -50,7 +50,7 @@ namespace WebAppExamPart2.Controllers
             return BadRequest("Feil i inputvalidering på server");
         }
 
-        [HttpGet]
+        /*[HttpGet]
         public async Task<ActionResult<Kunde>> HentAlle()
         {
             if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
@@ -59,9 +59,9 @@ namespace WebAppExamPart2.Controllers
             }
             List<Kunde> alleKunder = await _kundeDB.HentAlle();
             return Ok(alleKunder);
-        }
+        }*/
 
-        [HttpGet]
+        /*[HttpGet]
         [Route("hentAlleBilletter")]
         public async Task<ActionResult<Billett>> HentAlleBilletter()
         {
@@ -71,7 +71,7 @@ namespace WebAppExamPart2.Controllers
             }
             List<Billett> alleBilletter = await _kundeDB.HentAlleBilletter();
             return Ok(alleBilletter);
-        }
+        }*/
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Billett>> HentEnBillett(int billettId)
@@ -111,7 +111,7 @@ namespace WebAppExamPart2.Controllers
             return destinasjoner;
         }
 
-        [HttpPut]
+        /*[HttpPut]
         public async Task<ActionResult> Endre(Kunde endreKunde)
         {
             if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
@@ -131,9 +131,9 @@ namespace WebAppExamPart2.Controllers
             }
             _kundeLog.LogInformation("Feil i inputValidering");
             return BadRequest("Feil i inputvalidering på server");
-        }
+        }*/
 
-        [HttpGet("{id}")]
+       [HttpGet("{id}")]
         public async Task<ActionResult> HentEn(int id)
         {
             if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
@@ -155,7 +155,7 @@ namespace WebAppExamPart2.Controllers
             return BadRequest("Feil i inputValidering på server");
         }
 
-        [HttpDelete("{id}")]
+        /*[HttpDelete("{id}")]
         public async Task<ActionResult> Slett(int id)
         {
             if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
@@ -170,9 +170,9 @@ namespace WebAppExamPart2.Controllers
                 return NotFound("Kunne ikke slette kunden");
             }
             return Ok("Kunde ble slettet");
-        }
+        }*/
 
-        [HttpDelete]
+        /*[HttpDelete]
         public async Task<ActionResult> SlettAlle()
         {
             if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
@@ -187,7 +187,7 @@ namespace WebAppExamPart2.Controllers
                 return NotFound("Kunne ikke slette alle");
             }
             return Ok("Alle ble slettet");
-        }
+        }*/
 
         [HttpPost]
         [Route("lagreKreditt")]

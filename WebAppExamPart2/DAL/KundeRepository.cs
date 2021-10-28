@@ -113,7 +113,7 @@ namespace WebAppExamPart2.DAL
 
 
 
-        public async Task<List<Kunde>> HentAlle()
+        /*public async Task<List<Kunde>> HentAlle()
         {
             try
             {
@@ -136,7 +136,7 @@ namespace WebAppExamPart2.DAL
             {
                 return null;
             }
-        }
+        }*/
 
         public async Task<List<Destinasjon>> HentAlleDestinasjon()
         {
@@ -157,7 +157,7 @@ namespace WebAppExamPart2.DAL
             }
         }
 
-        public async Task<bool> Endre(Kunde endreKunde)
+       /* public async Task<bool> Endre(Kunde endreKunde)
         {
             try
             {
@@ -190,7 +190,7 @@ namespace WebAppExamPart2.DAL
             {
                 return false;
             }
-        }
+        }*/
 
         public IEnumerable HentGyldigDestinasjoner(int desintasjonId)
         {
@@ -272,7 +272,7 @@ namespace WebAppExamPart2.DAL
             }
         }
 
-        public async Task<bool> Slett(int id)
+        /*public async Task<bool> Slett(int id)
         {
             try
             {
@@ -285,9 +285,9 @@ namespace WebAppExamPart2.DAL
             {
                 return false;
             }
-        }
+        }*/
 
-        public async Task<bool> SlettAlle()
+        /*public async Task<bool> SlettAlle()
         {
             try
             {
@@ -303,9 +303,9 @@ namespace WebAppExamPart2.DAL
             {
                 return false;
             }
-        }
+        }*/
 
-        public async Task<List<Billett>> HentAlleBilletter()
+        /*public async Task<List<Billett>> HentAlleBilletter()
         {
             try
             {
@@ -332,7 +332,7 @@ namespace WebAppExamPart2.DAL
             {
                 return null;
             }
-        }
+        }*/
 
         public async Task<Billett> HentEnBillett(int billettId) {
             try

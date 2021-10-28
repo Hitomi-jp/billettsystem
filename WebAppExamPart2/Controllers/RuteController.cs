@@ -124,7 +124,89 @@ namespace WebAppExamPart2.Controllers
             List<Strekning> alleStrekninger = await _ruteRepo.HentAlleStrekninger();
             return Ok(alleStrekninger);
         }
-        
+
+        [HttpGet]
+        [Route("hentAlle")]
+        public async Task<ActionResult<Kunde>> HentAlle()
+        {
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
+            {
+                return Unauthorized();
+            }
+            List<Kunde> alleKunder = await _kundeDB.HentAlle();
+            return Ok(alleKunder);
+        }
+
+        [HttpGet]
+        [Route("hentAlleBilletter")]
+        public async Task<ActionResult<Billett>> HentAlleBilletter()
+        {
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
+            {
+                return Unauthorized();
+            }
+            List<Billett> alleBilletter = await _kundeDB.HentAlleBilletter();
+            return Ok(alleBilletter);
+        }
+
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> Slett(int id)
+        {
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
+            {
+                return Unauthorized();
+            }
+
+            bool returnOk = await _kundeDB.Slett(id);
+            if (!returnOk)
+            {
+                _ruteLogger.LogInformation("Kunne ikke slette kunden");
+                return NotFound("Kunne ikke slette kunden");
+            }
+            return Ok("Kunde ble slettet");
+        }
+
+        [HttpDelete]
+        [Route("slettAlle")]
+        public async Task<ActionResult> SlettAlle()
+        {
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
+            {
+                return Unauthorized();
+            }
+
+            bool returnOk = await _kundeDB.SlettAlle();
+            if (!returnOk)
+            {
+                _ruteLogger.LogInformation("Kunne ikke slette alle");
+                return NotFound("Kunne ikke slette alle");
+            }
+            return Ok("Alle ble slettet");
+        }
+
+        [HttpPut]
+        public async Task<ActionResult> Endre(Kunde endreKunde)
+        {
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
+            {
+                return Unauthorized();
+            }
+
+            if (ModelState.IsValid)
+            {
+                bool returnOk = await _kundeDB.Endre(endreKunde);
+                if (!returnOk)
+                {
+                    _ruteLogger.LogInformation("Kunne ikke endre kunden");
+                    return NotFound("Kunne ikke endre kunden");
+                }
+                return Ok("Kunde ble endret");
+            }
+            _ruteLogger.LogInformation("Feil i inputValidering");
+            return BadRequest("Feil i inputvalidering på server");
+        }
+
         [HttpGet]
         [Route("sjekkAdminLoggetInn")]
         public  bool SjekkLoggetInn() {

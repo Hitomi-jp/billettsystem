@@ -10,14 +10,14 @@ namespace WebAppExamPart2.DAL
     public interface IKundeRepository
     {
         Task<int> Lagre(Kunde innKunde);
-        Task<List<Kunde>> HentAlle();
-        Task<bool> Endre(Kunde endreKunde);
-        Task<Kunde> HentEn(int id);
-        Task<bool> Slett(int id);
-        Task<bool> SlettAlle();
+        //Task<bool> Endre(Kunde endreKunde);
+        //Task<bool> Slett(int id);
+        //Task<bool> SlettAlle();
         Task<bool> LagreKreditt(Kreditt kredittInfo);
         Task<int> LagreBillett(Billett billett);
-        Task<List<Billett>> HentAlleBilletter();
+        //Task<List<Kunde>> HentAlle();
+        //Task<List<Billett>> HentAlleBilletter();
+        Task<Kunde> HentEn(int id);
         Task<Billett> HentEnBillett(int kundeId);
         Task<List<Destinasjon>> HentAlleDestinasjon();
         IEnumerable HentGyldigDestinasjoner(int destinasjonId);
