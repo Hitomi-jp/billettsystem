@@ -28,6 +28,7 @@ export class KjopBillettComponent implements OnInit {
   visKredittSkjema: boolean = false;
   visRuteUtvalg: boolean = false;
   visLugarUtvalg: boolean = false;
+  visKvittering: boolean = false;
   alleStrekninger: Strekning[];
   fraDestinasjoner: string[]
   gyldigTilDestinasjoner: string[];
@@ -38,10 +39,11 @@ export class KjopBillettComponent implements OnInit {
   billettPris: number = 0;
   billett: Billett = {
     kundeId: null,
+    ruteId: null,
     destinationFrom: "",
     destinationTo: "",
     ticketType: "",
-    lugarType: "Standard",
+    lugarType: "",
     departureDato: "",
     returnDato: "",
     antallAdult: 0,
@@ -191,7 +193,8 @@ export class KjopBillettComponent implements OnInit {
 
   lagreBillett() {
     this._http.post<any>("api/kunde/lagreBillett", this.billett)
-    .subscribe(ruter => {
+    .subscribe(billettId => {
+      this.billett.id = billettId;
       this.lagreKreditt()
     },
       error => {
@@ -200,6 +203,7 @@ export class KjopBillettComponent implements OnInit {
   }
 
   lagreKreditt() {
+    console.log(this.billett)
     this.kreditt.kundeId = this.billett.kundeId;
     this.kreditt.kortnummer = this.kredittSkjema.value.kortnr;
     this.kreditt.kortHolderNavn = this.kredittSkjema.value.kortholdersnavn;
@@ -208,8 +212,9 @@ export class KjopBillettComponent implements OnInit {
 
     this._http.post<any>("api/kunde/lagreKreditt", this.kreditt)
     .subscribe(response => {
+      this.visKvittering = true;
       console.log(response)
-      this.router.navigate(['/kvittering'])
+      // this.router.navigate(['/kvittering'])
   
     },
       error => {
@@ -276,6 +281,8 @@ export class KjopBillettComponent implements OnInit {
     this.billettPris += rute.totalPris;
     
     this.billettPris += this.lugarSkjema.value.lugar === 'Standard' ? this.valgtRute.prisStandardLugar : this.valgtRute.prisPremiumLugar
+
+    this.billett.ruteId = rute.id; 
   }
 
   vedBilettNeste() {

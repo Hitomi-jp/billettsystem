@@ -81,13 +81,14 @@ namespace WebAppExamPart2.DAL
             }
         }
 
-        public async Task<bool> LagreBillett(Billett innBillett)
+        public async Task<int> LagreBillett(Billett innBillett)
         {
             try
             {
                 var nyBillett = new Billett();
                 nyBillett.DestinationFrom = innBillett.DestinationFrom;
                 nyBillett.KundeId = innBillett.KundeId;
+                nyBillett.RuteId = innBillett.RuteId;
                 nyBillett.DestinationTo = innBillett.DestinationTo;
                 nyBillett.TicketType = innBillett.TicketType;
                 nyBillett.LugarType = innBillett.LugarType;
@@ -100,12 +101,12 @@ namespace WebAppExamPart2.DAL
 
                 _kundeDB.Billetter.Add(nyBillett);
                 await _kundeDB.SaveChangesAsync();
-                return true;
+                var billettId = nyBillett.Id;
+                return billettId;
             }
-            catch (Exception e)
+            catch
             {
-                Console.Write(e.Message);
-                return false;
+                return 0;
             }
         }
 
@@ -333,14 +334,15 @@ namespace WebAppExamPart2.DAL
             }
         }
 
-        public async Task<Billett> HentEnBillett(int kundeId) {
+        public async Task<Billett> HentEnBillett(int billettId) {
             try
             {
-                Billett enBillett = await _kundeDB.Billetter.FindAsync(kundeId);
+                Billett enBillett = await _kundeDB.Billetter.FindAsync(billettId);
                 var hentetBillett = new Billett()
                 {
                     Id = enBillett.Id,
                     KundeId = enBillett.KundeId,
+                    RuteId = enBillett.RuteId,
                     DestinationTo = enBillett.DestinationTo,
                     DestinationFrom = enBillett.DestinationFrom,
                     TicketType = enBillett.TicketType,

@@ -16,7 +16,7 @@ namespace WebAppExamPart2.DAL
         Task<bool> Slett(int id);
         Task<bool> SlettAlle();
         Task<bool> LagreKreditt(Kreditt kredittInfo);
-        Task<bool> LagreBillett(Billett billett);
+        Task<int> LagreBillett(Billett billett);
         Task<List<Billett>> HentAlleBilletter();
         Task<Billett> HentEnBillett(int kundeId);
         Task<List<Destinasjon>> HentAlleDestinasjon();

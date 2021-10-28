@@ -1,6 +1,7 @@
 export class Billett {
   id?: number;
   kundeId: number;
+  ruteId: number;
   destinationFrom: string;
   destinationTo: string;
   ticketType: string;

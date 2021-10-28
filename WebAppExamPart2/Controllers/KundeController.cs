@@ -74,14 +74,14 @@ namespace WebAppExamPart2.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Billett>> HentEnBillett(int kundeId)
+        public async Task<ActionResult<Billett>> HentEnBillett(int billettId)
         {
             if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
             {
                 return Unauthorized();
             }
 
-            Billett billett = await _kundeDB.HentEnBillett(kundeId);
+            Billett billett = await _kundeDB.HentEnBillett(billettId);
             if (billett == null)
             {
                 _kundeLog.LogInformation("Kunne ikke finne kunden");
@@ -209,20 +209,20 @@ namespace WebAppExamPart2.Controllers
 
         [HttpPost]
         [Route("lagreBillett")]
-        public async Task<ActionResult> LagreBillett(Billett billett)
+        public async Task<ActionResult<int>> LagreBillett(Billett billett)
         {
             // if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
             // {
             //     return Unauthorized();
             // }
 
-            bool returnOk = await _kundeDB.LagreBillett(billett);
-            if (!returnOk)
+            int billettId = await _kundeDB.LagreBillett(billett);
+            if (billettId == 0)
             {
                 _kundeLog.LogInformation("Kunne ikke lagre Billett");
                 return BadRequest("Kunne ikke lagre Billett");
             }
-            return Ok();
+            return billettId;
         }
 
         /*[HttpPost]   --- should delete at the end, now moved to RuteController.cs

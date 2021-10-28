@@ -12,6 +12,7 @@ namespace WebAppExamPart2.Models
         [Key]
         public int Id { get; set; }
         public int KundeId { get; set; }
+        public int RuteId { get; set; }
         public string DestinationFrom { get; set; }
 
         public string DestinationTo { get; set; }

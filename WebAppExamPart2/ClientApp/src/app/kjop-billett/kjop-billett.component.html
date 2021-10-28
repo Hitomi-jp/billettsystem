@@ -2,7 +2,7 @@
 
 <p *ngIf="laster"><em>Loading...</em></p>
 
-<div class="container">
+<div class="container" *ngIf="!visKvittering">
     <div *ngIf="visBillettSkjema">
         <form [formGroup]="skjema" (ngSubmit)="vedSubmit()">
             <div class="form-group">
@@ -220,3 +220,163 @@
         </form>
     </div>
 </div>
+
+<div class="d-flex justify-content-center row" *ngIf="this.visKvittering">
+    <div class="col-md-8">
+      <div class="p-3 bg-white rounded">
+        <div class="text-right mt-3">
+          <h4 class="text-danger mb-0">Sommerbrett.no</h4><br />
+        </div>
+        <div id="statement"><h2>Takk for du valgte å reise med oss, God tur!</h2></div><br>
+        <div class="row">
+          <div class="col-md-6">
+            <h1 class="text-uppercase">Kvittering</h1>
+            <div class="billed"><span class="font-weight-bold text-uppercase">Navn:</span><span class="ml-1" id="navn">{{kunde.fornavn}} {{kunde.etternavn}}</span></div>
+            <div class="billed"><span class="font-weight-bold text-uppercase">Telefonnr:</span><span class="ml-1" id="telefonnr">{{kunde.telfonnr}}</span></div>
+            <div class="billed"><span class="font-weight-bold text-uppercase">Adress:</span><span class="ml-1" id="adress">{{kunde.adresse}}</span></div>
+            <div class="billed"><span class="font-weight-bold text-uppercase">Billett ID:</span><span class="ml-1" id="billettId">{{billett.id}}</span></div>
+            <div class="billed"><span class="font-weight-bold text-uppercase">Dato:</span><span class="ml-1" id="currentDate">{{getCurrentDateString()}}</span></div>
+          </div>
+        </div>
+        <div class="mt-3">
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Fra</th>
+                  <th></th>
+                  <th></th>
+                  <th>Til</th>
+                  <th>Pris</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td id="fra">{{billett.destinationFrom}}</td>
+                  <th></th>
+                  <th></th>
+                  <td id="til">{{billett.destinationTo}}</td>
+                </tr>
+              </tbody>
+
+              <thead>
+                <tr>
+
+                  <th>Fra Dato</th>
+                  <th></th>
+                  <th></th>
+                  <th>Til Dato</th>
+                  <th></th>
+                </tr>
+
+              </thead>
+              <tbody>
+                <tr>
+                  <td id="datoFra">{{billett.departureDato}}</td>
+                  <th></th>
+                  <th></th>
+                  <td id="datoTil">{{billett.returnDato}}</td>
+                  <td id="returpris"></td>
+                </tr>
+              </tbody>
+
+              <thead>
+                <tr>
+                  <th>Billettype</th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                  <tr>
+                    <td id="billettType">{{billett.ticketType}}</td>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <td id="billiettpris"></td>
+                </tr>
+              </tbody>
+
+              <thead>
+                <tr>
+                  <th>Antall Voksen</th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td id="antallVoksen">{{billett.antallAdult}}</td>
+                  <td></td>
+                  <td></td>
+                  <th></th>
+                  <td id="voksenpris"></td>
+                </tr>
+              </tbody>
+
+              <thead>
+
+                <tr>
+                  <th>Antall Barn</th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td id="antallBarn">{{billett.antallChild}}</td>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <td id="barnpris"></td>
+                </tr>
+              </tbody>
+              <thead>
+                <tr>
+                  <th>Lugar Type</th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td id="billettKlasse">{{billett.lugarType}}</td>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <td id="klassettpris"></td>
+                </tr>
+              </tbody>
+              <thead>
+                <tr>
+                  <th>Totalpris</th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <td id="totallpris" style="font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif">{{billett.pris}}</td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <a href="index.html" id="buttonKvittering" class="btn btn-success">OK</a><br>
+      </div>
+    </div>
+  </div>
