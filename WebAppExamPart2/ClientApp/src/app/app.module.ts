@@ -17,7 +17,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material.module';
 import { RuterComponent } from './ruter/ruter.component';
 import { KjopBillettComponent } from './kjop-billett/kjop-billett.component';
-import { LogoutComponent } from './logout/logout.component';
+import { LogoutComponent } from './logout_will_Delete/logout.component';
 
 @NgModule({
   declarations: [

@@ -20,5 +20,13 @@ export class NavMenuComponent {
     this.isExpanded = !this.isExpanded;
   }
 
+  constructor(private _http: HttpClient, private router: Router) { }
+  LoggUt() {
+    this._http.get<any>("api/rute/loggut")
+      .subscribe(retur => {
+        this.router.navigate(['/login']);
+      });
+  }
+
 }
 

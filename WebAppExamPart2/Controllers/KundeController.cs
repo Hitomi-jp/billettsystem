@@ -225,7 +225,7 @@ namespace WebAppExamPart2.Controllers
             return Ok();
         }
 
-        /*[HttpPost]
+        /*[HttpPost]   --- should delete at the end, now moved to RuteController.cs
         [Route("loggInn")]
         public async Task<ActionResult> LoggInn(Bruker bruker)
         {
@@ -246,7 +246,7 @@ namespace WebAppExamPart2.Controllers
             return BadRequest("Feil i inputvalidering på server");
         }
 
-        [HttpGet]
+        [HttpGet]--- should delete at the end, now moved to RuteController.cs
         [Route("api/kunde/loggut")]
         public void LoggUt()
         {

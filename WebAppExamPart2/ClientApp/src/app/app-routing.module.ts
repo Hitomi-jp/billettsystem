@@ -9,7 +9,7 @@ import { KredittComponent } from './kreditt/kreditt.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { RuterComponent } from './ruter/ruter.component';
 import { KjopBillettComponent } from './kjop-billett/kjop-billett.component';
-import { LogoutComponent } from './logout/logout.component'
+import { LogoutComponent } from './logout_will_Delete/logout.component'
 
 const appRoots: Routes = [
   { path: 'kjop', component: KjopBillettComponent },
