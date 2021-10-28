@@ -78,7 +78,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { Bruker } from "../Bruker";
 import { Router } from "@angular/router";
-import { MaterialModule } from '../material.module'
+import { MaterialModule } from '../material.module';
+import { LoginService } from 'src/login.service';
 
 @NgModule({
   declarations: [
@@ -101,7 +102,7 @@ import { MaterialModule } from '../material.module'
 
 export class LoginComponent {
   formGroup: FormGroup;
-  constructor(private formBuilder: FormBuilder, private _http: HttpClient, private router: Router) { }
+  constructor(private formBuilder: FormBuilder, private _http: HttpClient, private router: Router, private loggInnService: LoginService) { }
 
   ngOnInit() {
     this.createForm();
@@ -143,6 +144,7 @@ export class LoginComponent {
       .subscribe(retur => {
         if (retur) {
           console.log(retur);
+          this.loggInnService.loggeInn();
           this.router.navigate(['/ruter']);
           console.log("Ferdig get-brukren")
         }

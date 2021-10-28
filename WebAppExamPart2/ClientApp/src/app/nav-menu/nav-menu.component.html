@@ -15,9 +15,6 @@
            [ngClass]="{ show: isExpanded }">
         <ul class="navbar-nav flex-grow">
           <li class="nav-item">
-            <a class="nav-link text-dark" routerLink="/login">Logg Inn</a>
-          </li>
-          <li class="nav-item">
             <a class="nav-link text-dark" routerLink="/kjop">Kjop</a>
           </li>
           <li class="nav-item">
@@ -38,9 +35,12 @@
           <li class="nav-item">
             <a class="nav-link text-dark" routerLink="/ruter">Ruter</a>
           </li>
+          <li *ngIf="!loggInService.getIsLoggedIn()" class="nav-item">
+            <a class="nav-link text-dark" routerLink="/login">Logg Inn</a>
+          </li>
         </ul>
       </div>
-      <button mat-flat-button color="primary" (click)=" LoggUt()">Log out</button>
+      <button *ngIf="loggInService.getIsLoggedIn()" mat-flat-button color="primary" (click)=" LoggUt()">Log out</button>
     </div>
   </nav>
 </header>
