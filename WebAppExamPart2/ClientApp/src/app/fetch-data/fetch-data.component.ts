@@ -46,7 +46,7 @@ export class FetchDataComponent {
 
   hentAlleKunder() {
     this.laster = true;
-    this._http.get<Kunde[]>("api/rute/hentAlle")
+    this._http.get<Kunde[]>("api/kunde/HentAlleKunder")
       .subscribe(kundene => {
         this.alleKunder = kundene;
         this.hentAlleBilletter();
@@ -59,7 +59,7 @@ export class FetchDataComponent {
   };
 
   hentAlleBilletter() {
-    this._http.get<Billett[]>("api/rute/hentAlleBilletter")
+    this._http.get<Billett[]>("api/billett/hentAlleBilletter")
       .subscribe(billettene => {
         this.alleBilletter = billettene;
         if (this.alleKunder && this.alleBilletter) {

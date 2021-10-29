@@ -30,9 +30,9 @@ namespace WebAppExamPart2Test
             };
 
             var mock = new Mock<IKundeRepository>();
-            mock.Setup(k => k.Lagre(innKunde)).ReturnsAsync(innKunde.Id);
+            mock.Setup(k => k.LagreKunde(innKunde)).ReturnsAsync(innKunde.Id);
             var kundeController = new KundeController(mock.Object, mockLog.Object);
-            var resultat = await kundeController.Lagre(innKunde);
+            var resultat = await kundeController.LagreKunde(innKunde);
 
             Assert.Equal(innKunde.Id,resultat.Value);
         }

@@ -17,7 +17,7 @@ namespace WebAppExamPart2.DAL
 
         private ILogger<KundeRepository> _kundeLog;
 
-
+   
         public KundeRepository(KundeContext kundeDb, ILogger<KundeRepository> kundeLog)
         {
             _kundeDB = kundeDb;
@@ -25,7 +25,7 @@ namespace WebAppExamPart2.DAL
 
         }
 
-        public async Task<int> Lagre(Kunde innKunde)
+        public async Task<int> LagreKunde(Kunde innKunde)
         {
             try
             {
@@ -60,104 +60,7 @@ namespace WebAppExamPart2.DAL
             }
         }
 
-        public async Task<bool> LagreKreditt(Kreditt kredittInfo) {
-            try
-            {
-              var nyKreditt = new Kreditt();
-              nyKreditt.Kortnummer = kredittInfo.Kortnummer;
-              nyKreditt.KundeId = kredittInfo.KundeId;  
-              nyKreditt.KortHolderNavn = kredittInfo.KortHolderNavn;
-              nyKreditt.KortUtlopsdato = kredittInfo.KortUtlopsdato;
-              nyKreditt.Cvc = kredittInfo.Cvc; 
-
-              _kundeDB.Kreditt.Add(nyKreditt);
-              await _kundeDB.SaveChangesAsync();
-              return true;
-            }
-            catch (Exception e)
-            {
-                Console.Write(e.Message);
-                return false;
-            }
-        }
-
-        public async Task<int> LagreBillett(Billett innBillett)
-        {
-            try
-            {
-                var nyBillett = new Billett();
-                nyBillett.DestinationFrom = innBillett.DestinationFrom;
-                nyBillett.KundeId = innBillett.KundeId;
-                nyBillett.RuteId = innBillett.RuteId;
-                nyBillett.DestinationTo = innBillett.DestinationTo;
-                nyBillett.TicketType = innBillett.TicketType;
-                nyBillett.LugarType = innBillett.LugarType;
-                nyBillett.AntallAdult = innBillett.AntallAdult;
-                nyBillett.AntallChild = innBillett.AntallChild;
-                nyBillett.DepartureDato = innBillett.DepartureDato;
-                nyBillett.ReturnDato = innBillett.ReturnDato;
-                nyBillett.Pris = innBillett.Pris;
-       
-
-                _kundeDB.Billetter.Add(nyBillett);
-                await _kundeDB.SaveChangesAsync();
-                var billettId = nyBillett.Id;
-                return billettId;
-            }
-            catch
-            {
-                return 0;
-            }
-        }
-
-
-
-
-        /*public async Task<List<Kunde>> HentAlle()
-        {
-            try
-            {
-                List<Kunde> alleKundene = await _kundeDB.Kunder.Select(innKunde => new Kunde
-                {
-                    Id = innKunde.Id,
-                    Fornavn = innKunde.Fornavn,
-                    Etternavn = innKunde.Etternavn,
-                    Telfonnr = innKunde.Telfonnr,
-                    Epost = innKunde.Epost,
-                    Adresse = innKunde.Adresse,
-                    Postnr = innKunde.PostSteder.Postnr,
-                    Poststed = innKunde.PostSteder.Poststed
-
-                }).ToListAsync();
-
-                return alleKundene;
-            }
-            catch
-            {
-                return null;
-            }
-        }*/
-
-        public async Task<List<Destinasjon>> HentAlleDestinasjon()
-        {
-            try
-            {
-                List<Destinasjon> alleDestinasjon = await _kundeDB.Destinasjoner.Select(innDestinasjon => new Destinasjon
-                {
-                    Id = innDestinasjon.Id,
-                    Sted = innDestinasjon.Sted,
-
-                }).ToListAsync();
-
-                return alleDestinasjon;
-            }
-            catch
-            {
-                return null;
-            }
-        }
-
-       /* public async Task<bool> Endre(Kunde endreKunde)
+        public async Task<bool> EndreEnKunde(Kunde endreKunde)
         {
             try
             {
@@ -190,64 +93,88 @@ namespace WebAppExamPart2.DAL
             {
                 return false;
             }
-        }*/
-
-        public IEnumerable HentGyldigDestinasjoner(int desintasjonId)
-        {
-            IEnumerable destinasjoner = null;
-            if (desintasjonId == 1)
-            {
-                destinasjoner = _kundeDB.Destinasjoner.Where(d => d.Id > 2 && d.Id < 6);
-            }
-            else if (desintasjonId == 2)
-            {
-                destinasjoner = _kundeDB.Destinasjoner.Where(d => d.Id == 1 || d.Id > 4 && d.Id < 8);
-            }
-            else if (desintasjonId == 3)
-            {
-                destinasjoner = _kundeDB.Destinasjoner.Where(d => d.Id > 0 && d.Id < 3 || d.Id > 7 && d.Id < 9);
-            }
-            else if (desintasjonId == 4)
-            {
-                destinasjoner = _kundeDB.Destinasjoner.Where(d => d.Id > 8 && d.Id <= 11);
-            }
-            else if (desintasjonId == 5)
-            {
-                destinasjoner = _kundeDB.Destinasjoner.Where(d => d.Id > 5 && d.Id < 9);
-            }
-            else if (desintasjonId == 6)
-            {
-                destinasjoner = _kundeDB.Destinasjoner.Where(d => d.Id > 0 && d.Id < 6);
-            }
-            else if (desintasjonId == 7)
-            {
-                destinasjoner = _kundeDB.Destinasjoner.Where(d => d.Id > 4 && d.Id < 7 || d.Id > 0 && d.Id < 3);
-            }
-            else if (desintasjonId == 8)
-            {
-                destinasjoner = _kundeDB.Destinasjoner.Where(d => d.Id > 0 && d.Id < 5 || d.Id > 9 && d.Id <= 11);
-            }
-            else if (desintasjonId == 9)
-            {
-                destinasjoner = _kundeDB.Destinasjoner.Where(d => d.Id > 2 && d.Id < 9);
-            }
-            else if (desintasjonId == 10)
-            {
-                destinasjoner = _kundeDB.Destinasjoner.Where(d => d.Id > 0 && d.Id < 6);
-            }
-            else if (desintasjonId == 11)
-            {
-                destinasjoner = _kundeDB.Destinasjoner.Where(d => d.Id > 2 && d.Id < 9);
-            }
-            else
-            {
-                destinasjoner = _kundeDB.Destinasjoner.Where(d => d.Id < 5);
-            }
-
-            return destinasjoner;
         }
 
-        public async Task<Kunde> HentEn(int id)
+        public async Task<bool> SlettEnKunde(int id)
+        {
+            try
+            {
+                Kunder enKunde = await _kundeDB.Kunder.FindAsync(id);
+                _kundeDB.Kunder.Remove(enKunde);
+                await _kundeDB.SaveChangesAsync();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public async Task<bool> SlettAlleKunder()
+        {
+            try
+            {
+
+                _kundeDB.Kunder.RemoveRange(_kundeDB.Kunder);
+                _kundeDB.PostSteder.RemoveRange(_kundeDB.PostSteder);
+                _kundeDB.Kreditt.RemoveRange(_kundeDB.Kreditt);
+                _kundeDB.Billetter.RemoveRange(_kundeDB.Billetter);
+                await _kundeDB.SaveChangesAsync();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public async Task<bool> LagreKreditt(Kreditt kredittInfo) {
+            try
+            {
+              var nyKreditt = new Kreditt();
+              nyKreditt.Kortnummer = kredittInfo.Kortnummer;
+              nyKreditt.KundeId = kredittInfo.KundeId;  
+              nyKreditt.KortHolderNavn = kredittInfo.KortHolderNavn;
+              nyKreditt.KortUtlopsdato = kredittInfo.KortUtlopsdato;
+              nyKreditt.Cvc = kredittInfo.Cvc; 
+
+              _kundeDB.Kreditt.Add(nyKreditt);
+              await _kundeDB.SaveChangesAsync();
+              return true;
+            }
+            catch (Exception e)
+            {
+                Console.Write(e.Message);
+                return false;
+            }
+        }
+
+        public async Task<List<Kunde>> HentAlleKunder()
+        {
+            try
+            {
+                List<Kunde> alleKundene = await _kundeDB.Kunder.Select(innKunde => new Kunde
+                {
+                    Id = innKunde.Id,
+                    Fornavn = innKunde.Fornavn,
+                    Etternavn = innKunde.Etternavn,
+                    Telfonnr = innKunde.Telfonnr,
+                    Epost = innKunde.Epost,
+                    Adresse = innKunde.Adresse,
+                    Postnr = innKunde.PostSteder.Postnr,
+                    Poststed = innKunde.PostSteder.Poststed
+
+                }).ToListAsync();
+
+                return alleKundene;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public async Task<Kunde> HentEnKunde(int id)
         {
             try
             {
@@ -271,97 +198,7 @@ namespace WebAppExamPart2.DAL
                 return null;
             }
         }
-
-        /*public async Task<bool> Slett(int id)
-        {
-            try
-            {
-                Kunder enKunde = await _kundeDB.Kunder.FindAsync(id);
-                _kundeDB.Kunder.Remove(enKunde);
-                await _kundeDB.SaveChangesAsync();
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }*/
-
-        /*public async Task<bool> SlettAlle()
-        {
-            try
-            {
-           
-                _kundeDB.Kunder.RemoveRange(_kundeDB.Kunder);
-                _kundeDB.PostSteder.RemoveRange(_kundeDB.PostSteder);
-                _kundeDB.Kreditt.RemoveRange(_kundeDB.Kreditt);
-                _kundeDB.Billetter.RemoveRange(_kundeDB.Billetter);
-                await _kundeDB.SaveChangesAsync();
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }*/
-
-        /*public async Task<List<Billett>> HentAlleBilletter()
-        {
-            try
-            {
-                List<Billett> alleBilletter = await _kundeDB.Billetter.Select(innBillett => new Billett
-                {
-                    Id = innBillett.Id,
-                    KundeId = innBillett.KundeId,
-                    DestinationFrom = innBillett.DestinationFrom,
-                    DestinationTo = innBillett.DestinationTo,
-                    TicketType = innBillett.TicketType,
-                    LugarType = innBillett.LugarType,
-                    AntallAdult = innBillett.AntallAdult,
-                    AntallChild = innBillett.AntallChild,
-                    DepartureDato = innBillett.DepartureDato,
-                    ReturnDato = innBillett.ReturnDato,
-                    Pris = innBillett.Pris,
-    
-
-                }).ToListAsync();
-
-                return alleBilletter;
-            }
-            catch
-            {
-                return null;
-            }
-        }*/
-
-        public async Task<Billett> HentEnBillett(int billettId) {
-            try
-            {
-                Billett enBillett = await _kundeDB.Billetter.FindAsync(billettId);
-                var hentetBillett = new Billett()
-                {
-                    Id = enBillett.Id,
-                    KundeId = enBillett.KundeId,
-                    RuteId = enBillett.RuteId,
-                    DestinationTo = enBillett.DestinationTo,
-                    DestinationFrom = enBillett.DestinationFrom,
-                    TicketType = enBillett.TicketType,
-                    LugarType = enBillett.LugarType,
-                    DepartureDato = enBillett.DepartureDato,
-                    ReturnDato = enBillett.ReturnDato,
-                    AntallAdult = enBillett.AntallAdult,
-                    AntallChild = enBillett.AntallChild,
-                    Pris = enBillett.Pris
-
-                };
-                return hentetBillett;
-            }
-            catch
-            {
-                return null;
-            }
-        }
-
+      
         /*public static byte[] LagHash(string passord, byte[] salt)
         {
             return KeyDerivation.Pbkdf2(
@@ -372,34 +209,34 @@ namespace WebAppExamPart2.DAL
                                 numBytesRequested: 32);
         }*/
 
-       /* public static byte[] LagSalt()
-        {
-            var csp = new RNGCryptoServiceProvider();
-            var salt = new byte[24];
-            csp.GetBytes(salt);
-            return salt;
-        }*/
+        /* public static byte[] LagSalt()
+         {
+             var csp = new RNGCryptoServiceProvider();
+             var salt = new byte[24];
+             csp.GetBytes(salt);
+             return salt;
+         }*/
 
-       /* public async Task<bool> LoggInn(Bruker bruker)
-        {
-            try
-            {
-                Brukere funnetBruker = await _kundeDB.Brukere.FirstOrDefaultAsync(b => b.Brukernavn == bruker.Brukernavn);
-                byte[] hash = LagHash(bruker.Passord, funnetBruker.Salt);
-                bool ok = hash.SequenceEqual(funnetBruker.Passord);
-                if (ok)
-                {
-                    return true;
-    
-                }
-                return false;
-               
-            }
-            catch (Exception e)
-            {
-                _kundeLog.LogInformation(e.Message);
-                return false;
-            }
-        }*/
+        /* public async Task<bool> LoggInn(Bruker bruker)
+         {
+             try
+             {
+                 Brukere funnetBruker = await _kundeDB.Brukere.FirstOrDefaultAsync(b => b.Brukernavn == bruker.Brukernavn);
+                 byte[] hash = LagHash(bruker.Passord, funnetBruker.Salt);
+                 bool ok = hash.SequenceEqual(funnetBruker.Passord);
+                 if (ok)
+                 {
+                     return true;
+
+                 }
+                 return false;
+
+             }
+             catch (Exception e)
+             {
+                 _kundeLog.LogInformation(e.Message);
+                 return false;
+             }
+         }*/
     }
 }

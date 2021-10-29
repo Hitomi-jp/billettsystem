@@ -15,19 +15,18 @@ namespace WebAppExamPart2.Controllers
     [Route("api/[Controller]")]
     public class RuteController : ControllerBase
     {
-        private readonly IRuteRepository _kundeDB;
-
+      
         private readonly IRuteRepository _ruteRepo;
 
         private ILogger<RuteController> _ruteLogger;
 
         private const string _loggetInn = "loggetInn";
 
-        public RuteController(IRuteRepository ruteRepo, ILogger<RuteController> ruteLogger, IRuteRepository kundeDB)
+        public RuteController(IRuteRepository ruteRepo, ILogger<RuteController> ruteLogger)
         {
             _ruteRepo = ruteRepo;
             _ruteLogger = ruteLogger;
-            _kundeDB = kundeDB;
+            
         }
 
 
@@ -125,87 +124,7 @@ namespace WebAppExamPart2.Controllers
             return Ok(alleStrekninger);
         }
 
-        [HttpGet]
-        [Route("hentAlle")]
-        public async Task<ActionResult<Kunde>> HentAlle()
-        {
-            if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
-            {
-                return Unauthorized();
-            }
-            List<Kunde> alleKunder = await _kundeDB.HentAlle();
-            return Ok(alleKunder);
-        }
 
-        [HttpGet]
-        [Route("hentAlleBilletter")]
-        public async Task<ActionResult<Billett>> HentAlleBilletter()
-        {
-            if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
-            {
-                return Unauthorized();
-            }
-            List<Billett> alleBilletter = await _kundeDB.HentAlleBilletter();
-            return Ok(alleBilletter);
-        }
-
-
-        [HttpDelete("{id}")]
-        public async Task<ActionResult> Slett(int id)
-        {
-            if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
-            {
-                return Unauthorized();
-            }
-
-            bool returnOk = await _kundeDB.Slett(id);
-            if (!returnOk)
-            {
-                _ruteLogger.LogInformation("Kunne ikke slette kunden");
-                return NotFound("Kunne ikke slette kunden");
-            }
-            return Ok("Kunde ble slettet");
-        }
-
-        [HttpDelete]
-        [Route("slettAlle")]
-        public async Task<ActionResult> SlettAlle()
-        {
-            if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
-            {
-                return Unauthorized();
-            }
-
-            bool returnOk = await _kundeDB.SlettAlle();
-            if (!returnOk)
-            {
-                _ruteLogger.LogInformation("Kunne ikke slette alle");
-                return NotFound("Kunne ikke slette alle");
-            }
-            return Ok("Alle ble slettet");
-        }
-
-        [HttpPut]
-        public async Task<ActionResult> Endre(Kunde endreKunde)
-        {
-            if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
-            {
-                return Unauthorized();
-            }
-
-            if (ModelState.IsValid)
-            {
-                bool returnOk = await _kundeDB.Endre(endreKunde);
-                if (!returnOk)
-                {
-                    _ruteLogger.LogInformation("Kunne ikke endre kunden");
-                    return NotFound("Kunne ikke endre kunden");
-                }
-                return Ok("Kunde ble endret");
-            }
-            _ruteLogger.LogInformation("Feil i inputValidering");
-            return BadRequest("Feil i inputvalidering på server");
-        }
 
         [HttpGet]
         [Route("sjekkAdminLoggetInn")]
@@ -224,7 +143,7 @@ namespace WebAppExamPart2.Controllers
             Console.WriteLine(bruker);
             if (ModelState.IsValid)
             {
-                bool returnOK = await _kundeDB.LoggInn(bruker);
+                bool returnOK = await _ruteRepo.LoggInn(bruker);
                 if (!returnOK)
                 {
                     _ruteLogger.LogInformation("Innloggingen feilet for bruker" + bruker.Brukernavn);

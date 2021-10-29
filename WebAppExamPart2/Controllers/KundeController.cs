@@ -28,7 +28,7 @@ namespace WebAppExamPart2.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<int>> Lagre(Kunde innKunde) //Kunde/Lagre
+        public async Task<ActionResult<int>> LagreKunde(Kunde innKunde) //Kunde/Lagre
         {
             /*  if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
               {
@@ -37,7 +37,7 @@ namespace WebAppExamPart2.Controllers
 
             if (ModelState.IsValid)
             {
-                int kundeId = await _kundeDB.Lagre(innKunde);
+                int kundeId = await _kundeDB.LagreKunde(innKunde);
                 if (kundeId == 0)
                 {
                     _kundeLog.LogInformation("Kunne ikke lagre kunden");
@@ -50,69 +50,8 @@ namespace WebAppExamPart2.Controllers
             return BadRequest("Feil i inputvalidering på server");
         }
 
-        /*[HttpGet]
-        public async Task<ActionResult<Kunde>> HentAlle()
-        {
-            if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
-            {
-                return Unauthorized();
-            }
-            List<Kunde> alleKunder = await _kundeDB.HentAlle();
-            return Ok(alleKunder);
-        }*/
-
-        /*[HttpGet]
-        [Route("hentAlleBilletter")]
-        public async Task<ActionResult<Billett>> HentAlleBilletter()
-        {
-            if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
-            {
-                return Unauthorized();
-            }
-            List<Billett> alleBilletter = await _kundeDB.HentAlleBilletter();
-            return Ok(alleBilletter);
-        }*/
-
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Billett>> HentEnBillett(int billettId)
-        {
-            if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
-            {
-                return Unauthorized();
-            }
-
-            Billett billett = await _kundeDB.HentEnBillett(billettId);
-            if (billett == null)
-            {
-                _kundeLog.LogInformation("Kunne ikke finne kunden");
-                return NotFound("Kunne ikke finne kunden");
-            }
-            return Ok(billett);
-        }
-
-        [HttpGet]
-        [Route("hentAlleDestinasjon")]
-        public async Task<ActionResult<Destinasjon>> HentAlleDestinasjon()
-        {
-            // if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
-            // {
-            //     return Unauthorized();
-            // }
-
-            List<Destinasjon> alleDestinasjon = await _kundeDB.HentAlleDestinasjon();
-            return Ok(alleDestinasjon);
-        }
-
-        [HttpGet]
-        [Route("hentGyldigDestinasjoner")]
-        public IEnumerable HentGyldigDestinasjoner(int destinasjonId)
-        {
-            IEnumerable destinasjoner = _kundeDB.HentGyldigDestinasjoner(destinasjonId);
-            return destinasjoner;
-        }
-
-        /*[HttpPut]
-        public async Task<ActionResult> Endre(Kunde endreKunde)
+        [HttpPut]
+        public async Task<ActionResult> EndreKunde(Kunde endreKunde)
         {
             if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
             {
@@ -121,7 +60,7 @@ namespace WebAppExamPart2.Controllers
 
             if (ModelState.IsValid)
             {
-                bool returnOk = await _kundeDB.Endre(endreKunde);
+                bool returnOk = await _kundeDB.EndreEnKunde(endreKunde);
                 if (!returnOk)
                 {
                     _kundeLog.LogInformation("Kunne ikke endre kunden");
@@ -131,63 +70,43 @@ namespace WebAppExamPart2.Controllers
             }
             _kundeLog.LogInformation("Feil i inputValidering");
             return BadRequest("Feil i inputvalidering på server");
-        }*/
-
-       [HttpGet("{id}")]
-        public async Task<ActionResult> HentEn(int id)
-        {
-            if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
-            {
-                return Unauthorized();
-            }
-
-            if (ModelState.IsValid)
-            {
-                Kunde en = await _kundeDB.HentEn(id);
-                if (en == null)
-                {
-                    _kundeLog.LogInformation("Kunne ikke finne kunden");
-                    return NotFound("Kunne ikke finne kunden");
-                }
-                return Ok(en);
-            }
-            _kundeLog.LogInformation("Feil i inputValidering");
-            return BadRequest("Feil i inputValidering på server");
         }
 
-        /*[HttpDelete("{id}")]
-        public async Task<ActionResult> Slett(int id)
+        [HttpDelete("{kundeId}")]
+        [Route("slettEnKunde")]
+        public async Task<ActionResult> SlettEnKunde(int kundeId)
         {
             if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
             {
                 return Unauthorized();
             }
 
-            bool returnOk = await _kundeDB.Slett(id);
+            bool returnOk = await _kundeDB.SlettEnKunde(kundeId);
             if (!returnOk)
             {
                 _kundeLog.LogInformation("Kunne ikke slette kunden");
                 return NotFound("Kunne ikke slette kunden");
             }
             return Ok("Kunde ble slettet");
-        }*/
+        }
 
-        /*[HttpDelete]
-        public async Task<ActionResult> SlettAlle()
+        [HttpDelete]
+        [Route("slettAlle")]
+        public async Task<ActionResult> SlettAlleKunder()
         {
             if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
             {
                 return Unauthorized();
             }
 
-            bool returnOk = await _kundeDB.SlettAlle();
+            bool returnOk = await _kundeDB.SlettAlleKunder();
             if (!returnOk)
             {
                 _kundeLog.LogInformation("Kunne ikke slette alle");
                 return NotFound("Kunne ikke slette alle");
             }
             return Ok("Alle ble slettet");
-        }*/
+        }
 
         [HttpPost]
         [Route("lagreKreditt")]
@@ -207,24 +126,41 @@ namespace WebAppExamPart2.Controllers
             return Ok();
         }
 
-        [HttpPost]
-        [Route("lagreBillett")]
-        public async Task<ActionResult<int>> LagreBillett(Billett billett)
+        [HttpGet]
+        [Route("HentAlleKunder")]
+        public async Task<ActionResult<Kunde>> HentAlleKunder()
         {
-            // if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
-            // {
-            //     return Unauthorized();
-            // }
-
-            int billettId = await _kundeDB.LagreBillett(billett);
-            if (billettId == 0)
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
             {
-                _kundeLog.LogInformation("Kunne ikke lagre Billett");
-                return BadRequest("Kunne ikke lagre Billett");
+                return Unauthorized();
             }
-            return billettId;
+            List<Kunde> alleKunder = await _kundeDB.HentAlleKunder();
+            return Ok(alleKunder);
         }
 
+        [HttpGet("{kundeId}")]
+        public async Task<ActionResult> HentEnKunde(int kundeId)
+        {
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
+            {
+                return Unauthorized();
+            }
+
+            if (ModelState.IsValid)
+            {
+                Kunde en = await _kundeDB.HentEnKunde(kundeId);
+                if (en == null)
+                {
+                    _kundeLog.LogInformation("Kunne ikke finne kunden");
+                    return NotFound("Kunne ikke finne kunden");
+                }
+                return Ok(en);
+            }
+            _kundeLog.LogInformation("Feil i inputValidering");
+            return BadRequest("Feil i inputValidering på server");
+        }
+
+    
         /*[HttpPost]   --- should delete at the end, now moved to RuteController.cs
         [Route("loggInn")]
         public async Task<ActionResult> LoggInn(Bruker bruker)

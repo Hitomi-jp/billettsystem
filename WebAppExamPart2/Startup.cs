@@ -29,6 +29,7 @@ namespace WebAppExamPart2
 
             services.AddScoped<IKundeRepository, KundeRepository>();
             services.AddScoped<IRuteRepository, RuteRepository>();
+            services.AddScoped<IBillettRepository, BillettRepository>();
 
             //For settion
             services.AddSession(options =>
