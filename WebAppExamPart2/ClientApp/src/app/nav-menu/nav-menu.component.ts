@@ -22,7 +22,7 @@ export class NavMenuComponent {
 
   constructor(private _http: HttpClient, private router: Router, private loggInService: LoginService) { }
   LoggUt() {
-    this._http.get<any>("api/rute/loggut")
+    this._http.get<any>("api/loginout/loggut")
       .subscribe(retur => {
         this.loggInService.loggeUt();
         this.router.navigate(['/login']);

@@ -136,34 +136,6 @@ namespace WebAppExamPart2.Controllers
             return true;
         }
 
-        [HttpPost]
-        [Route("loggInn")]
-        public async Task<ActionResult> LoggInn(Bruker bruker)
-        {
-            Console.WriteLine(bruker);
-            if (ModelState.IsValid)
-            {
-                bool returnOK = await _ruteRepo.LoggInn(bruker);
-                if (!returnOK)
-                {
-                    _ruteLogger.LogInformation("Innloggingen feilet for bruker" + bruker.Brukernavn);
-                    HttpContext.Session.SetString(_loggetInn, "");
-                    return Ok(false);
-                }
-                HttpContext.Session.SetString(_loggetInn, "LoggetInn");
-                return Ok(true);
-            }
-            _ruteLogger.LogInformation("Feil i inputvalidering");
-            return BadRequest("Feil i inputvalidering på server");
-        }
-
-        [HttpGet]
-        [Route("loggut")]
-        public bool LoggUt()
-        {
-            HttpContext.Session.SetString(_loggetInn, "");
-            return true;
-
-        }
+       
     }
 }

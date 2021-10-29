@@ -140,7 +140,7 @@ export class LoginComponent {
     const bruker = new Bruker();
     bruker.brukernavn = this.formGroup.value.brukernavn;
     bruker.passord = this.formGroup.value.passord;
-    this._http.post<boolean>("api/rute/loggInn", bruker)
+    this._http.post<boolean>("api/loginout/loggInn", bruker)
       .subscribe(retur => {
         if (retur) {
           console.log(retur);

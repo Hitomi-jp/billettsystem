@@ -14,13 +14,8 @@ namespace WebAppExamPart2.DAL
         Task<bool> EndreRute(Rute rute);
         Task<bool> SlettEnRute(int ruteId);
         Task<List<Strekning>> HentAlleStrekninger();
-        Task<List<Kunde>> HentAlle();
-        Task<List<Billett>> HentAlleBilletter();
-        Task<bool> Slett(int id);
-        Task<bool> SlettAlle();
-        Task<bool> Endre(Kunde endreKunde);
         Task<bool> SlettEnStrekning (string strekningId);
-        Task<bool> LoggInn(Bruker bruker);
+   
 
     }
 }
