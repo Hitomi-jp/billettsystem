@@ -66,7 +66,7 @@ namespace WebAppExamPart2.Controllers
                     _kundeLog.LogInformation("Kunne ikke endre kunden");
                     return NotFound("Kunne ikke endre kunden");
                 }
-                return Ok("Kunde ble endret");
+                return Ok();
             }
             _kundeLog.LogInformation("Feil i inputValidering");
             return BadRequest("Feil i inputvalidering på server");
@@ -138,7 +138,8 @@ namespace WebAppExamPart2.Controllers
             return Ok(alleKunder);
         }
 
-        [HttpGet("{kundeId}")]
+        [HttpGet]
+        [Route("hentEnKunde")]
         public async Task<ActionResult> HentEnKunde(int kundeId)
         {
             if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))

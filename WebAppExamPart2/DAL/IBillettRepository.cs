@@ -13,6 +13,8 @@ namespace WebAppExamPart2.DAL
         //Task<bool> EndreEnBillett(Billett endreBillett);
         Task<List<Billett>> HentAlleBilletter();
         Task<Billett> HentEnBillett(int kundeId);
+
+        Task<bool> EndreBillett(Billett endreBillett);
         Task<List<Destinasjon>> HentAlleDestinasjon();
         IEnumerable HentGyldigDestinasjoner(int destinasjonId);
     }

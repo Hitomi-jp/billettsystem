@@ -34,8 +34,8 @@ namespace WebAppExamPart2.DAL
             var destinasjon10 = new Destinasjon { Id = 10, Sted = "Ålesund" };
             var destinasjon11 = new Destinasjon { Id = 11, Sted = "Lofoten" };
 
-            var ticket1 = new Billett { KundeId=1,DestinationFrom = "Oslo", DestinationTo = "Bergen", TicketType = "En vei", LugarType = "Standard", AntallAdult = 2, AntallChild = 0, DepartureDato = "2021-11-23", ReturnDato ="", Pris = 1200 };
-            var ticket2 = new Billett { KundeId = 2, DestinationFrom = "Stavanger", DestinationTo = "Danmark", TicketType = "Retur", LugarType = "Premium", AntallAdult = 1, AntallChild = 1, DepartureDato = "2021-12-24", ReturnDato ="2023-01-03", Pris = 1400};
+            var ticket1 = new Billett { KundeId=1, RuteId=1,DestinationFrom = "Oslo", DestinationTo = "Kiel", TicketType = "En vei", LugarType = "Standard", AntallAdult = 2, AntallChild = 0, DepartureDato = "2021-11-23", ReturnDato ="", Pris = 1200 };
+            var ticket2 = new Billett { KundeId = 2, RuteId=1, DestinationFrom = "Oslo", DestinationTo = "Kiel", TicketType = "Retur", LugarType = "Premium", AntallAdult = 1, AntallChild = 1, DepartureDato = "2021-12-24", ReturnDato ="2023-01-03", Pris = 1400};
 
             var kunde1 = new Kunder { Id = 1, Fornavn = "Tor", Etternavn = "Nordman", Telfonnr = "004745142581", Epost = "xxx@oslomet.no", Adresse = "Pilestredet 35", PostSteder = poststed1, Billetter = ticket1};
             var kunde2 = new Kunder { Id = 2, Fornavn = "Morten", Etternavn = "Nordman", Telfonnr = "004745145218", Epost = "zzz@oslomet.no", Adresse = "Pilestredet 32", PostSteder = poststed2, Billetter = ticket2};
@@ -71,7 +71,9 @@ namespace WebAppExamPart2.DAL
             context.Destinasjoner.Add(destinasjon11);
 
             var strekning = new Strekning { StrekningId = "Oslo-Kiel", Fra = "Oslo", Til = "Kiel" };
+            var strekning2 = new Strekning { StrekningId = "Oslo-Danmark", Fra = "Oslo", Til = "Danmark" };
             context.Strekninger.Add(strekning);
+            context.Strekninger.Add(strekning2);
             
             var rute = new Rute();
             rute.BoatNavn = "ColorMagic";
@@ -86,7 +88,23 @@ namespace WebAppExamPart2.DAL
             rute.Avgang = "14:00";
             rute.AntallDagerEnVei = 1;
             rute.AntallDagerToVei = 2;
+
+            var rute2 = new Rute();
+            rute2.BoatNavn = "Color Fantasy";
+            rute2.Id = 2;
+            rute2.RuteFra = "Oslo";
+            rute2.RuteTil = "Danmark";
+            rute2.PrisEnvei = 500;
+            rute2.PrisToVei = 1000;
+            rute2.PrisRabattBarn = "20";
+            rute2.PrisStandardLugar = 200;
+            rute2.PrisPremiumLugar = 300;
+            rute2.Avgang = "14:00";
+            rute2.AntallDagerEnVei = 1;
+            rute2.AntallDagerToVei = 2;
+
             context.Ruter.Add(rute);
+            context.Ruter.Add(rute2);
 
             context.SaveChanges();
         }

@@ -37,3 +37,6 @@
     left: -10%;
 }
 
+.selectedRute {
+    outline: 1px solid blue;
+}

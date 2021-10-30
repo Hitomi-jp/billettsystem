@@ -51,32 +51,22 @@ namespace WebAppExamPart2.DAL
                 return 0;
             }
         }
-        /*public sync Task<bool> EndreEnBillett(Billett endreBillett)
+        public async Task<bool> EndreBillett(Billett endreBillett)
         {
             try
             {
-                Kunder enBillett = await _kundeDB.Billetter.FindAsync(endreBillett.Id);
-                if (enBillett.PostSteder.Postnr != endreBillett.Postnr)
-                {
-                    var sjekkPoststed = _kundeDB.PostSteder.Find(endreBillett.Postnr);
-                    if (sjekkPoststed == null)
-                    {
-                        var nyPoststedsRad = new PostSteder();
-                        nyPoststedsRad.Postnr = endreBillett.Postnr;
-                        nyPoststedsRad.Poststed = endreBillett.Poststed;
-                        enBillett.PostSteder = nyPoststedsRad;
-                    }
-                    else
-                    {
-                        enBillett.PostSteder.Postnr = endreBillett.Postnr;
-                    }
-                }
-                enBillett.Fornavn = endreBillett.Fornavn;
-                enKuenBillettnde.Etternavn = endreBillett.Etternavn;
-                enBillett.Telfonnr = endreBillett.Telfonnr;
-                enBillett.Epost = endreBillett.Epost;
-                enBillett.Adresse = endreBillett.Adresse;
-
+                Billett enBillett = await _kundeDB.Billetter.FindAsync(endreBillett.Id);
+                enBillett.RuteId = endreBillett.RuteId;
+                enBillett.DestinationFrom = endreBillett.DestinationFrom;
+                enBillett.DestinationTo = endreBillett.DestinationTo;
+                enBillett.TicketType = endreBillett.TicketType;
+                enBillett.LugarType = endreBillett.LugarType;
+                enBillett.DepartureDato = endreBillett.DepartureDato;
+                enBillett.ReturnDato = endreBillett.ReturnDato;
+                enBillett.AntallAdult = endreBillett.AntallAdult;
+                enBillett.AntallChild = endreBillett.AntallChild;
+                enBillett.Pris = endreBillett.Pris;
+                
                 await _kundeDB.SaveChangesAsync();
                 return true;
             }
@@ -84,7 +74,7 @@ namespace WebAppExamPart2.DAL
             {
                 return false;
             }
-        }*/
+        }
 
         public async Task<List<Billett>> HentAlleBilletter()
         {
@@ -94,6 +84,7 @@ namespace WebAppExamPart2.DAL
                 {
                     Id = innBillett.Id,
                     KundeId = innBillett.KundeId,
+                    RuteId = innBillett.RuteId,
                     DestinationFrom = innBillett.DestinationFrom,
                     DestinationTo = innBillett.DestinationTo,
                     TicketType = innBillett.TicketType,

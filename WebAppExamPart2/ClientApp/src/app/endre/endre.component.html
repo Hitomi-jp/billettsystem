@@ -1,147 +1,161 @@
-<body id="lagreBody">
-  <div class="formContainer" id="kjopBillettForm">
-    <div class="col-md-12">
-      <form [formGroup]="skjema" (ngSubmit)="vedSubmit()">
-        <div class="formContainer">
-          <h2>Endre Billett</h2>
-          <div class="reisemalTitle">
-            <span>Reisemål</span>
-          </div>
-          <div class="destinationGroup">
-            <div class="inputBox">
-              <label for="reiseMalFra"> Fra:</label>
-              <select id="reiseMalFra" (change)="onFraDestinasjonChange($event)">
-                <option value="disabled" selected disabled>Hvor vil du reise fra</option>
-                <option *ngFor="let destinasjon of destinasjoner" value="{{destinasjon.id}}">{{destinasjon.sted}}</option>
-              </select>
-            </div>
-            <div class="inputBox">
-              <label for="reiseMalTil"> Til:</label>
-              <select id="reiseMalTil">
-                <option *ngFor="let destinasjon of gyldigDestinasjoner" value="{{destinasjon.sted}}">{{destinasjon.sted}}</option>
-              </select>
-            </div>
-          </div>
+<h1 id="tableLabel">Kjop</h1>
 
-          <div class="destinationGroup">
-            <div class="inputBox">
-              <label>Antall voksen</label>
-              <input type=number class="form-control" formControlantallVoksen="antallVoksen" min="1" value="1" />
-            </div>
-            <div class="inputBox">
-              <label>Antall barn</label>
-              <input type=number class="form-control" formControlantallBarn="antallBarn" min="0" value="0" />
-            </div>
-          </div>
+<p *ngIf="laster"><em>Loading...</em></p>
 
-          <div class="destinationGroup">
-            <div class="inputBox">
-              <label>Billettype</label>
-              <div>
-                <input type="radio" id="single" value="En vei" name="turType" checked="checked" />
+<div class="container">
+    <div *ngIf="visBillettSkjema">
+        <form [formGroup]="skjema" (ngSubmit)="vedSubmit()">
+            <div class="form-group">
+                <label for="reiseMalFra">Fra</label>
+                <select id="reiseMalFra" formControlName="reiseMalFra" (change)="vedFraChange()">
+                    <option value="disabled" selected disabled >Hvor vil du reise fra</option>
+                    <option *ngFor="let strekning of fraDestinasjoner" value="{{strekning}}">{{strekning}}</option>
+                  </select>
+                <p class="alert alert-warning" [hidden]="skjema.controls.reiseMalFra.valid || (skjema.controls.reiseMalFra.pristine && !submitted)">
+                    Destinasjon er obligatorisk.
+                </p>
+                <label for="reiseMalTil">Til</label>
+                <select id="reiseMalTil" formControlName="reiseMalTil" (change)="vedTilChange()">
+                    <option *ngFor="let destinasjon of gyldigTilDestinasjoner; index as i" [selected]="i === 0" value="{{destinasjon}}">{{destinasjon}}</option>
+                  </select>
+                <p class="alert alert-warning" [hidden]="skjema.controls.reiseMalFra.valid || (skjema.controls.reiseMalFra.pristine && !submitted)">
+                    Destinasjon er obligatorisk.
+                </p>
+            </div>
+            <div class="formGroup">
+                <label>Når vil du reise</label>
+                <input type="date" value="{{dagsDato}}" min="{{dagsDato}}" formControlName="reiseDato" (change)="hideRuteOgLugarUtvalg()" />
+            </div>
+
+            <div class="form-group">
+                <div>
+                    <label>Antall voksen</label>
+                    <input type="number" min="1"  formControlName="antallVoksen" (change)="hideRuteOgLugarUtvalg()"/>
+                </div>
+                <div>
+                    <label>Antall barn</label>
+                    <input type="number" min="0"  formControlName="antallBarn" (change)="hideRuteOgLugarUtvalg()"/>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <input type="radio" id="single" value="En vei"  checked="checked" formControlName="billettType" (change)="vedBillettTypeChange()"/>
                 <label for="single">En vei </label>
-                <input type="radio" id="turRetur" value="Retur" name="turType" />
-                <label for="turRetur">Retur</label>
-              </div>
+                <input type="radio" id="turRetur" value="Retur"  formControlName="billettType" (change)="vedBillettTypeChange()"/>
+                <label for="turRetur">Tur-Retur</label>
             </div>
 
-            <div class="inputBox">
-              <label>Klasset</label>
-              <div>
-                <input type="radio" id="economy" value="Economy" name="klasset" checked="checked" />
-                <label for="economy">Economy</label>
-                <input type="radio" id="business" value="Business" name="klasset" />
-                <label for="business">Business</label>
-                <input type="radio" id="first_Class" value="Førsteklasse" name="klasset" />
-                <label for="first_Class">Førsteklasse</label>
-              </div>
-            </div>
-          </div>
-
-
-          <div class="destinationGroup">
-            <div class="inputBox">
-              <label>Avgang dato</label>
-              <input type="date" class="form-control" formControlavgangDato="avgangDato" />
-            </div>
-            <div class="inputBox">
-              <label>Retur dato</label>
-              <input type="date" class="form-control" formControlreturDato="returDato" />
-            </div>
-          </div>
-
-          <div class="destinationGroup">
-            <div class="inputBox">
-              <label>Fornavn</label>
-              <input class="form-control" formControlName="fornavn" />
-              <p class="alert alert-warning" [hidden]="skjema.controls.fornavn.valid || (skjema.controls.fornavn.pristine && !submitted)">
-                Fornavn er obligatorisk.
-              </p>
-            </div>
-            <div class="inputBox">
-              <label>Etternavn</label>
-              <input class="form-control" formControlEtterName="etternavn" />
-              <p class="alert alert-warning" [hidden]="skjema.controls.etternavn.valid || (skjema.controls.etternavn.pristine && !submitted)">
-                Etternavn er obligatorisk.
-              </p>
-            </div>
-          </div>
-
-          <div class="destinationGroup">
-            <div class="inputBox">
-              <label>Telefonnr</label>
-              <input class="form-control" formControlTelefonnr="Telefonnr" />
-              <p class="alert alert-warning" [hidden]="skjema.controls.Telefonnr.valid || (skjema.controls.Telefonnr.pristine && !submitted)">
-                Telefonnr er obligatorisk.
-              </p>
-            </div>
-            <div class="inputBox">
-              <label>E-post</label>
-              <input class="form-control" formControlEpost="epost" />
-              <p class="alert alert-warning" [hidden]="skjema.controls.epost.valid || (skjema.controls.epost.pristine && !submitted)">
-                E-post er obligatorisk.
-              </p>
-            </div>
-          </div>
-
-          <div class="destinationGroup">
-            <div class="inputBox">
-              <label>Adresse</label>
-              <input class="form-control" formControlTelefonnr="adresse" />
-              <p class="alert alert-warning" [hidden]="skjema.controls.adresse.valid || (skjema.controls.adresse.pristine && !submitted)">
-                Adresse er obligatorisk.
-              </p>
-            </div>
-            <div class="inputBox">
-              <label>Poststed</label>
-              <input class="form-control" formControlPoststed="poststed" />
-              <p class="alert alert-warning" [hidden]="skjema.controls.poststed.valid || (skjema.controls.poststed.pristine && !submitted)">
-                Poststed er obligatorisk.
-              </p>
-            </div>
-          </div>
-
-          <div class="destinationGroup">
-            <div class="inputBox">
-              <label>Postnr</label>
-              <input class="form-control" formControlPostnr="postnr" />
-              <p class="alert alert-warning" [hidden]="skjema.controls.postnr.valid || (skjema.controls.postnr.pristine && !submitted)">
-                Postnr er obligatorisk.
-              </p>
-            </div>
-            <div class="inputBox">
-
-            </div>
-          </div>
-
-          <div class="buttons">
-            <input type="button" id="reg" value="Endre Billett" class="btn btn-primary" onclick="valideringOgLagreKunde()" />
-            <a href="index.html" id="avbryt" class="btn btn-primary">Avbryt</a>
-          </div>
-
-        </div>
-
-      </form>
+            <!-- <p [hidden]="!skjema.valid" (click)="vedSokClick()">Søk</p> -->
+ 
+            
+            <!-- <div class="form-group">
+                <button type="submit" *ngIf="visFormLagre" [disabled]="!skjema.valid" class="btn btn-primary">Registrer</button>
+                <button type="submit" *ngIf="!visFormLagre" [disabled]="!skjema.valid" class="btn btn-primary">Endre</button>
+                <button class="btn btn-default" (click)="tilbakeTilListe()">Tilbake</button>
+            </div> -->
+        </form>
     </div>
-  </div>
-</body>
+            
+    <div *ngIf="visRuteUtvalg" id="funnetRuterContainer">
+        <p>Velg Båt</p>
+        <div id="funnetRuter">
+            <div *ngFor="let funnetRute of funnetRuter" class="{{funnetRute.id === billett.ruteId? 'selectedRute' : ''}} ruteChoice" (click)="vedFunnetRuteClick(funnetRute)">
+                <p>{{funnetRute.boatNavn}}</p>
+                <p>Pris: {{funnetRute.totalPris}}</p>
+                <p>Avgang: {{billett.departureDato}} kl: {{funnetRute.avgang}}</p>
+                <p>Ankomst: {{billett.returnDato}} kl: {{funnetRute.avgang}}</p>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="visLugarUtvalg">
+        <form [formGroup]="lugarSkjema">
+            <p>Lugar</p>
+            <div class="form-group">
+                <input type="radio" id="standard" value="Standard"  checked="checked" formControlName="lugar" (change)="oppdaterPrisMedLugar()"/>
+                <label for="standard">Standard {{valgtRute.prisStandardLugar}}kr</label>
+                <input type="radio" id="premium" value="Premium"  formControlName="lugar" (change)="oppdaterPrisMedLugar()"/>
+                <label for="premium">Premium {{valgtRute.prisPremiumLugar}}kr</label>
+            </div>
+        </form>
+        <p>Total Pris: {{billettPris}}</p>
+        <!-- <p (click)="vedBilettNeste()">Neste</p> -->
+    </div>
+    
+    <div *ngIf="visKundeSkjema">
+        <form [formGroup]="kundeSkjema">
+            <div class="destinationGroup">
+                <div class="inputBox">
+                  <label>Fornavn</label>
+                  <input class="form-control" formControlName="fornavn" required/>
+                  <span class="requiredStar" *ngIf="kundeSkjema.get('fornavn').hasError('required')">*</span>
+                  <p class="alert alert-warning" *ngIf="kundeSkjema.get('fornavn').hasError('pattern')">
+                      Mellom 2-40 bokstaver
+                  </p>
+                </div>
+                <div class="inputBox">
+                  <label>Etternavn</label>
+                  <input class="form-control" formControlName="etternavn" required/>
+                  <span class="requiredStar" *ngIf="kundeSkjema.get('etternavn').hasError('required')">*</span>
+                  <p class="alert alert-warning" *ngIf="kundeSkjema.get('etternavn').hasError('pattern')">
+                      Mellom 2-40 bokstaver
+                  </p>
+                </div>
+              </div>
+ 
+              <div class="destinationGroup">
+                <div class="inputBox">
+                  <label>Telefonnr</label>
+                  <input class="form-control" formControlName="telefonnr" required/>
+                  <span class="requiredStar" *ngIf="kundeSkjema.get('telefonnr').hasError('required')">*</span>
+                  <p class="alert alert-warning" *ngIf="kundeSkjema.get('telefonnr').hasError('pattern')">
+                      Ugyldig telefonnr eks. 934829238
+                  </p>
+                </div>
+                <div class="inputBox">
+                  <label>E-post</label>
+                  <input class="form-control" formControlName="epost" required />
+                  <span class="requiredStar" *ngIf="kundeSkjema.get('epost').hasError('required')">*</span>
+                  <p class="alert alert-warning" *ngIf="kundeSkjema.get('epost').hasError('pattern')">
+                      Ugyldig epos eks. test@oslomet.no
+                  </p>
+                </div>
+              </div>
+ 
+              <div class="destinationGroup">
+                <div class="inputBox">
+                  <label>Adresse</label>
+                  <input class="form-control" formControlName="adresse" required />
+                  <span class="requiredStar" *ngIf="kundeSkjema.get('adresse').hasError('required')">*</span>
+                  <p class="alert alert-warning" *ngIf="kundeSkjema.get('adresse').hasError('pattern')">
+                      Ugyldig karakter
+                  </p>
+                </div>
+                <div class="inputBox">
+                  <label>Poststed</label>
+                  <input class="form-control" formControlName="poststed" required/>
+                  <span class="requiredStar" *ngIf="kundeSkjema.get('poststed').hasError('required')">*</span>
+                  <p class="alert alert-warning" *ngIf="kundeSkjema.get('poststed').hasError('pattern')">
+                      Mellom 2-40 bokstaver
+                  </p>
+                </div>
+              </div>
+ 
+              <div class="destinationGroup">
+                <div class="inputBox">
+                  <label>Postnr</label>
+                  <input class="form-control" formControlName="postnr" required/>
+                  <span class="requiredStar" *ngIf="kundeSkjema.get('postnr').hasError('required')">*</span>
+                  <p class="alert alert-warning" *ngIf="kundeSkjema.get('postnr').hasError('pattern')">
+                      4 siffer
+                </div>
+                <div class="inputBox">
+ 
+                </div>
+              </div>
+              <div class="form-group">
+                  <button class="btn btn-primary" [disabled]="!kundeSkjema.valid || !skjema.valid || valgtRute === null" (click)="vedEndre()">Endre</button>
+                  <button class="btn btn-default" (click)="vedEndreTilbake()">Tilbake</button>
+              </div>
+        </form>
+</div>
