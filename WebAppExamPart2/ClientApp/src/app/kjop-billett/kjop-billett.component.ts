@@ -192,7 +192,7 @@ export class KjopBillettComponent implements OnInit {
   }
 
   lagreBillett() {
-    this._http.post<any>("api/kunde/lagreBillett", this.billett)
+    this._http.post<any>("api/billett/lagreBillett", this.billett)
     .subscribe(billettId => {
       this.billett.id = billettId;
       this.lagreKreditt()

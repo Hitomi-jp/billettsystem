@@ -13,7 +13,7 @@ import { LogoutComponent } from './logout_will_Delete/logout.component'
 
 const appRoots: Routes = [
   { path: 'kjop', component: KjopBillettComponent },
-  { path: 'endre', component: EndreComponent },
+  { path: 'endre/:id', component: EndreComponent },
   { path: 'home', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'billett', component: FetchDataComponent },

@@ -45,6 +45,26 @@ namespace WebAppExamPart2.Controllers
             return billettId;
         }
 
+        [HttpPut]
+        public async Task<ActionResult> EndreBillett(Billett endreBillett) {
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
+            {
+                return Unauthorized();
+            }
+            if (ModelState.IsValid)
+            {
+                bool returnOk = await _kundeDB.EndreBillett(endreBillett);
+                if (!returnOk)
+                {
+                    _kundeLog.LogInformation("Kunne ikke endre billett");
+                    return NotFound("Kunne ikke endre billett");
+                }
+                return Ok();
+            }
+            _kundeLog.LogInformation("Feil i inputValidering");
+            return BadRequest("Feil i inputvalidering på server");
+        }
+
         [HttpGet]
         [Route("hentAlleBilletter")]
         public async Task<ActionResult<Billett>> HentAlleBilletter()
@@ -58,7 +78,8 @@ namespace WebAppExamPart2.Controllers
         }
 
 
-        [HttpGet("{billettId}")]
+        [HttpGet]
+        [Route("hentEnBillett")]
         public async Task<ActionResult<Billett>> HentEnBillett(int billettId)
         {
             if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))

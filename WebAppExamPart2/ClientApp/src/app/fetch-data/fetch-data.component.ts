@@ -62,6 +62,7 @@ export class FetchDataComponent {
     this._http.get<Billett[]>("api/billett/hentAlleBilletter")
       .subscribe(billettene => {
         this.alleBilletter = billettene;
+        console.log(billettene)
         if (this.alleKunder && this.alleBilletter) {
           this.joinKundeOgBillett()
         }
