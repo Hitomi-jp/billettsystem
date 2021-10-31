@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
+using System.Net;
 
 namespace WebAppExamPart2Test
 {
@@ -39,6 +40,7 @@ namespace WebAppExamPart2Test
             var resultat = await kundeController.LagreKunde(innKunde);
 
             Assert.Equal(innKunde.Id,resultat.Value);
+        
         }
 
 
@@ -57,10 +59,13 @@ namespace WebAppExamPart2Test
                 Poststed = "Oslo"
             };
 
-            mockKundeRepo.Setup(k => k.LagreKunde(innKunde)).ReturnsAsync(0);
+            mockKundeRepo.Setup(k => k.LagreKunde(innKunde));
             var kundeController = new KundeController(mockKundeRepo.Object, mockLog.Object);
+            
             var resultat = await kundeController.LagreKunde(innKunde);
-            Assert.Equal(400, (resultat.Result as ObjectResult)?.StatusCode);
+            
+            Assert.Equal((int)HttpStatusCode.BadRequest, (resultat.Result as ObjectResult)?.StatusCode);
+           // Assert.Equal("Kunne ikke lagre kunden", (resultat.Result as ObjectResult)?.ToString());
 
         }
     }

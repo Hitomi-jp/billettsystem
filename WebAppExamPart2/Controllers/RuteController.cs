@@ -31,7 +31,7 @@ namespace WebAppExamPart2.Controllers
 
 
         [HttpPost]
-        public async Task<ActionResult> LagreRute(Rute innRute)
+        public async Task<ActionResult<bool>> LagreRute(Rute innRute)
         {
             if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn))) {
                 return Unauthorized("Ikke logget inn");

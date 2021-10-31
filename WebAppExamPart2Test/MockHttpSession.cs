@@ -22,6 +22,7 @@ namespace WebAppExamPart2Test
         void ISession.Set(string key, byte[] value)
         {
             sessionStorage[key] = value;
+            
         }
 
         bool ISession.TryGetValue(string key, out byte[] value)
