@@ -29,5 +29,9 @@ export class NavMenuComponent {
       });
   }
 
+  ngOnInit() {
+    this.loggInService.sjekkIsLoggetInn()
+  }
+
 }
 
