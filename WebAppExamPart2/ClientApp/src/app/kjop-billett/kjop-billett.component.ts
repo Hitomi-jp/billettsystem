@@ -99,7 +99,7 @@ export class KjopBillettComponent implements OnInit {
       "",  Validators.pattern("[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{2,7}$")
     ],
     epost: [
-      "", Validators.pattern("[A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]{1,}\.[A-Za-z0-9]{1,}$")
+      "", Validators.pattern(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)
     ],
     adresse: [
       null, Validators.pattern("[a-zA-ZæøåÆØÅ.\-]+[a-zA-ZæøåÆØÅ0-9\ \_.]*[0-9]*")
@@ -127,9 +127,10 @@ export class KjopBillettComponent implements OnInit {
     ],
     utlopsMaaned: [
       null, Validators.pattern("[0-9]{2}")
-    ],
+    ]
 
   }
+
 
   constructor(private _http: HttpClient, private router: Router, private fb: FormBuilder) {
     this.skjema = fb.group(this.validering);

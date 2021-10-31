@@ -31,10 +31,10 @@ namespace WebAppExamPart2.Controllers
 
 
         [HttpPost]
-        public async Task<ActionResult<bool>> LagreRute(Rute innRute)
+        public async Task<ActionResult> LagreRute(Rute innRute)
         {
             if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn))) {
-                return Unauthorized();
+                return Unauthorized("Ikke logget inn");
             }
             if (ModelState.IsValid)
             {
@@ -44,7 +44,7 @@ namespace WebAppExamPart2.Controllers
                     _ruteLogger.LogInformation("Kunne ikke lagre rute");
                     return BadRequest("Kunnde ikke lagre rute");
                 }
-                return Ok();
+                return Ok("Lagret rute");
             }
             _ruteLogger.LogInformation("Feil i input validering");
             return BadRequest("Feil i inputvalidering på server");

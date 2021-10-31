@@ -188,25 +188,25 @@
                   <input class="form-control" formControlName="cardVerificationCode" required/>
                   <span class="requiredStar" *ngIf="kredittSkjema.get('cardVerificationCode').hasError('required')">*</span>
                   <p class="alert alert-warning" *ngIf="kredittSkjema.get('cardVerificationCode').hasError('pattern')">
-                     Tre siffer
+                     3 siffer
                   </p>
                 </div>
                 <div class="inputBox utlopsDato">
                   <div class="utlopsFlex">
                     <div class="utlopsDatoBox">
+                      <label>Måned</label>
+                        <input class="form-control" formControlName="utlopsMaaned" required />
+                        <span class="requiredStar starUtlopsDato" *ngIf="kredittSkjema.get('utlopsMaaned').hasError('required')">*</span>
+                        <p class="alert alert-warning" *ngIf="kredittSkjema.get('utlopsMaaned').hasError('pattern')">
+                            2 siffer
+                        </p>
+                    </div>
+                    <div class="utlopsDatoBox">
                         <label>År</label>
                         <input class="form-control" formControlName="utlopsAar" required />
                         <span class="requiredStar starUtlopsDato" *ngIf="kredittSkjema.get('utlopsAar').hasError('required')">*</span>
                         <p class="alert alert-warning" *ngIf="kredittSkjema.get('utlopsAar').hasError('pattern')">
-                            To siffer
-                        </p>
-                    </div>
-                    <div class="utlopsDatoBox">
-                        <label>Måned</label>
-                        <input class="form-control" formControlName="utlopsMaaned" required />
-                        <span class="requiredStar starUtlopsDato" *ngIf="kredittSkjema.get('utlopsMaaned').hasError('required')">*</span>
-                        <p class="alert alert-warning" *ngIf="kredittSkjema.get('utlopsMaaned').hasError('pattern')">
-                            To siffer
+                            2 siffer
                         </p>
                     </div>
                   </div>
