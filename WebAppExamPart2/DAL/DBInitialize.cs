@@ -72,16 +72,18 @@ namespace WebAppExamPart2.DAL
 
             var strekning = new Strekning { StrekningId = "Oslo-Kiel", Fra = "Oslo", Til = "Kiel" };
             var strekning2 = new Strekning { StrekningId = "Oslo-Danmark", Fra = "Oslo", Til = "Danmark" };
+            var strekning3 = new Strekning { StrekningId = "Danmark-Stavanger", Fra = "Danmark", Til = "Stavanger" };
             context.Strekninger.Add(strekning);
             context.Strekninger.Add(strekning2);
+            context.Strekninger.Add(strekning3);
             
             var rute = new Rute();
             rute.BoatNavn = "ColorMagic";
             rute.Id = 1;
             rute.RuteFra = "Oslo";
             rute.RuteTil = "Kiel";
-            rute.PrisEnvei = 500;
-            rute.PrisToVei = 1000;
+            rute.PrisEnvei = 400;
+            rute.PrisToVei = 800;
             rute.PrisRabattBarn = "20";
             rute.PrisStandardLugar = 200;
             rute.PrisPremiumLugar = 300;
@@ -93,18 +95,48 @@ namespace WebAppExamPart2.DAL
             rute2.BoatNavn = "Color Fantasy";
             rute2.Id = 2;
             rute2.RuteFra = "Oslo";
-            rute2.RuteTil = "Danmark";
+            rute2.RuteTil = "Kiel";
             rute2.PrisEnvei = 500;
             rute2.PrisToVei = 1000;
             rute2.PrisRabattBarn = "20";
             rute2.PrisStandardLugar = 200;
             rute2.PrisPremiumLugar = 300;
-            rute2.Avgang = "14:00";
+            rute2.Avgang = "12:00";
             rute2.AntallDagerEnVei = 1;
             rute2.AntallDagerToVei = 2;
 
+            var rute3 = new Rute();
+            rute3.BoatNavn = "Stena Lines";
+            rute3.Id = 3;
+            rute3.RuteFra = "Danmark";
+            rute3.RuteTil = "Stavanger";
+            rute3.PrisEnvei = 500;
+            rute3.PrisToVei = 1000;
+            rute3.PrisRabattBarn = "10";
+            rute3.PrisStandardLugar = 300;
+            rute3.PrisPremiumLugar = 300;
+            rute3.Avgang = "13:00";
+            rute3.AntallDagerEnVei = 1;
+            rute3.AntallDagerToVei = 2;
+
+            var rute4 = new Rute();
+            rute4.BoatNavn = "DFDS";
+            rute4.Id = 4;
+            rute4.RuteFra = "Oslo";
+            rute4.RuteTil = "Danmark";
+            rute4.PrisEnvei = 500;
+            rute4.PrisToVei = 1000;
+            rute4.PrisRabattBarn = "10";
+            rute4.PrisStandardLugar = 400;
+            rute4.PrisPremiumLugar = 300;
+            rute4.Avgang = "14:00";
+            rute4.AntallDagerEnVei = 1;
+            rute4.AntallDagerToVei = 2;
+
             context.Ruter.Add(rute);
             context.Ruter.Add(rute2);
+            context.Ruter.Add(rute3);
+            context.Ruter.Add(rute4);
 
             context.SaveChanges();
         }

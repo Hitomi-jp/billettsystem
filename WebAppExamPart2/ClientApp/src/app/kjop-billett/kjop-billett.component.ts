@@ -286,6 +286,42 @@ export class KjopBillettComponent implements OnInit {
     this.billett.ruteId = rute.id; 
   }
 
+  vedAntallVoksenPlus() {
+    this.skjema.patchValue({
+      antallVoksen: this.skjema.value.antallVoksen + 1
+    })
+    this.hideRuteOgLugarUtvalg()
+  }
+
+  vedAntallVoksenMinus() {
+    if (this.skjema.value.antallVoksen === 1) {
+      return;
+    }
+    this.skjema.patchValue({
+      antallVoksen: this.skjema.value.antallVoksen - 1
+    })
+    this.hideRuteOgLugarUtvalg()
+  }
+
+  vedAntallBarnPlus() {
+    this.skjema.patchValue({
+      antallBarn: this.skjema.value.antallBarn + 1
+    })
+    this.hideRuteOgLugarUtvalg()
+  }
+
+  vedAntallBarnMinus() {
+    if (this.skjema.value.antallBarn < 1) {
+      return;
+    }
+    this.skjema.patchValue({
+      antallBarn: this.skjema.value.antallBarn - 1
+    })
+    this.hideRuteOgLugarUtvalg()
+  }
+
+
+
   vedBilettNeste() {
     this.visBillettSkjema = false;
     this.visRuteUtvalg = false;
@@ -314,13 +350,15 @@ export class KjopBillettComponent implements OnInit {
     this.visKundeSkjema = false;
   }
 
-
   vedKredittTilbake() {
     this.visKredittSkjema = false;
     this.visKundeSkjema = true;
   }
 
   hideRuteOgLugarUtvalg() {
+    if (!this.billett.destinationFrom && !this.billett.destinationTo) {
+      return;
+    }
     this.visRuteUtvalg = false;
     this.visLugarUtvalg = false;
     this.vedSokClick()

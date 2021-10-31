@@ -97,7 +97,8 @@ import { LoginService } from 'src/login.service';
   bootstrap: [AppComponent]
 })
 @Component({
-  templateUrl: "login.component.html"
+  templateUrl: "login.component.html",
+  styleUrls: ['./login.component.css']
 })
 
 export class LoginComponent {

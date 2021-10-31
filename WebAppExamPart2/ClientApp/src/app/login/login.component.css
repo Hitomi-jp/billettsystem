@@ -1,0 +1,12 @@
+form {
+    width: 100%;
+    max-width: 800px; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2em 1em;
+    background: rgb(231, 231, 231);
+    background: radial-gradient( circle, rgba(231, 231, 231, 1) 0%, rgba(133, 218, 186, 1) 100% );
+    border-radius: 10px;
+  }
