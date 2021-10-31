@@ -23,7 +23,7 @@ namespace WebAppExamPart2Test
         [Fact]
         public async Task LagreOK()
         {
-            var innKunde = new Kunde
+            var kunde1 = new Kunde
             {
                 Id = 1,
                 Fornavn = "Liam",
@@ -35,11 +35,11 @@ namespace WebAppExamPart2Test
                 Poststed = "Oslo"
             };
 
-            mockKundeRepo.Setup(k => k.LagreKunde(innKunde)).ReturnsAsync(innKunde.Id);
+            mockKundeRepo.Setup(k => k.LagreKunde(kunde1)).ReturnsAsync(kunde1.Id);
             var kundeController = new KundeController(mockKundeRepo.Object, mockLog.Object);
-            var resultat = await kundeController.LagreKunde(innKunde);
+            var resultat = await kundeController.LagreKunde(kunde1);
 
-            Assert.Equal(innKunde.Id,resultat.Value);
+            Assert.Equal(kunde1.Id,resultat.Value);
         
         }
 
@@ -47,7 +47,7 @@ namespace WebAppExamPart2Test
         [Fact]
         public async Task LagreFeil()
         {
-            var innKunde = new Kunde
+            var kunde1 = new Kunde
             {
                 Id = 1,
                 Fornavn = "Liam",
@@ -59,14 +59,43 @@ namespace WebAppExamPart2Test
                 Poststed = "Oslo"
             };
 
-            mockKundeRepo.Setup(k => k.LagreKunde(innKunde));
+            mockKundeRepo.Setup(k => k.LagreKunde(kunde1));
             var kundeController = new KundeController(mockKundeRepo.Object, mockLog.Object);
             
-            var resultat = await kundeController.LagreKunde(innKunde);
+            var resultat = await kundeController.LagreKunde(kunde1);
             
             Assert.Equal((int)HttpStatusCode.BadRequest, (resultat.Result as ObjectResult)?.StatusCode);
-           // Assert.Equal("Kunne ikke lagre kunden", (resultat.Result as ObjectResult)?.ToString());
+            Assert.Equal("Kunne ikke lagre kunden", (resultat.Result as ObjectResult)?.Value);
 
         }
+
+        [Fact]
+        public async Task LagreFeilModel()
+        {
+            //Arrange
+            var kunde1 = new Kunde
+
+            {
+                Id = 1,
+                Fornavn = "",
+                Etternavn = "Hansen",
+                Telfonnr = "67235975",
+                Epost = "test@oslomet.no",
+                Adresse = "Pilestredet 35",
+                Postnr = "0166",
+                Poststed = "Oslo"
+            };
+            mockKundeRepo.Setup(k => k.LagreKunde(kunde1)).ReturnsAsync(kunde1.Id);
+
+            var kundeController = new KundeController(mockKundeRepo.Object, mockLog.Object);
+
+            kundeController.ModelState.AddModelError("Fornavn", "Feil i inputvalidering på server");
+
+            var resultat = await kundeController.LagreKunde(kunde1);
+
+            Assert.Equal((int)HttpStatusCode.BadRequest, (resultat.Result as ObjectResult)?.StatusCode);
+            Assert.Equal("Feil i inputvalidering på server", (resultat.Result as ObjectResult)?.Value);
+        }
+
     }
 }

@@ -29,7 +29,7 @@ namespace WebAppExamPart2Test
         public async Task LagreRuteLoggetInnOk()
         {
             //Arrange
-           var rute1 = new Rute
+          /* var rute1 = new Rute
             {
                 Id = 1,
                 BoatNavn = "Cash Flow",
@@ -43,7 +43,7 @@ namespace WebAppExamPart2Test
                 Avgang = "0800",
                 AntallDagerEnVei = 1,
                 AntallDagerToVei = 2
-            };
+            };*/
 
             mockRuteRepo.Setup(rute => rute.LagreRute(It.IsAny<Rute>())).ReturnsAsync(true);
 
@@ -56,7 +56,9 @@ namespace WebAppExamPart2Test
             //Act
             var resultat = await ruteController.LagreRute(It.IsAny<Rute>());
 
-            Assert.Equal((int)HttpStatusCode.OK, (resultat.Result as ObjectResult)?.StatusCode);
+            Assert.IsType<OkResult>(resultat.Result);
+          
+
         }
         
         [Fact]
@@ -74,6 +76,8 @@ namespace WebAppExamPart2Test
             var resultat = await ruteController.LagreRute(It.IsAny<Rute>());
 
             Assert.Equal((int)HttpStatusCode.BadRequest, (resultat.Result as ObjectResult)?.StatusCode);
+            Assert.Equal("Kunnde ikke lagre rute", (resultat.Result as ObjectResult)?.Value);
         }
+
     }
 }

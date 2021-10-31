@@ -28,7 +28,7 @@ namespace WebAppExamPart2.Controllers
         [Route("loggInn")]
         public async Task<ActionResult> LoggInn(Bruker bruker)
         {
-            Console.WriteLine(bruker);
+            
             if (ModelState.IsValid)
             {
                 bool returnOK = await _logInOutRepo.LoggInn(bruker);

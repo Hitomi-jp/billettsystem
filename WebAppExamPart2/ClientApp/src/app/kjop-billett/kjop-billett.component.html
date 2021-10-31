@@ -76,7 +76,7 @@
     <div *ngIf="visRuteUtvalg" id="funnetRuterContainer">
         <p class="velgAvgang">Velg Avgang</p>
         <div id="funnetRuter">
-            <div class="ruteChoice" *ngFor="let funnetRute of funnetRuter" class="{{funnetRute.id === billett.ruteId? 'selectedRute' : ''}} ruteChoice" (click)="vedFunnetRuteClick(funnetRute)">
+            <div *ngFor="let funnetRute of funnetRuter" class="{{funnetRute.id === billett.ruteId? 'selectedRute' : ''}} ruteChoice" (click)="vedFunnetRuteClick(funnetRute)">
                 <p class="boatNavn">{{funnetRute.boatNavn}}</p>
                 <p class="pris">Pris: {{funnetRute.totalPris}}</p>
                 <p class="datoAvgang">Avgang: {{billett.departureDato}} kl: {{funnetRute.avgang}}</p>
