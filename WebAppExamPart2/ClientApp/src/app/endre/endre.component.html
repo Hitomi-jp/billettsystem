@@ -16,7 +16,7 @@
                 </p>
                 <label for="reiseMalTil">Til</label>
                 <select id="reiseMalTil" formControlName="reiseMalTil" (change)="vedTilChange()">
-                    <option *ngFor="let destinasjon of gyldigTilDestinasjoner; index as i" [selected]="i === 0" value="{{destinasjon}}">{{destinasjon}}</option>
+                    <option *ngFor="let destinasjon of gyldigTilDestinasjoner; index as i" [selected]="destinasjon === billett.destinationTo" value="{{destinasjon}}">{{destinasjon}}</option>
                   </select>
                 <p class="alert alert-warning" [hidden]="skjema.controls.reiseMalFra.valid || (skjema.controls.reiseMalFra.pristine && !submitted)">
                     Destinasjon er obligatorisk.

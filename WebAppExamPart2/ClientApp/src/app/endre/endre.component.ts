@@ -135,7 +135,6 @@ export class EndreComponent {
     this.laster = true;
     this._http.get<any>("api/Rute/hentAlleStrekninger")
       .subscribe(strekninger => {
-        console.log(strekninger)
         this.alleStrekninger = strekninger;
         let fra = [];
         this.alleStrekninger.forEach(strekning => {
@@ -252,9 +251,10 @@ export class EndreComponent {
       }
     })
     this.gyldigTilDestinasjoner = strekningerTil;
-    this.skjema.patchValue({
-      reiseMalTil: strekningerTil[0]
-    })
+    console.log(strekningerTil, "strekninnger til")
+    // this.skjema.patchValue({
+    //   reiseMalTil: this.billett.destinationTo
+    // })
   
     this.oppdaterRuter()
   }

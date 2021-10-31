@@ -54,5 +54,15 @@ namespace WebAppExamPart2.Controllers
 
         }
 
+        [HttpGet]
+        [Route("sjekkIsLoggetInn")]
+        public bool SjekkIsLoggetInn()
+        {
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn))) {
+                return false;
+            }
+            return true;
+        }
+
     }
 }
