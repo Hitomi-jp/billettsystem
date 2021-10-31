@@ -69,7 +69,7 @@ export class EndreComponent {
       "",  Validators.pattern("[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{2,7}$")
     ],
     epost: [
-      "", Validators.pattern("[A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]{1,}\.[A-Za-z0-9]{1,}$")
+      "", Validators.pattern(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)
     ],
     adresse: [
       null, Validators.pattern("[a-zA-ZæøåÆØÅ.\-]+[a-zA-ZæøåÆØÅ0-9\ \_.]*[0-9]*")
@@ -200,6 +200,40 @@ export class EndreComponent {
       }); 
   }
 
+  vedAntallVoksenPlus() {
+    this.skjema.patchValue({
+      antallVoksen: this.skjema.value.antallVoksen + 1
+    })
+    this.hideRuteOgLugarUtvalg()
+  }
+
+  vedAntallVoksenMinus() {
+    if (this.skjema.value.antallVoksen === 1) {
+      return;
+    }
+    this.skjema.patchValue({
+      antallVoksen: this.skjema.value.antallVoksen - 1
+    })
+    this.hideRuteOgLugarUtvalg()
+  }
+
+  vedAntallBarnPlus() {
+    this.skjema.patchValue({
+      antallBarn: this.skjema.value.antallBarn + 1
+    })
+    this.hideRuteOgLugarUtvalg()
+  }
+
+  vedAntallBarnMinus() {
+    if (this.skjema.value.antallBarn < 1) {
+      return;
+    }
+    this.skjema.patchValue({
+      antallBarn: this.skjema.value.antallBarn - 1
+    })
+    this.hideRuteOgLugarUtvalg()
+  }
+
   vedEndre() {
     this.billett.ruteId = this.valgtRute.id;
     this.billett.destinationFrom = this.skjema.value.reiseMalFra;
@@ -231,6 +265,8 @@ export class EndreComponent {
     this.billett.antallChild = this.skjema.value.antallBarn;
     this.billett.ticketType = this.skjema.value.billettType;
 
+    console.log(this.skjema.value.reiseMalFra, this.skjema.value.reiseMalTil)
+
     const filteredRuter = [];
     this.alleRuter.forEach(rute => {
       if (rute.ruteFra === this.billett.destinationFrom && rute.ruteTil === this.billett.destinationTo) {
@@ -242,21 +278,30 @@ export class EndreComponent {
     this.opdaterAnkomstDato()
   }
 
+  vedFraEndre() {
+    this.filterStrekninger(true)
+    this.vedFraChange()
+  }
+
   vedFraChange() {
     this.hideRuteOgLugarUtvalg()
+    this.filterStrekninger(false)
+    this.oppdaterRuter()
+  }
+  
+  filterStrekninger(endre) {
     let strekningerTil: string[] = [];
     this.alleStrekninger.forEach(strekning => {
       if (strekning.fra == this.skjema.value.reiseMalFra && !strekningerTil.includes(strekning.til)) {
         strekningerTil.push(strekning.til)
       }
     })
+    if (endre) {
+      this.skjema.patchValue({
+        reiseMalTil: strekningerTil[0]
+      })
+    }
     this.gyldigTilDestinasjoner = strekningerTil;
-    console.log(strekningerTil, "strekninnger til")
-    // this.skjema.patchValue({
-    //   reiseMalTil: this.billett.destinationTo
-    // })
-  
-    this.oppdaterRuter()
   }
 
   vedTilChange() {
@@ -295,11 +340,15 @@ export class EndreComponent {
     this.billett.pris = this.billettPris;
   }
 
-  vedKundeTilbake() {
+
+  vedEndreTilbake() {
     this.router.navigate(['/billett'])
   }
 
   hideRuteOgLugarUtvalg() {
+    if (!this.billett.destinationFrom && !this.billett.destinationTo) {
+      return;
+    }
     this.valgtRute = null;
     this.visRuteUtvalg = false;
     this.visLugarUtvalg = false;

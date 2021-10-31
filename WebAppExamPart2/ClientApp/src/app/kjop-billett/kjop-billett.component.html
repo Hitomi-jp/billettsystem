@@ -1,12 +1,13 @@
-<h1 id="tableLabel">Kjop</h1>
 
 <p *ngIf="laster"><em>Loading...</em></p>
 
+<h1 id="tableLabel" class="title">Kjop Billett</h1>
 <div class="container" *ngIf="!visKvittering">
-    <div *ngIf="visBillettSkjema">
+  <div *ngIf="visBillettSkjema" class="billettSkjema">
         <form [formGroup]="skjema" (ngSubmit)="vedSubmit()">
-            <div class="form-group">
-                <label for="reiseMalFra">Fra</label>
+            <div class="form-group reisemal">
+              <div class="destination-box">
+                <label for="reiseMalFra">Fra:</label>
                 <select id="reiseMalFra" formControlName="reiseMalFra" (change)="vedFraChange()">
                     <option value="disabled" selected disabled >Hvor vil du reise fra</option>
                     <option *ngFor="let strekning of fraDestinasjoner" value="{{strekning}}">{{strekning}}</option>
@@ -14,35 +15,51 @@
                 <p class="alert alert-warning" [hidden]="skjema.controls.reiseMalFra.valid || (skjema.controls.reiseMalFra.pristine && !submitted)">
                     Destinasjon er obligatorisk.
                 </p>
-                <label for="reiseMalTil">Til</label>
+              </div>
+              <div class="destination-box">
+                <label for="reiseMalTil">Til:</label>
                 <select id="reiseMalTil" formControlName="reiseMalTil" (change)="vedTilChange()">
                     <option *ngFor="let destinasjon of gyldigTilDestinasjoner; index as i " [selected]="i === 0" value="{{destinasjon}}">{{destinasjon}}</option>
                   </select>
                 <p class="alert alert-warning" [hidden]="skjema.controls.reiseMalFra.valid || (skjema.controls.reiseMalFra.pristine && !submitted)">
                     Destinasjon er obligatorisk.
                 </p>
+              </div>
             </div>
-            <div class="formGroup">
+            <div class="formGroup datoInput">
                 <label>Når vil du reise</label>
                 <input type="date" value="{{dagsDato}}" min="{{dagsDato}}" formControlName="reiseDato" (change)="hideRuteOgLugarUtvalg()" />
             </div>
 
-            <div class="form-group">
-                <div>
+            <div class="form-group antall">
+                <div class="antallVoksen">
                     <label>Antall voksen</label>
-                    <input type="number" min="1"  formControlName="antallVoksen" (change)="hideRuteOgLugarUtvalg()"/>
+                    <div class="antallControlls">
+                      <span (click)="vedAntallVoksenMinus()">-</span>
+                      <input type="number" min="1"  formControlName="antallVoksen" (change)="hideRuteOgLugarUtvalg()" readonly/>
+                      <span (click)="vedAntallVoksenPlus()">+</span>
+                    </div>
                 </div>
-                <div>
+                <div class="antallBarn">
                     <label>Antall barn</label>
-                    <input type="number" min="0"  formControlName="antallBarn" (change)="hideRuteOgLugarUtvalg()"/>
+                    <div class="antallControlls">
+                      <span (click)="vedAntallBarnMinus()">-</span>
+                      <input type="number" min="0"  formControlName="antallBarn" (change)="hideRuteOgLugarUtvalg()" readonly/>
+                      <span (click)="vedAntallBarnPlus()">+</span>                     
+                    </div>
                 </div>
             </div>
-
-            <div class="form-group">
+            <p class="type">Billett Type</p>
+            <div class="form-group billettType">
+              <div class="billettTypeInput">
                 <input type="radio" id="single" value="En vei"  checked="checked" formControlName="billettType" (change)="vedBillettTypeChange()"/>
                 <label for="single">En vei </label>
+              </div>
+              <div class="billettTypeInput">
                 <input type="radio" id="turRetur" value="Retur"  formControlName="billettType" (change)="vedBillettTypeChange()"/>
                 <label for="turRetur">Tur-Retur</label>
+
+              </div>
             </div>
 
             <!-- <p [hidden]="!skjema.valid" (click)="vedSokClick()">Søk</p> -->
@@ -57,34 +74,40 @@
     </div>
             
     <div *ngIf="visRuteUtvalg" id="funnetRuterContainer">
-        <p>Velg Båt</p>
+        <p class="velgAvgang">Velg Avgang</p>
         <div id="funnetRuter">
-            <div class="ruteChoice" *ngFor="let funnetRute of funnetRuter" (click)="vedFunnetRuteClick(funnetRute)">
-                <p>{{funnetRute.boatNavn}}</p>
-                <p>Pris: {{funnetRute.totalPris}}</p>
-                <p>Avgang: {{billett.departureDato}} kl: {{funnetRute.avgang}}</p>
-                <p>Ankomst: {{billett.returnDato}} kl: {{funnetRute.avgang}}</p>
+            <div class="ruteChoice" *ngFor="let funnetRute of funnetRuter" class="{{funnetRute.id === billett.ruteId? 'selectedRute' : ''}} ruteChoice" (click)="vedFunnetRuteClick(funnetRute)">
+                <p class="boatNavn">{{funnetRute.boatNavn}}</p>
+                <p class="pris">Pris: {{funnetRute.totalPris}}</p>
+                <p class="datoAvgang">Avgang: {{billett.departureDato}} kl: {{funnetRute.avgang}}</p>
+                <p class="datoAnkomst">Ankomst: {{billett.returnDato}} kl: {{funnetRute.avgang}}</p>
             </div>
         </div>
     </div>
 
-    <div *ngIf="visLugarUtvalg">
-        <form [formGroup]="lugarSkjema">
-            <p>Lugar</p>
-            <div class="form-group">
+    <div *ngIf="visLugarUtvalg" id="lugarContainer">
+        <form [formGroup]="lugarSkjema" id="lugarForm">
+            <p class="lugarTitle">Lugar</p>
+            <div class="form-group lugarInputContainer">
+              <div class="lugarTypeInput">
                 <input type="radio" id="standard" value="Standard"  checked="checked" formControlName="lugar" (change)="oppdaterPrisMedLugar()"/>
                 <label for="standard">Standard {{valgtRute.prisStandardLugar}}kr</label>
+              </div>
+              <div class="lugarTypeInput">
                 <input type="radio" id="premium" value="Premium"  formControlName="lugar" (change)="oppdaterPrisMedLugar()"/>
                 <label for="premium">Premium {{valgtRute.prisPremiumLugar}}kr</label>
+              </div>
             </div>
         </form>
-        <p>Total Pris: {{billettPris}}</p>
-        <p (click)="vedBilettNeste()">Neste</p>
+        <div class="neste">
+          <p class="totalPris">Total Pris: {{billettPris}}</p>
+          <p class="nesteButton btn btn-primary" (click)="vedBilettNeste()">Neste</p>
+        </div>
     </div>
     
-    <div *ngIf="visKundeSkjema">
-        <form [formGroup]="kundeSkjema">
-            <div class="destinationGroup">
+    <div *ngIf="visKundeSkjema" id="kundeSkjemaContainer">
+        <form [formGroup]="kundeSkjema" class="kundeForm">
+            <div class="inputGroupKunde">
                 <div class="inputBox">
                   <label>Fornavn</label>
                   <input class="form-control" formControlName="fornavn" required/>
@@ -103,7 +126,7 @@
                 </div>
               </div>
  
-              <div class="destinationGroup">
+              <div class="inputGroupKunde">
                 <div class="inputBox">
                   <label>Telefonnr</label>
                   <input class="form-control" formControlName="telefonnr" required/>
@@ -122,7 +145,7 @@
                 </div>
               </div>
  
-              <div class="destinationGroup">
+              <div class="inputGroupKunde">
                 <div class="inputBox">
                   <label>Adresse</label>
                   <input class="form-control" formControlName="adresse" required />
@@ -141,7 +164,7 @@
                 </div>
               </div>
  
-              <div class="destinationGroup">
+              <div class="inputGroupKunde">
                 <div class="inputBox">
                   <label>Postnr</label>
                   <input class="form-control" formControlName="postnr" required/>
@@ -153,7 +176,7 @@
  
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group kundeFormButtons">
                   <button class="btn btn-primary" [disabled]="!kundeSkjema.valid" (click)="vedKundeNeste()">Neste</button>
                   <button class="btn btn-default" (click)="vedKundeTilbake()">Tilbake</button>
               </div>
@@ -213,7 +236,7 @@
                 </div>
               </div>
 
-              <div class="form-group">
+              <div class="form-group kredittFormButtons" >
                   <button class="btn btn-primary" [disabled]="!kredittSkjema.valid" (click)="lagreKunde()">Lagre</button>
                   <button class="btn btn-default" (click)="vedKredittTilbake()">Tilbake</button>
               </div>

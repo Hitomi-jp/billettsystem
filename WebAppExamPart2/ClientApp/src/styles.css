@@ -10,6 +10,11 @@ body {
   padding: 0 2em;
 }
 
+:root {
+  --border-color: lightgray;
+  --form-bg-color: rgba(237, 237, 237, 0.2);
+}
+
 .header {
   width: 100%;
   height: 450px;
@@ -100,18 +105,10 @@ body {
 
 form {
   width: 100%;
-  max-width: 800px; /* Login page */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 2em 1em;
-  background: rgb(231, 231, 231);
-  background: radial-gradient( circle, rgba(231, 231, 231, 1) 0%, rgba(133, 218, 186, 1) 100% );
-  border-radius: 10px;
+
 }
 
-  form .reisemalTitle {
+  /* form .reisemalTitle {
     width: 100%;
     padding: 0 10px;
   }
@@ -227,7 +224,7 @@ form {
 
 #buttonKvittering {
   width: 100px;
-}
+} */
 
 
 

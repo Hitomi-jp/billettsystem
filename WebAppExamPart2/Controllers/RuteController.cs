@@ -44,7 +44,7 @@ namespace WebAppExamPart2.Controllers
                     _ruteLogger.LogInformation("Kunne ikke lagre rute");
                     return BadRequest("Kunnde ikke lagre rute");
                 }
-                return Ok("Lagret rute");
+                return Ok();
             }
             _ruteLogger.LogInformation("Feil i input validering");
             return BadRequest("Feil i inputvalidering på server");
