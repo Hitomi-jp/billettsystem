@@ -1,42 +1,328 @@
+
+.title {
+    text-align: center;
+    margin: 1em 0;
+    padding: 0;
+}
+
+.billettSkjema {
+    padding-top: 1em;
+    background-color: var(--form-bg-color);
+}
+
+/* form {
+    padding: 2em 0.5em;
+} */
+
+/* Destination inputs */
+.reisemal {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding: 1em;
+}
+
+
+.destination-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 48%;
+    min-width: 300px;
+}
+
+.destination-box label {
+    margin: 0 1em;
+}
+
+.destination-box select {
+    flex: 1;
+    padding: 5px;
+    border: none;
+    border: 1px solid var(--border-color);
+}
+
+@media only screen and (max-width: 800px) {
+    .destination-box {
+        width: 100%;
+        margin-bottom: 5px;
+    }
+}
+
+/* Dato input */
+.datoInput {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 0.5em;
+}
+
+.datoInput input {
+    width: 100%;
+    max-width: 400px;
+    border: 1px solid var(--border-color);
+    margin-bottom: 1em;
+}
+
+/* Antall */
+.antall {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    border-top: 12px solid white;
+    border-bottom: 12px solid white;
+    padding: 1em;
+}
+
+.antallVoksen, 
+.antallBarn {
+    width: 100%;
+    max-width: 250px;
+    min-width: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 1em;
+}
+
+.antallControlls {
+    width: 100%;
+    max-width: 150px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.antallControlls input::-webkit-outer-spin-button,
+.antallControlls input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+.antallControlls input[type=number] {
+    -moz-appearance: textfield;
+}
+
+.antallControlls input {
+    width: 40px;
+    border: 1px solid var(--border-color);
+}
+
+.antallControlls span {
+    font-size: 25px;
+    font-weight: 800;
+    color: rgb(80, 80, 213);
+    border: 1px solid var(--border-color);
+    background-color: white;
+    padding: 0 10px;
+    border-radius: 50%;
+}
+
+.antallControlls span:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+}
+
+/* Billett Type*/
+.type {
+    text-align: center;
+    margin: 0;
+}
+.billettType {
+    display: flex;
+    justify-content: center;
+}
+
+.billettTypeInput {
+    width: 100%;
+    max-width: 200px;
+    margin: 1em;
+    text-align: center;
+}
+
+.billettTypeInput label {
+    margin-left: 10px;
+}
+
+
+/*Ruter*/
 #funnetRuterContainer {
     width: 100%;
+    padding: 2em 1em;
+    margin-top: 0.5em;
+    background-color: var(--form-bg-color);
 }
+
+.velgAvgang {
+    text-align: center;
+}
+
 #funnetRuter {
     width: 100%;
     display: flex;
     justify-content: space-around;
+    flex-wrap: wrap;
 }
 
 .ruteChoice {
-    outline: 1px solid black
-}
-
-.inputBox {
-    padding-left: 1em;
+    width: 35%;
+    min-width: 300px;
+    max-width: 350px;
+    margin: 10px 0;
+    padding: 1em;
+    font-size: 1rem;
+    background-color: white;
+    border-radius: 5px;
     position: relative;
 }
 
-.utlopsFlex {
+.ruteChoice::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 0;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    background-color: rgba(72, 98, 154, 0.9);
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
 }
+
+.ruteChoice:hover::after {
+    cursor: pointer;
+    content: 'Velg';
+    font-size: 1.5rem;
+    color: white;
+    z-index: 99;
+    width: 100%;
+    height: 100%;
+}
+.boatNavn {
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+
+.selectedRute {
+    background-color: rgba(72, 98, 154, 0.9);
+    color: white;
+}
+
+/* Lugar */
+#lugarContainer {
+    margin-top: 0.5em;
+    padding-bottom: 3em;
+}
+
+#lugarForm {
+    text-align: center;
+    background-color: var(--form-bg-color);
+    padding-top: 1em;
+    padding-bottom: 1em;
+}
+
+.lugarTitle {
+    margin: 0;
+}
+
+.lugarInputContainer {
+    display: flex;
+    display: flex;
+    justify-content: center;
+    
+}
+
+.lugarTypeInput {
+    width: 100%;
+    max-width: 200px;
+    margin: 1em;
+    text-align: center;
+}
+
+.lugarTypeInput label {
+    margin-left: 10px;
+}
+
+.neste {
+    margin-top: 2em;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.totalPris {
+    width: 300px;
+}
+
+.totalPrisEndre {
+    margin: 0 auto;
+}
+
+.nesteButton {
+    box-sizing: border-box;
+    padding: 5px 30px;
+}
+
+
+/* Kunde Form */
+#kundeSkjemaContainer {
+    margin-top: 1em;
+}
+.inputBox {
+    padding-left: 1em;
+    position: relative;
+    margin-bottom: 2em;
+}
+
+.inputBox input {
+    border: none;
+    border-bottom: 1px solid var(--border-color);
+    border-radius: 0;
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+.inputBox label {
+    font-weight: 300;
+}
+
+
+.requiredStar {
+    position: absolute;
+    color: red;
+    top: 0;
+    left: 0;
+}
+
+.kundeFormButtons {
+    display: flex;
+    justify-content: center;
+    padding-bottom: 5em;
+}
+
+
+/* Kreditt */
 
 .utlopsDatoBox {
     position: relative;
     width: 48%;
 }
-
-.requiredStar {
-    position: absolute;
-    color: red;
-    left: 0;
+.utlopsFlex {
+    display: flex;
+    justify-content: space-between;
 }
 
 .starUtlopsDato {
     top: 0;
-    left: -10%;
+    left: -20px;
 }
 
-.selectedRute {
-    outline: 1px solid blue;
+.kredittFormButtons {
+    display: flex;
+    justify-content: center;
 }
+
