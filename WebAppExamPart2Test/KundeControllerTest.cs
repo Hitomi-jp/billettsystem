@@ -16,6 +16,12 @@ namespace WebAppExamPart2Test
     public class KundeControllerTest
     {
 
+        private const string _loggetInn = "loggetInn";
+        private const string _ikkeLoggetInn = "";
+
+        private readonly Mock<HttpContext> mockHttpContext = new Mock<HttpContext>();
+        private readonly MockHttpSession mockHttpSession = new MockHttpSession();
+
         private readonly Mock<ILogger<KundeController>> mockLog = new Mock<ILogger<KundeController>>();
         private readonly Mock<IKundeRepository> mockKundeRepo = new Mock<IKundeRepository>();
 
@@ -95,6 +101,12 @@ namespace WebAppExamPart2Test
 
             Assert.Equal((int)HttpStatusCode.BadRequest, (resultat.Result as ObjectResult)?.StatusCode);
             Assert.Equal("Feil i inputvalidering på server", (resultat.Result as ObjectResult)?.Value);
+        }
+
+        [Fact]
+        public async Task EndreEnKunde()
+        {
+        
         }
 
     }
