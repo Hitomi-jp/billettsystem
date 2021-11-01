@@ -4,9 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 
 namespace WebAppExamPart2.Models
 {
+    [ExcludeFromCodeCoverage]
     public class Rute
     {
         // [Key]

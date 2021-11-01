@@ -3,12 +3,14 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 using WebAppExamPart2.Models;
 
 namespace WebAppExamPart2.DAL
 {
+    [ExcludeFromCodeCoverage]
     public class BillettRepository : IBillettRepository
     {
         private readonly KundeContext _kundeDB;

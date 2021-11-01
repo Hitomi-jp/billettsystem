@@ -7,9 +7,11 @@ using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using System.Security.Cryptography;
+using System.Diagnostics.CodeAnalysis;
 
 namespace WebAppExamPart2.DAL
 {
+    [ExcludeFromCodeCoverage]
     public class RuteRepository : IRuteRepository
     {
         private readonly KundeContext _kundeDb;

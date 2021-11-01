@@ -111,11 +111,7 @@ namespace WebAppExamPart2.Controllers
         [HttpPost]
         [Route("lagreKreditt")]
         public async Task<ActionResult> LagreKreditt(Kreditt kredittInfo)
-        {
-            // if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
-            // {
-            //     return Unauthorized();
-            // }
+        { 
 
             bool returnOk = await _kundeDB.LagreKreditt(kredittInfo);
             if (!returnOk)
@@ -157,37 +153,8 @@ namespace WebAppExamPart2.Controllers
                 }
                 return Ok(en);
             }
-            _kundeLog.LogInformation("Feil i inputValidering");
-            return BadRequest("Feil i inputValidering på server");
+            _kundeLog.LogInformation("Kunne ikke finne kunden");
+            return NotFound("Kunne ikke finne kunden");
         }
-
-    
-        /*[HttpPost]   --- should delete at the end, now moved to RuteController.cs
-        [Route("loggInn")]
-        public async Task<ActionResult> LoggInn(Bruker bruker)
-        {
-            Console.WriteLine(bruker);
-            if (ModelState.IsValid)
-            {
-                bool returnOK = await _kundeDB.LoggInn(bruker);
-                if (!returnOK)
-                {
-                    _kundeLog.LogInformation("Innloggingen feilet for bruker" + bruker.Brukernavn);
-                    HttpContext.Session.SetString(_loggetInn, "");
-                    return Ok(false);
-                }
-                HttpContext.Session.SetString(_loggetInn, "LoggetInn");
-                return Ok(true);
-            }
-            _kundeLog.LogInformation("Feil i inputvalidering");
-            return BadRequest("Feil i inputvalidering på server");
-        }
-
-        [HttpGet]--- should delete at the end, now moved to RuteController.cs
-        [Route("api/kunde/loggut")]
-        public void LoggUt()
-        {
-            HttpContext.Session.SetString(_loggetInn, "");
-        }*/
     }
 }
