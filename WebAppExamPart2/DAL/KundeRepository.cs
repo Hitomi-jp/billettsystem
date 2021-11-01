@@ -110,7 +110,7 @@ namespace WebAppExamPart2.DAL
             }
         }
 
-        public async Task<bool> SlettAlleKunder()
+       /* public async Task<bool> SlettAlleKunder()
         {
             try
             {
@@ -126,7 +126,7 @@ namespace WebAppExamPart2.DAL
             {
                 return false;
             }
-        }
+        }*/
 
         public async Task<bool> LagreKreditt(Kreditt kredittInfo) {
             try

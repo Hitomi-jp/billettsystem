@@ -90,7 +90,7 @@ namespace WebAppExamPart2.Controllers
             return Ok("Kunde ble slettet");
         }
 
-        [HttpDelete]
+      /*  [HttpDelete]
         [Route("slettAlle")]
         public async Task<ActionResult> SlettAlleKunder()
         {
@@ -106,7 +106,7 @@ namespace WebAppExamPart2.Controllers
                 return NotFound("Kunne ikke slette alle");
             }
             return Ok("Alle ble slettet");
-        }
+        }*/
 
         [HttpPost]
         [Route("lagreKreditt")]
