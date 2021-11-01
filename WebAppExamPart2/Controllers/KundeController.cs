@@ -30,11 +30,7 @@ namespace WebAppExamPart2.Controllers
         [HttpPost]
         public async Task<ActionResult<int>> LagreKunde(Kunde innKunde) //Kunde/Lagre
         {
-            /*  if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
-              {
-                  return Unauthorized();
-              }*/
-
+          
             if (ModelState.IsValid)
             {
                 int kundeId = await _kundeDB.LagreKunde(innKunde);
@@ -143,8 +139,6 @@ namespace WebAppExamPart2.Controllers
                 return Unauthorized();
             }
 
-            if (ModelState.IsValid)
-            {
                 Kunde en = await _kundeDB.HentEnKunde(kundeId);
                 if (en == null)
                 {
@@ -153,8 +147,5 @@ namespace WebAppExamPart2.Controllers
                 }
                 return Ok(en);
             }
-            _kundeLog.LogInformation("Kunne ikke finne kunden");
-            return NotFound("Kunne ikke finne kunden");
-        }
     }
 }

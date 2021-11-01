@@ -10,7 +10,7 @@ namespace WebAppExamPart2.DAL
     public interface IBillettRepository
     {
         Task<int> LagreBillett(Billett billett);
-        //Task<bool> EndreEnBillett(Billett endreBillett);
+ 
         Task<List<Billett>> HentAlleBilletter();
         Task<Billett> HentEnBillett(int kundeId);
 
