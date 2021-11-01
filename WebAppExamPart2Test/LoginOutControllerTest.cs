@@ -50,7 +50,7 @@ namespace WebAppExamPart2Test
 
             var logInOutController = new LogInOutController(mockLogInOut.Object, mockLog.Object);
 
-            mockHttpSession[_loggetInn] = "";
+            mockHttpSession[_loggetInn] = _loggetInn;
             mockHttpContext.Setup(s => s.Session).Returns(mockHttpSession);
             logInOutController.ControllerContext.HttpContext = mockHttpContext.Object;
 
@@ -59,46 +59,45 @@ namespace WebAppExamPart2Test
 
             // Assert 
 
-            
-           // Assert.Equal((int)HttpStatusCode.OK, resultat.StatusCode);
-           // Assert.False((bool)resultat.Value);
+            Assert.Equal((int)HttpStatusCode.OK, resultat.StatusCode);
+            Assert.False((bool)resultat.Value);
         }
 
-       /* [Fact]
+       [Fact]
         public async Task LoggInnInputFeil()
         {
-            mockRep.Setup(k => k.LoggInn(It.IsAny<Bruker>())).ReturnsAsync(true);
+            mockLogInOut.Setup(admin => admin.LoggInn(It.IsAny<Bruker>())).ReturnsAsync(true);
 
-            var kundeController = new KundeController(mockRep.Object, mockLog.Object);
+            var logInOutcontroller = new LogInOutController(mockLogInOut.Object, mockLog.Object);
 
-            kundeController.ModelState.AddModelError("Brukernavn", "Feil i inputvalidering på server");
+            logInOutcontroller.ModelState.AddModelError("Brukernavn", "Feil i inputvalidering på server");
 
-            mockSession[_loggetInn] = _loggetInn;
-            mockHttpContext.Setup(s => s.Session).Returns(mockSession);
-            kundeController.ControllerContext.HttpContext = mockHttpContext.Object;
+            mockHttpSession[_loggetInn] = _loggetInn;
+            mockHttpContext.Setup(s => s.Session).Returns(mockHttpSession);
+            logInOutcontroller.ControllerContext.HttpContext = mockHttpContext.Object;
 
             // Act
-            var resultat = await kundeController.LoggInn(It.IsAny<Bruker>()) as BadRequestObjectResult;
+            var resultat = await logInOutcontroller.LoggInn(It.IsAny<Bruker>()) as BadRequestObjectResult;
 
             // Assert 
             Assert.Equal((int)HttpStatusCode.BadRequest, resultat.StatusCode);
             Assert.Equal("Feil i inputvalidering på server", resultat.Value);
-        }*/
+        }
 
-        /*[Fact]
+        [Fact]
         public void LoggUt()
         {
-            var kundeController = new KundeController(mockRep.Object, mockLog.Object);
+            var logInOutcontroller = new LogInOutController(mockLogInOut.Object, mockLog.Object);
 
-            mockHttpContext.Setup(s => s.Session).Returns(mockSession);
-            mockSession[_loggetInn] = _loggetInn;
-            kundeController.ControllerContext.HttpContext = mockHttpContext.Object;
+            mockHttpContext.Setup(s => s.Session).Returns(mockHttpSession);
+            mockHttpSession[_loggetInn] = _loggetInn;
+            logInOutcontroller.ControllerContext.HttpContext = mockHttpContext.Object;
 
             // Act
-            kundeController.LoggUt();
+            logInOutcontroller.LoggUt();
 
             // Assert
-            Assert.Equal(_ikkeLoggetInn, mockSession[_loggetInn]);
-        }*/
+            Assert.Equal("", mockHttpSession[_loggetInn]);
+        }
     }
 }
