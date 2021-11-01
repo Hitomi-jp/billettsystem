@@ -72,7 +72,7 @@ namespace WebAppExamPart2.Controllers
             return BadRequest("Feil i inputvalidering på server");
         }
 
-        [HttpDelete("{kundeId}")]
+        [HttpDelete]
         [Route("slettEnKunde")]
         public async Task<ActionResult> SlettEnKunde(int kundeId)
         {
@@ -87,7 +87,7 @@ namespace WebAppExamPart2.Controllers
                 _kundeLog.LogInformation("Kunne ikke slette kunden");
                 return NotFound("Kunne ikke slette kunden");
             }
-            return Ok("Kunde ble slettet");
+            return Ok();
         }
 
         [HttpDelete]

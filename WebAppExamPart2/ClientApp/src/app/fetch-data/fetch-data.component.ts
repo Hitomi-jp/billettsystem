@@ -35,7 +35,7 @@ import { AppComponent } from '../app.component';
 export class FetchDataComponent {
   alleKunder: Kunde[]
   alleBilletter: Billett[]
-  alle: any = []
+  alleBillettOgKunder: any = []
   laster: boolean;
 
   constructor(private _http: HttpClient, private router: Router, private formBuilder: FormBuilder, modalService: NgbModal) { }
@@ -56,7 +56,7 @@ export class FetchDataComponent {
             this.router.navigate(['/login'])
           }
         });
-  };
+  }
 
   hentAlleBilletter() {
     this._http.get<Billett[]>("api/billett/hentAlleBilletter")
@@ -75,15 +75,37 @@ export class FetchDataComponent {
         });
   };
 
+  slettEnBillett(billettId: number) {
+    const slettBillett = this.findBillett(billettId);
+    this._http.delete("api/billett?billettId=" + billettId)
+      .subscribe(response => {
+        console.log("slettet billett")
+        this.slettEnKunde(slettBillett.kundeId);
+      })
+  }
+
+  slettEnKunde(kundeId: number) {
+    this._http.delete("api/kunde/slettEnKunde?kundeId=" + kundeId)
+      .subscribe(response => {
+        console.log("slettet kunde")
+        this.alleBillettOgKunder = [];
+        this.hentAlleKunder()
+      })
+  }
+
   joinKundeOgBillett() {
     this.alleKunder.forEach((kunde: Kunde) => {
       this.alleBilletter.forEach((billett: Billett) => {
         if (kunde.id === billett.kundeId) {
           const data = { ...kunde, ...billett }
-          this.alle.push(data)
+          this.alleBillettOgKunder.push(data)
         }
       })
     })
+  }
+
+  findBillett(billettId) {
+    return this.alleBilletter.find(billett => billett.id === billettId)
   }
 
   slettAlle() {

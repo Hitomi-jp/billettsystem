@@ -96,6 +96,23 @@ namespace WebAppExamPart2.Controllers
             return Ok(billett);
         }
 
+        [HttpDelete]
+        public async Task<ActionResult> SlettEnBillett(int billettId)
+        {
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
+            {
+                return Unauthorized();
+            }
+            bool slettOk = await _kundeDB.SlettEnBillett(billettId);
+            if (!slettOk)
+            {
+                _kundeLog.LogInformation("Kunne ikke slette billett");
+                return NotFound("Kunnde ikke slette billett");
+            }
+            return Ok();
+        }
+
+
 
         [HttpGet]
         [Route("hentAlleDestinasjon")]
