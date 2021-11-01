@@ -26,6 +26,7 @@ export class KjopBillettComponent implements OnInit {
   visBillettSkjema: boolean = true;
   visKundeSkjema: boolean = false;
   visKredittSkjema: boolean = false;
+  ugyldigKredittUtlopsdato: boolean = false;
   visRuteUtvalg: boolean = false;
   visLugarUtvalg: boolean = false;
   visKvittering: boolean = false;
@@ -36,6 +37,8 @@ export class KjopBillettComponent implements OnInit {
   funnetRuter: any[];
   valgtRute: any;
   dagsDato: string;
+  kunde: Kunde;
+  kreditt: Kreditt;
   billettPris: number = 0;
   billett: Billett = {
     kundeId: null,
@@ -50,22 +53,7 @@ export class KjopBillettComponent implements OnInit {
     antallChild: 0,
     pris: 0
   };
-  kunde: Kunde = {
-    fornavn: "",
-    etternavn: "",
-    telfonnr: "",
-    epost: "",
-    adresse: "",
-    postnr: "",
-    poststed: "",
-  };
-  kreditt: Kreditt = {
-    kundeId: 0,
-    kortnummer: "",
-    kortHolderNavn: "",
-    kortUtlopsdato: "",
-    cvc: ""
-  };
+ 
 
   validering = {
     reiseMalFra: [
@@ -204,12 +192,14 @@ export class KjopBillettComponent implements OnInit {
   }
 
   lagreKreditt() {
-    console.log(this.billett)
-    this.kreditt.kundeId = this.billett.kundeId;
-    this.kreditt.kortnummer = this.kredittSkjema.value.kortnr;
-    this.kreditt.kortHolderNavn = this.kredittSkjema.value.kortholdersnavn;
-    this.kreditt.kortUtlopsdato = this.kredittSkjema.value.utlopsAar + "/" + this.kredittSkjema.value.utlopsMaaned;
-    this.kreditt.cvc = this.kredittSkjema.value.cardVerificationCode;
+    const kreditt = {
+      kundeId: this.billett.kundeId,
+      kortnummer: this.kredittSkjema.value.kortnr,
+      kortHolderNavn: this.kredittSkjema.value.kortholdersnavn,
+      kortUtlopsdato: this.kredittSkjema.value.utlopsMaaned + "/" + this.kredittSkjema.value.utlopsAar,
+      cvc: this.kredittSkjema.value.cardVerificationCode,
+    }
+    this.kreditt = kreditt;
 
     this._http.post<any>("api/kunde/lagreKreditt", this.kreditt)
     .subscribe(response => {
@@ -327,17 +317,20 @@ export class KjopBillettComponent implements OnInit {
     this.visRuteUtvalg = false;
     this.visLugarUtvalg = false;
     this.visKundeSkjema = true;
-    this.billett.pris = this.billettPris;
+    this.billett.pris = parseInt(this.billettPris.toFixed(2));
   }
 
   vedKundeNeste() {
-    this.kunde.fornavn = this.kundeSkjema.value.fornavn;
-    this.kunde.etternavn = this.kundeSkjema.value.etternavn;
-    this.kunde.telfonnr = this.kundeSkjema.value.telefonnr;
-    this.kunde.epost = this.kundeSkjema.value.epost;
-    this.kunde.adresse = this.kundeSkjema.value.adresse;
-    this.kunde.postnr = this.kundeSkjema.value.postnr;
-    this.kunde.poststed = this.kundeSkjema.value.poststed;
+    const kunde: Kunde = {
+      fornavn: this.kundeSkjema.value.fornavn,
+      etternavn: this.kundeSkjema.value.etternavn,
+      telfonnr: this.kundeSkjema.value.telefonnr,
+      epost: this.kundeSkjema.value.epost,
+      adresse: this.kundeSkjema.value.adresse,
+      postnr: this.kundeSkjema.value.postnr,
+      poststed: this.kundeSkjema.value.poststed,
+    }
+    this.kunde = kunde;
 
     this.visKundeSkjema = false;
     this.visKredittSkjema = true;
@@ -363,6 +356,8 @@ export class KjopBillettComponent implements OnInit {
     if (!this.billett.destinationFrom && !this.billett.destinationTo) {
       return;
     }
+    this.billett.ruteId = null;
+    this.valgtRute = null;
     this.visRuteUtvalg = false;
     this.visLugarUtvalg = false;
     this.vedSokClick()
@@ -428,5 +423,35 @@ export class KjopBillettComponent implements OnInit {
     let date = new Date(avgang)
     date.setDate(date.getDate() + antallDager);
     this.billett.returnDato = this.getDate(date);
+  }
+
+  valideringUtlopsDato() {
+    const maaned = parseInt(this.kredittSkjema.value.utlopsMaaned);
+    const aar = this.kredittSkjema.value.utlopsAar;
+
+    let date = new Date();
+    let regexp = /^[0-9]{2}$/;
+    let currentYear = date.getFullYear()  % 100;
+    let currentMonth = date.getMonth() + 1;
+    let arRegexOk = regexp.test(aar);
+    
+    if (!aar) {
+      return '';
+    }
+    if (parseInt(aar) > currentYear) {
+      this.ugyldigKredittUtlopsdato = false;
+      return '';
+    } else if (parseInt(aar) === currentYear) {
+      const manedOk = maaned >= currentMonth;
+      if (!manedOk) {
+        this.ugyldigKredittUtlopsdato = true;
+        return 'Ugyldig måned';
+      }
+      this.ugyldigKredittUtlopsdato = false;
+      return '';
+    } else {
+      this.ugyldigKredittUtlopsdato = true;
+      return 'Ugyldig år';
+    }
   }
 }
