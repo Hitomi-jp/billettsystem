@@ -34,7 +34,7 @@ namespace WebAppExamPart2.Controllers
         public async Task<ActionResult<bool>> LagreRute(Rute innRute)
         {
             if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn))) {
-                return Unauthorized("Ikke logget inn");
+                return Unauthorized();
             }
             if (ModelState.IsValid)
             {
@@ -52,7 +52,7 @@ namespace WebAppExamPart2.Controllers
 
 
         [HttpGet]
-        public async Task<ActionResult<Rute>> HentAlleRuter()
+        public async Task<ActionResult<Rute>> HentAlleRuter(Rute rute)
         {
             // if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn))) {
             //     return Unauthorized();
@@ -135,7 +135,5 @@ namespace WebAppExamPart2.Controllers
             }
             return true;
         }
-
-       
     }
 }

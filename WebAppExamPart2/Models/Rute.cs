@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Mvc;
 
 namespace WebAppExamPart2.Models
 {
@@ -47,6 +48,5 @@ namespace WebAppExamPart2.Models
 
         [RegularExpression(@"[0-9]+")]
         public int AntallDagerToVei { get; set; }
-
     }
 }

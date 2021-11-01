@@ -12,7 +12,7 @@ namespace WebAppExamPart2.DAL
         Task<int> LagreKunde(Kunde innKunde);
         Task<bool> EndreEnKunde(Kunde endreKunde);
         Task<bool> SlettEnKunde(int kundeId);
-        Task<bool> SlettAlleKunder();
+        //Task<bool> SlettAlleKunder();
         Task<bool> LagreKreditt(Kreditt kredittInfo);
         Task<List<Kunde>> HentAlleKunder();
         Task<Kunde> HentEnKunde(int id);
