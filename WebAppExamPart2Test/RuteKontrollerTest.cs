@@ -79,5 +79,9 @@ namespace WebAppExamPart2Test
             Assert.Equal("Kunnde ikke lagre rute", (resultat.Result as ObjectResult)?.Value);
         }
 
+        public async Task LagreRuteUtenlogInn()
+        {
+
+        }
     }
 }
