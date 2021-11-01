@@ -43,7 +43,7 @@ export class KjopBillettComponent implements OnInit {
     destinationFrom: "",
     destinationTo: "",
     ticketType: "",
-    lugarType: "",
+    lugarType: "Standard",
     departureDato: "",
     returnDato: "",
     antallAdult: 0,
@@ -353,6 +353,10 @@ export class KjopBillettComponent implements OnInit {
   vedKredittTilbake() {
     this.visKredittSkjema = false;
     this.visKundeSkjema = true;
+  }
+
+  vedKjopOk() {
+    this.router.navigate(['/home'])
   }
 
   hideRuteOgLugarUtvalg() {
