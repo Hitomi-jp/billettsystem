@@ -135,6 +135,20 @@ namespace WebAppExamPart2.DAL
             }
         }
 
+        public async Task<bool> SlettEnBillett(int billettId) {
+            try
+            {
+                 Billett enBillett = await _kundeDB.Billetter.FindAsync(billettId);
+                 _kundeDB.Billetter.Remove(enBillett);
+                 await _kundeDB.SaveChangesAsync();
+                 return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
         public async Task<List<Destinasjon>> HentAlleDestinasjon()
         {
             try
