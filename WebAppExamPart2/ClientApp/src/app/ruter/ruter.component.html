@@ -32,7 +32,8 @@
                 <td>{{ rute.avgang }}</td>
                 <td>{{ rute.antallDagerEnVei }}</td>
                 <td>{{ rute.antallDagerToVei }}</td>
-                <td><button class="btn btn-danger" (click)="slettEnRute(rute.id)">Slett</button></td>
+                <!-- <td><button class="btn btn-danger" (click)="slettEnRute(rute.id)">Slett</button></td> -->
+                <td><button class="btn btn-danger" (click)="visModal(rute)">Slett</button></td>
                 <td><button class="btn btn-success" (click)="hentEnRute(rute.id)">Endre</button></td>
             </tr>
         </tbody>

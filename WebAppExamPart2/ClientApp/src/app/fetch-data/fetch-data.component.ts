@@ -10,6 +10,7 @@ import { MaterialModule } from '../material.module'
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from '../app.component';
+import { Modal } from '../modal/modal';
 
 @Component({
   selector: 'app-fetch-data',
@@ -38,10 +39,26 @@ export class FetchDataComponent {
   alleBillettOgKunder: any = []
   laster: boolean;
 
-  constructor(private _http: HttpClient, private router: Router, private formBuilder: FormBuilder, modalService: NgbModal) { }
+  constructor(private _http: HttpClient, private router: Router, private formBuilder: FormBuilder, private modalService: NgbModal) { }
 
   ngOnInit() {
     this.hentAlleKunder();
+  }
+
+  visModal(billett) {
+    const modalRef = this.modalService.open(Modal, {
+      backdrop: 'static',
+      keyboard: false
+    });
+
+    modalRef.componentInstance.navn = `${billett.fornavn} ${billett.etternavn}'s billett`;
+
+    modalRef.result.then(retur => {
+      console.log('Lukket med:'+ retur);
+      if (retur === 'Slett klikk') {
+        this.slettEnKunde(billett.id);
+      }
+    });
   }
 
   hentAlleKunder() {
@@ -83,13 +100,11 @@ export class FetchDataComponent {
   }
 
   slettEnKunde(id: number) {
-    if (window.confirm("Slette billett?")) {
-      const slettBillett = this.findBillett(id);
-      this._http.delete("api/kunde/slettEnKunde?kundeId=" + slettBillett.kundeId)
-        .subscribe(response => {
-          this.slettEnBillett(id);
-        })
-    }
+    const slettBillett = this.findBillett(id);
+    this._http.delete("api/kunde/slettEnKunde?kundeId=" + slettBillett.kundeId)
+      .subscribe(response => {
+        this.slettEnBillett(id);
+      })
   }
 
   joinKundeOgBillett() {

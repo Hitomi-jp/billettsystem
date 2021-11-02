@@ -18,6 +18,7 @@ import { MaterialModule } from './material.module';
 import { RuterComponent } from './ruter/ruter.component';
 import { KjopBillettComponent } from './kjop-billett/kjop-billett.component';
 import { LogoutComponent } from './logout_will_Delete/logout.component';
+import { Modal } from './modal/modal';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { LogoutComponent } from './logout_will_Delete/logout.component';
     FetchDataComponent,
     RuterComponent,
     KjopBillettComponent,
-    LogoutComponent
+    LogoutComponent,
+    Modal
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -44,6 +46,7 @@ import { LogoutComponent } from './logout_will_Delete/logout.component';
     MaterialModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [Modal] // merk!  
 })
 export class AppModule { }
