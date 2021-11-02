@@ -442,7 +442,7 @@ namespace WebAppExamPart2Test
 
             Assert.IsType<UnauthorizedResult>(resultat.Result);
         }
-
+        [Fact]
         public void SjekkIsLoggetInnLoggetInnOK()
         {
             var ruteController = new RuteController(mockRuteRepo.Object, mockLog.Object);
