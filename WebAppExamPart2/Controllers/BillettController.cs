@@ -31,11 +31,7 @@ namespace WebAppExamPart2.Controllers
         [Route("lagreBillett")]
         public async Task<ActionResult<int>> LagreBillett(Billett billett)
         {
-            // if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
-            // {
-            //     return Unauthorized();
-            // }
-
+            
             int billettId = await _kundeDB.LagreBillett(billett);
             if (billettId == 0)
             {
@@ -90,8 +86,8 @@ namespace WebAppExamPart2.Controllers
             Billett billett = await _kundeDB.HentEnBillett(billettId);
             if (billett == null)
             {
-                _kundeLog.LogInformation("Kunne ikke finne kunden");
-                return NotFound("Kunne ikke finne kunden");
+                _kundeLog.LogInformation("Kunne ikke finne billett");
+                return NotFound("Kunne ikke finne billett");
             }
             return Ok(billett);
         }

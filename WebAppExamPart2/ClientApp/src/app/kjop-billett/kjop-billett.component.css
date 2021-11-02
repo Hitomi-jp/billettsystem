@@ -49,6 +49,10 @@
     }
 }
 
+.endreButton {
+    margin-left: 1em;
+}
+
 /* Dato input */
 .datoInput {
     margin-top: 10px;

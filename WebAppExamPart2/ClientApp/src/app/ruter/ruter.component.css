@@ -7,3 +7,118 @@ table th {
     font-size: 12px;
     min-width: 100px;
 }
+
+#tableLabel,
+.formTitle {
+    text-align: center;
+    margin: 1em;
+}
+
+.registrerButton {
+    display: block;
+    margin-left: auto;
+}
+
+.inputBox {
+    padding-left: 1em;
+    position: relative;
+    margin-bottom: 2em;
+}
+
+.inputBox input {
+    border: none;
+    border-bottom: 1px solid var(--border-color);
+    border-radius: 0;
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+.inputBox label {
+    font-weight: 300;
+}
+
+#avgang {
+    width: 300px;
+    margin: 0 auto;
+}
+#avgang input {
+    border: 1px solid var(--border-color);
+}
+
+.requiredStar {
+    position: absolute;
+    color: red;
+    top: 0;
+    left: 0;
+}
+
+/* Antall */
+.antall {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    border-top: 12px solid white;
+    border-bottom: 12px solid white;
+    padding: 1em;
+}
+
+.antallDagerEnVei, 
+.antallDagerToVei {
+    width: 100%;
+    max-width: 250px;
+    min-width: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 1em;
+}
+
+.antallDagerEnVei label, 
+.antallDagerToVei label {
+    font-size: 1.2rem;
+    font-weight: 300;
+}
+
+.antallControlls {
+    width: 50%;
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.antallControlls input::-webkit-outer-spin-button,
+.antallControlls input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+.antallControlls input[type=number] {
+    -moz-appearance: textfield;
+}
+
+.antallControlls input {
+    width: 40px;
+    border: 1px solid var(--border-color);
+}
+
+.antallControlls span {
+    font-size: 25px;
+    font-weight: 800;
+    color: rgb(80, 80, 213);
+    border: 1px solid var(--border-color);
+    background-color: white;
+    padding: 0 10px;
+    border-radius: 50%;
+}
+
+.antallControlls span:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+}
+
+/* Buttons box */
+.buttonBox {
+    display: flex;
+    justify-content: center;
+    padding-bottom: 5em;
+}

@@ -10,6 +10,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using System.Net;
+using System.Diagnostics.CodeAnalysis;
 
 namespace WebAppExamPart2Test
 {
@@ -446,28 +447,8 @@ namespace WebAppExamPart2Test
 
             // Assert 
             Assert.IsType<UnauthorizedResult>(resultat);
-            //Assert.Equal((int)HttpStatusCode.Unauthorized, resultat.StatusCode);
-
+ 
         }
-
-       [Fact]
-       public async Task HentEnLoggetInnFeilServer()
-       {
-           mockKundeRepo.Setup(k => k.HentEnKunde(It.IsAny<int>())).ReturnsAsync(() => null);
-
-           var kundeController = new KundeController(mockKundeRepo.Object, mockLog.Object);
-
-           mockHttpSession[_loggetInn] = _loggetInn;
-           mockHttpContext.Setup(s => s.Session).Returns(mockHttpSession);
-           kundeController.ControllerContext.HttpContext = mockHttpContext.Object;
-
-           // Act
-           var resultat = await kundeController.HentEnKunde(It.IsAny<int>());
-
-            // Assert 
-            Assert.Equal((int)HttpStatusCode.NotFound, (resultat as ObjectResult)?.StatusCode);
-            Assert.Equal("Kunne ikke finne kunden", (resultat as ObjectResult)?.Value);
-       }
     }
 }
 

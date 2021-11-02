@@ -10,6 +10,8 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using System.Net;
+using System.Diagnostics.CodeAnalysis;
+
 namespace WebAppExamPart2Test
 {
     public class LoginOutControllerTest
