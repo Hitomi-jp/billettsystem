@@ -143,7 +143,6 @@ export class KjopBillettComponent implements OnInit {
     this.laster = true;
     this._http.get<any>("api/Rute/hentAlleStrekninger")
       .subscribe(strekninger => {
-        console.log(strekninger)
         this.alleStrekninger = strekninger;
         let fra = [];
         this.alleStrekninger.forEach(strekning => {
@@ -204,9 +203,6 @@ export class KjopBillettComponent implements OnInit {
     this._http.post<any>("api/kunde/lagreKreditt", this.kreditt)
     .subscribe(response => {
       this.visKvittering = true;
-      console.log(response)
-      // this.router.navigate(['/kvittering'])
-  
     },
       error => {
         console.log(error)
@@ -264,7 +260,6 @@ export class KjopBillettComponent implements OnInit {
   vedFunnetRuteClick(rute) {
     this.billettPris = 0;
     this.valgtRute = rute;
-    console.log(rute)
     this.lugarSkjema.patchValue({
       lugar: 'Standard'
     })
@@ -309,8 +304,6 @@ export class KjopBillettComponent implements OnInit {
     })
     this.hideRuteOgLugarUtvalg()
   }
-
-
 
   vedBilettNeste() {
     this.visBillettSkjema = false;
@@ -383,7 +376,6 @@ export class KjopBillettComponent implements OnInit {
     })
   }
   
-  
   getPrisUtenLugar(rute) {
     let totalPris = 0;
     let veiPris = 0;
@@ -391,7 +383,6 @@ export class KjopBillettComponent implements OnInit {
       veiPris += this.billett.antallAdult * rute.prisEnvei;
       if (this.billett.antallChild > 0) {
         let rabattBarn = parseInt(rute.prisRabattBarn)
-        console.log(rabattBarn)
         veiPris += (this.billett.antallChild * rute.prisEnvei) - ((this.billett.antallChild * rute.prisEnvei)*(rabattBarn/100)) ;
       }
     } else {
@@ -403,6 +394,20 @@ export class KjopBillettComponent implements OnInit {
     }
     totalPris += veiPris;
     return totalPris;
+  }
+
+  getPrisBarn() {
+    if (this.billett.ticketType === 'En vei') {
+      if (this.billett.antallChild > 0) {
+        let rabattBarn = parseInt(this.valgtRute.prisRabattBarn)
+        return (this.billett.antallChild * this.valgtRute.prisEnvei) - ((this.billett.antallChild * this.valgtRute.prisEnvei)*(rabattBarn/100)) ;
+      }
+    } else {
+      if (this.billett.antallChild > 0) {
+        let rabattBarn = parseInt(this.valgtRute.prisRabattBarn)
+        return (this.billett.antallChild * this.valgtRute.prisToVei) - ((this.billett.antallChild * this.valgtRute.prisToVei)*(rabattBarn/100)) ;
+      }
+    }
   }
 
   getCurrentDateString() {

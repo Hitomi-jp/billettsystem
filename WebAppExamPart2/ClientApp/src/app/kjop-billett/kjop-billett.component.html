@@ -265,7 +265,7 @@
         <div class="text-right mt-3">
           <h4 class="text-danger mb-0">Sommerbrett.no</h4><br />
         </div>
-        <div id="statement"><h2>Takk for du valgte å reise med oss, God tur!</h2></div><br>
+        <div id="statement"><h2>Takk for at du valgte å reise med oss, God tur!</h2></div><br>
         <div class="row">
           <div class="col-md-6">
             <h1 class="text-uppercase">Kvittering</h1>
@@ -273,6 +273,7 @@
             <div class="billed"><span class="font-weight-bold text-uppercase">Telefonnr:</span><span class="ml-1" id="telefonnr">{{kunde.telfonnr}}</span></div>
             <div class="billed"><span class="font-weight-bold text-uppercase">Adress:</span><span class="ml-1" id="adress">{{kunde.adresse}}</span></div>
             <div class="billed"><span class="font-weight-bold text-uppercase">Billett ID:</span><span class="ml-1" id="billettId">{{billett.id}}</span></div>
+            <div class="billed"><span class="font-weight-bold text-uppercase">Boatnavn:</span><span class="ml-1" id="boatNavn">{{valgtRute.boatNavn}}</span></div>
             <div class="billed"><span class="font-weight-bold text-uppercase">Dato:</span><span class="ml-1" id="currentDate">{{getCurrentDateString()}}</span></div>
           </div>
         </div>
@@ -352,7 +353,8 @@
                   <td></td>
                   <td></td>
                   <th></th>
-                  <td id="voksenpris"></td>
+                  <td id="voksenpris" *ngIf="billett.ticketType === 'En vei' ">{{billett.antallAdult * valgtRute.prisEnvei}}</td>
+                  <td id="voksenpris" *ngIf="billett.ticketType !== 'En vei' ">{{billett.antallAdult * valgtRute.prisToVei}}</td>
                 </tr>
               </tbody>
 
@@ -372,7 +374,7 @@
                   <th></th>
                   <th></th>
                   <th></th>
-                  <td id="barnpris"></td>
+                  <td id="barnpris">{{getPrisBarn()}}</td>
                 </tr>
               </tbody>
               <thead>
@@ -390,7 +392,8 @@
                   <th></th>
                   <th></th>
                   <th></th>
-                  <td id="klassettpris"></td>
+                  <td id="klassettpris" *ngIf="billett.lugarType === 'Standard' ">{{valgtRute.prisStandardLugar}}</td>
+                  <td id="klassettpris" *ngIf="billett.lugarType !== 'Standard' ">{{valgtRute.prisPremiumLugar}}</td>
                 </tr>
               </tbody>
               <thead>

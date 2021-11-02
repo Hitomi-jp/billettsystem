@@ -91,7 +91,6 @@ export class EndreComponent {
 
   ngOnInit() {
     this.hentAlleStrekninger()
-    // this.hentAlleRuter()
     this.dagsDato = this.getCurrentDateString();
   }
 
@@ -148,7 +147,6 @@ export class EndreComponent {
         error => {
           console.log(error)
         });
-    // this.laster = false;
   };
 
   hentAlleRuter() {
@@ -327,9 +325,7 @@ export class EndreComponent {
   vedFunnetRuteClick(rute) {
     this.billettPris = 0;
     this.valgtRute = rute;
-    // this.lugarSkjema.patchValue({
-    //   lugar: 'Standard'
-    // })
+   
     this.visLugarUtvalg = true;
     this.billettPris += rute.totalPris;
     
@@ -361,7 +357,6 @@ export class EndreComponent {
   }
 
   oppdaterPrisMedLugar() {
-    console.log("oppdater pris")
     this.billett.lugarType = this.lugarSkjema.value.lugar;
     this.billettPris += this.lugarSkjema.value.lugar === 'Standard' ? this.valgtRute.prisStandardLugar : this.valgtRute.prisPremiumLugar
     this.billettPris -= this.lugarSkjema.value.lugar === 'Standard' ? this.valgtRute.prisPremiumLugar : this.valgtRute.prisStandardLugar
