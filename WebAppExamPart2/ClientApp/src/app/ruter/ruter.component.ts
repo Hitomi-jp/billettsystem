@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Rute } from './Rute';
 import { Router } from '@angular/router';
+import { Modal } from '../modal/modal';
 
 @Component({
   selector: 'app-ruter',
@@ -53,12 +55,28 @@ export class RuterComponent implements OnInit {
     ],
   }
 
-  constructor(private _http: HttpClient, private router: Router, private fb: FormBuilder) {
+  constructor(private _http: HttpClient, private router: Router, private fb: FormBuilder, private modalService: NgbModal) {
     this.skjema = fb.group(this.validering)
   }
 
   ngOnInit() {
     this.sjekkIsLoggetInn()
+  }
+
+  visModal(rute) {
+    const modalRef = this.modalService.open(Modal, {
+      backdrop: 'static',
+      keyboard: false
+    });
+
+    modalRef.componentInstance.navn = "Rute: " + rute.boatNavn;
+
+    modalRef.result.then(retur => {
+      console.log('Lukket med:'+ retur);
+      if (retur === 'Slett klikk') {
+        this.slettEnRute(rute.id)
+      }
+    });
   }
 
   vedSubmit() {
@@ -198,14 +216,12 @@ export class RuterComponent implements OnInit {
   }
 
   slettEnRute(ruteId: number) {
-    if (window.confirm("Slette rute?")) {
-      this._http.delete("api/rute/" + ruteId)
-        .subscribe(retur => {
-          this.hentAlleRuter();
-        },
-          error => console.log(error)
-        );
-    }
+    this._http.delete("api/rute/" + ruteId)
+      .subscribe(retur => {
+        this.hentAlleRuter();
+      },
+        error => console.log(error)
+      );
   }
 
   tilbakeTilListe() {
