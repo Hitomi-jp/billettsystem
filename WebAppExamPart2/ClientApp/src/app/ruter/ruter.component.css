@@ -13,10 +13,15 @@ table th {
     text-align: center;
     margin: 1em;
 }
+.registrerButtonContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 
 .registrerButton {
     display: block;
-    margin-left: auto;
+    width: 150px;
 }
 
 .inputBox {

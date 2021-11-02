@@ -421,13 +421,11 @@ export class EndreComponent {
   valideringEpostKarakter() {
       const epost = this.kundeSkjema.value.epost;
       if (/[øæåØÆÅ]/.test(epost)) {
-        console.log("yess")
         this.gyldigEpostKarakter = false;
-        return 'Ugyldig karakter'
+        return 'Ugyldig karakter (æøå)'
       }else {
 
         this.gyldigEpostKarakter = true;
-        console.log("no")
         return ''
       }
     }

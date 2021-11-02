@@ -7,8 +7,4 @@
   border-collapse: collapse;
   overflow-x: auto;
 }
-.scroll {
-  display: inline-block;
-  width: 100%;
-  text-align: right;
-}
+

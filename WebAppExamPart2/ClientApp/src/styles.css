@@ -108,124 +108,13 @@ form {
 
 }
 
-  /* form .reisemalTitle {
-    width: 100%;
-    padding: 0 10px;
-  }
-
-  form label {
-    font-weight: 400;
-  }
-
-.inputContainer {
+.scroll {
+  display: inline-block;
   width: 100%;
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
+  text-align: right;
+  font-size: 1.1rem;
+  opacity: 0.8;
 }
-
-.inputBox {
-  flex: 1;
-  min-width: 350px;
-  padding: 10px;
-}
-
-.inputs {
-  display: flex;
-  flex-direction: column;
-}
-
-  .inputs input {
-    flex: 1;
-    border: 1px solid lightgray;
-    border-radius: 5px;
-    padding: 5px;
-  }
-
-.destinationGroup {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-  .destinationGroup .inputBox {
-    display: flex;
-    flex-direction: column;
-  }
-
-    .destinationGroup .inputBox select {
-      flex: 1;
-      border: 1px solid lightgray;
-      border-radius: 5px;
-      padding: 7px;
-    }
-
-.checkbox {
-  display: flex;
-  justify-content: space-around;
-}
-
-.checkboxTicketType {
-  width: 60%;
-  margin: 0 auto;
-}
-
-.feilDiv {
-  color: rgb(249, 70, 70);
-  font-size: 16px;
-  text-align: center;
-}
-
-.buttons {
-  width: 100%;
-  max-width: 300px;
-  margin-top: 1em;
-  display: flex;
-  justify-content: space-around;
-}
-
-#reg {
-  font-size: 20px;
-}
-
-#avbryt {
-  font-size: 20px;
-  background-color: white;
-  color: gray;
-  border: 1px solid gray;
-}
-
-  #avbryt:hover {
-    background-color: rgb(227, 227, 227);
-  }
-
-.utlopsDatoInputs {
-  display: flex;
-  justify-content: space-between;
-}
-
-#utlopsdatoManed,
-#utlopsdatoAr {
-  width: 45%;
-}
-
-#utlopsdatoManed {
-  margin-right: 3px;
-}
-
-#utlopsdatoAr {
-  margin-left: 3px;
-}
-
-.hidden {
-  visibility: hidden;
-}
-
-#buttonKvittering {
-  width: 100px;
-} */
-
 
 
 html, body { height: 100%; }

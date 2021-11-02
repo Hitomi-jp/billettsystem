@@ -39,8 +39,9 @@
         </tbody>
     </table>
 </div>
-<div class="registrerButtonContainer">
-    <button class="btn btn-success registrerButton" *ngIf="visRuterListe" (click)="visRegistrerRuteForm()">Registrer Rute</button>
+<div class="registrerButtonContainer" *ngIf="visRuterListe">
+    <button class="btn btn-success registrerButton"  (click)="visRegistrerRuteForm()">Registrer Rute</button>
+    <span class="scroll">scroll til høyre for å se mer info >></span>
 </div>
 
 
