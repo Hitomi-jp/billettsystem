@@ -91,7 +91,7 @@ export class EndreComponent {
 
   ngOnInit() {
     this.hentAlleStrekninger()
-    this.hentAlleRuter()
+    // this.hentAlleRuter()
     this.dagsDato = this.getCurrentDateString();
   }
 
@@ -143,11 +143,12 @@ export class EndreComponent {
           }
           this.fraDestinasjoner = fra;
         })
+        this.hentAlleRuter()
       },
         error => {
           console.log(error)
         });
-    this.laster = false;
+    // this.laster = false;
   };
 
   hentAlleRuter() {
@@ -178,6 +179,7 @@ export class EndreComponent {
         this.kunde = hentetKunde;
         this.patchValues()
       })
+      this.laster = false;
   }
 
   endreBillett() {
@@ -265,8 +267,6 @@ export class EndreComponent {
     this.billett.antallChild = this.skjema.value.antallBarn;
     this.billett.ticketType = this.skjema.value.billettType;
 
-    console.log(this.skjema.value.reiseMalFra, this.skjema.value.reiseMalTil)
-
     const filteredRuter = [];
     this.alleRuter.forEach(rute => {
       if (rute.ruteFra === this.billett.destinationFrom && rute.ruteTil === this.billett.destinationTo) {
@@ -279,12 +279,16 @@ export class EndreComponent {
   }
 
   vedFraEndre() {
+    this.valgtRute = null;
     this.filterStrekninger(true)
     this.vedFraChange()
   }
 
   vedFraChange() {
-    this.hideRuteOgLugarUtvalg()
+    this.visRuteUtvalg = false;
+    this.visLugarUtvalg = false;
+    this.oppdaterRuter()
+
     this.filterStrekninger(false)
     this.oppdaterRuter()
   }
@@ -309,6 +313,8 @@ export class EndreComponent {
   }
 
   vedBillettTypeChange() {
+    this.valgtRute = null;
+    this.billett.ruteId = null;
     this.hideRuteOgLugarUtvalg()
   }
 
@@ -332,15 +338,6 @@ export class EndreComponent {
     this.billett.ruteId = rute.id; 
   }
 
-  vedBilettNeste() {
-    this.visBillettSkjema = false;
-    this.visRuteUtvalg = false;
-    this.visLugarUtvalg = false;
-    this.visKundeSkjema = true;
-    this.billett.pris = this.billettPris;
-  }
-
-
   vedEndreTilbake() {
     this.router.navigate(['/billett'])
   }
@@ -349,10 +346,11 @@ export class EndreComponent {
     if (!this.billett.destinationFrom && !this.billett.destinationTo) {
       return;
     }
+    this.billett.ruteId = null;
     this.valgtRute = null;
     this.visRuteUtvalg = false;
     this.visLugarUtvalg = false;
-    this.removeSelectedClass()
+    // this.removeSelectedClass()
     this.oppdaterRuter()
   }
   
@@ -363,6 +361,7 @@ export class EndreComponent {
   }
 
   oppdaterPrisMedLugar() {
+    console.log("oppdater pris")
     this.billett.lugarType = this.lugarSkjema.value.lugar;
     this.billettPris += this.lugarSkjema.value.lugar === 'Standard' ? this.valgtRute.prisStandardLugar : this.valgtRute.prisPremiumLugar
     this.billettPris -= this.lugarSkjema.value.lugar === 'Standard' ? this.valgtRute.prisPremiumLugar : this.valgtRute.prisStandardLugar
@@ -382,7 +381,6 @@ export class EndreComponent {
       veiPris += this.billett.antallAdult * rute.prisEnvei;
       if (this.billett.antallChild > 0) {
         let rabattBarn = parseInt(rute.prisRabattBarn)
-        console.log(rabattBarn)
         veiPris += (this.billett.antallChild * rute.prisEnvei) - ((this.billett.antallChild * rute.prisEnvei)*(rabattBarn/100)) ;
       }
     } else {

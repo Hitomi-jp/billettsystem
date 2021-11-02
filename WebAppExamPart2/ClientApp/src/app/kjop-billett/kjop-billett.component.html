@@ -74,15 +74,16 @@
     </div>
             
     <div *ngIf="visRuteUtvalg" id="funnetRuterContainer">
-        <p class="velgAvgang">Velg Avgang</p>
+        <p class="velgAvgang">Avganger</p>
         <div id="funnetRuter">
-            <div *ngFor="let funnetRute of funnetRuter" class="{{funnetRute.id === billett.ruteId? 'selectedRute' : ''}} ruteChoice" (click)="vedFunnetRuteClick(funnetRute)">
+            <div *ngFor="let funnetRute of funnetRuter" class="{{funnetRute.id === billett.ruteId ? 'selectedRute' : ''}} ruteChoice" (click)="vedFunnetRuteClick(funnetRute)">
                 <p class="boatNavn">{{funnetRute.boatNavn}}</p>
                 <p class="pris">Pris: {{funnetRute.totalPris}}</p>
                 <p class="datoAvgang">Avgang: {{billett.departureDato}} kl: {{funnetRute.avgang}}</p>
-                <p class="datoAnkomst">Ankomst: {{billett.returnDato}} kl: {{funnetRute.avgang}}</p>
+                <p class="datoAnkomst">Ankomst: {{billett.returnDato}}</p>
             </div>
         </div>
+        <p *ngIf="valgtRute == null" class="velgAvgangError">Velg avgang</p>
     </div>
 
     <div *ngIf="visLugarUtvalg" id="lugarContainer">
@@ -218,7 +219,20 @@
                   <div class="utlopsFlex">
                     <div class="utlopsDatoBox">
                       <label>Måned</label>
-                        <input class="form-control" formControlName="utlopsMaaned" required />
+                        <select class="form-control" formControlName="utlopsMaaned" required>
+                          <option value="01">01</option>
+                          <option value="02">02</option>
+                          <option value="03">03</option>
+                          <option value="04">04</option>
+                          <option value="05">05</option>
+                          <option value="06">06</option>
+                          <option value="07">07</option>
+                          <option value="08">08</option>
+                          <option value="09">09</option>
+                          <option value="10">10</option>
+                          <option value="11">11</option>
+                          <option value="12">12</option>
+                        </select>
                         <span class="requiredStar starUtlopsDato" *ngIf="kredittSkjema.get('utlopsMaaned').hasError('required')">*</span>
                         <p class="alert alert-warning" *ngIf="kredittSkjema.get('utlopsMaaned').hasError('pattern')">
                             2 siffer
@@ -233,11 +247,12 @@
                         </p>
                     </div>
                   </div>
+                  <span class="utlopsDatoError">{{valideringUtlopsDato()}}</span>
                 </div>
               </div>
 
               <div class="form-group kredittFormButtons" >
-                  <button class="btn btn-primary" [disabled]="!kredittSkjema.valid" (click)="lagreKunde()">Lagre</button>
+                  <button class="btn btn-primary" [disabled]="!kredittSkjema.valid || ugyldigKredittUtlopsdato" (click)="lagreKunde()">Lagre</button>
                   <button class="btn btn-default" (click)="vedKredittTilbake()">Tilbake</button>
               </div>
         </form>

@@ -2,12 +2,14 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 using WebAppExamPart2.Models;
 
 namespace WebAppExamPart2.DAL
 {
+    [ExcludeFromCodeCoverage]
     public static class DBInitialize
     {
         public static void Initialize(IApplicationBuilder app)

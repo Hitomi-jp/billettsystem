@@ -76,20 +76,20 @@ export class FetchDataComponent {
   };
 
   slettEnBillett(billettId: number) {
-    const slettBillett = this.findBillett(billettId);
     this._http.delete("api/billett?billettId=" + billettId)
       .subscribe(response => {
         console.log("slettet billett")
-        this.slettEnKunde(slettBillett.kundeId);
+        this.alleBillettOgKunder = [];
+        this.hentAlleKunder()
       })
   }
 
-  slettEnKunde(kundeId: number) {
-    this._http.delete("api/kunde/slettEnKunde?kundeId=" + kundeId)
+  slettEnKunde(id: number) {
+    const slettBillett = this.findBillett(id);
+    this._http.delete("api/kunde/slettEnKunde?kundeId=" + slettBillett.kundeId)
       .subscribe(response => {
         console.log("slettet kunde")
-        this.alleBillettOgKunder = [];
-        this.hentAlleKunder()
+        this.slettEnBillett(id);
       })
   }
 

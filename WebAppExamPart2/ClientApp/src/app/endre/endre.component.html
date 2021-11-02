@@ -73,15 +73,16 @@
     </div>
             
     <div *ngIf="visRuteUtvalg" id="funnetRuterContainer">
-        <p class="velgAvgang">Velg Avgang</p>
+        <p class="velgAvgang">Avganger</p>
         <div id="funnetRuter">
-            <div *ngFor="let funnetRute of funnetRuter" class="{{funnetRute.id === billett.ruteId? 'selectedRute' : ''}} ruteChoice" (click)="vedFunnetRuteClick(funnetRute)">
+            <div *ngFor="let funnetRute of funnetRuter" class="{{funnetRute.id === billett.ruteId ? 'selectedRute' : ''}} ruteChoice" (click)="vedFunnetRuteClick(funnetRute)">
                 <p class="boatNavn">{{funnetRute.boatNavn}}</p>
-                <p class="pris">Pris: {{funnetRute.totalPris}}</p>
+                <p class="pris">Pris: {{funnetRute.totalPris.toFixed(2)}}</p>
                 <p class="datoAvgang">Avgang: {{billett.departureDato}} kl: {{funnetRute.avgang}}</p>
-                <p class="datoAnkomst">Ankomst: {{billett.returnDato}} kl: {{funnetRute.avgang}}</p>
+                <p class="datoAnkomst">Ankomst: {{billett.returnDato}}</p>
             </div>
         </div>
+        <p *ngIf="visRuteUtvalg && valgtRute === null" class="velgAvgangError">Velg avgang</p>
     </div>
 
     <div *ngIf="visLugarUtvalg" id="lugarContainer">
@@ -99,7 +100,7 @@
             </div>
         </form>
         <div class="neste">
-            <p class="totalPrisEndre">Total Pris: {{billettPris}}</p>
+            <p class="totalPrisEndre">Total Pris: {{billettPris.toFixed(2)}}</p>
         </div>
         <!-- <p (click)="vedBilettNeste()">Neste</p> -->
     </div>

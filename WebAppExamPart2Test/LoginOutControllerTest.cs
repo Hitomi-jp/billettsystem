@@ -99,5 +99,37 @@ namespace WebAppExamPart2Test
             // Assert
             Assert.Equal("", mockHttpSession[_loggetInn]);
         }
+
+        [Fact]
+        public void SjekkIsLoggetInnLoggetInnOK()
+        {
+            var logInOutcontroller = new LogInOutController(mockLogInOut.Object, mockLog.Object);
+
+            mockHttpContext.Setup(s => s.Session).Returns(mockHttpSession);
+            mockHttpSession[_loggetInn] = _loggetInn;
+            logInOutcontroller.ControllerContext.HttpContext = mockHttpContext.Object;
+
+            // Act
+            logInOutcontroller.SjekkIsLoggetInn();
+
+            // Assert
+            Assert.Equal("loggetInn", mockHttpSession[_loggetInn]);
+        }
+
+        [Fact]
+        public void SjekkIsLoggetInnLoggetInnFeil()
+        {
+            var logInOutcontroller = new LogInOutController(mockLogInOut.Object, mockLog.Object);
+
+            mockHttpContext.Setup(s => s.Session).Returns(mockHttpSession);
+            mockHttpSession[_loggetInn] = _ikkeLoggetInn;
+            logInOutcontroller.ControllerContext.HttpContext = mockHttpContext.Object;
+
+            // Act
+            logInOutcontroller.SjekkIsLoggetInn();
+
+            // Assert
+            Assert.Equal("", mockHttpSession[_loggetInn]);
+        }
     }
 }
