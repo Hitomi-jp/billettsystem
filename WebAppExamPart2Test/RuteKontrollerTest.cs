@@ -116,7 +116,7 @@ namespace WebAppExamPart2Test
         }
 
         [Fact]
-        public async Task EndreRuteOk()
+        public async Task EndreRuteLoggetInnOk()
         {
             mockRuteRepo.Setup(rute => rute.EndreRute(It.IsAny<Rute>())).ReturnsAsync(true);
 
@@ -133,13 +133,14 @@ namespace WebAppExamPart2Test
         }
 
         [Fact]
-        public async Task EndreRuteIkkOk()
+        public async Task EndreRuteLoggetInnIkkeOk()
         {
             //Arrange
             mockRuteRepo.Setup(rute => rute.EndreRute(It.IsAny<Rute>())).ReturnsAsync(false);
 
             var ruteController = new RuteController(mockRuteRepo.Object, mockLog.Object);
-            mockHttpSession[_loggetInn] = _ikkeLoggetInn;
+
+            mockHttpSession[_loggetInn] = _loggetInn;
             mockHttpContext.Setup(s => s.Session).Returns(mockHttpSession);
             ruteController.ControllerContext.HttpContext = mockHttpContext.Object;
 
@@ -185,6 +186,24 @@ namespace WebAppExamPart2Test
             Assert.Equal("Fiel i input validering på server", (resultat.Result as ObjectResult)?.Value);
 
         }
+
+        [Fact]
+        public async Task EndreRuteIkkeLoggetInn()
+        {
+            mockRuteRepo.Setup(rute => rute.EndreRute(It.IsAny<Rute>())).ReturnsAsync(true);
+
+            var ruteController = new RuteController(mockRuteRepo.Object, mockLog.Object);
+
+            mockHttpSession[_loggetInn] = _ikkeLoggetInn;
+            mockHttpContext.Setup(s => s.Session).Returns(mockHttpSession);
+            ruteController.ControllerContext.HttpContext = mockHttpContext.Object;
+
+            //Act
+            var resultat = await ruteController.EndreRute(It.IsAny<Rute>());
+
+            Assert.IsType<UnauthorizedResult>(resultat.Result);
+        }
+
 
         [Fact]
         public async Task HentAlleRuterOk()
@@ -243,10 +262,6 @@ namespace WebAppExamPart2Test
             mockRuteRepo.Setup(K => K.HentAlleRuter()).ReturnsAsync(ruteList);
             var ruteController = new RuteController(mockRuteRepo.Object, mockLog.Object);
 
-            mockHttpSession[_loggetInn] = _loggetInn;
-            mockHttpContext.Setup(s => s.Session).Returns(mockHttpSession);
-            ruteController.ControllerContext.HttpContext = mockHttpContext.Object;
-
             var resultat = await ruteController.HentAlleRuter();
             Assert.Equal((int)HttpStatusCode.OK, (resultat.Result as ObjectResult)?.StatusCode);
             Assert.Equal<List<Rute>>((resultat.Result as ObjectResult)?.Value as List<Rute>, ruteList);
@@ -254,19 +269,16 @@ namespace WebAppExamPart2Test
         }
 
         [Fact]
-        public async Task HentAlleRuterIkkeLoggetInn()
+        public async Task HentAlleRuterFeilDB()
         {
             mockRuteRepo.Setup(K => K.HentAlleRuter()).ReturnsAsync(()=> null);
             var ruteController = new RuteController(mockRuteRepo.Object, mockLog.Object);
 
-            mockHttpSession[_loggetInn] = _ikkeLoggetInn;
-            mockHttpContext.Setup(s => s.Session).Returns(mockHttpSession);
-            ruteController.ControllerContext.HttpContext = mockHttpContext.Object;
-
             var resultat = await ruteController.HentAlleRuter();
 
-            Assert.IsType<UnauthorizedResult>(resultat.Result);
-        }        
+            Assert.Equal((int)HttpStatusCode.OK, (resultat.Result as ObjectResult)?.StatusCode);
+            Assert.Null(resultat.Value);
+        }  
         
         [Fact]
         public async Task HentEnRuteOk()
@@ -290,10 +302,6 @@ namespace WebAppExamPart2Test
             mockRuteRepo.Setup(K => K.HentEnRute(It.IsAny<int>())).ReturnsAsync(rute1);
             var ruteController = new RuteController(mockRuteRepo.Object, mockLog.Object);
 
-            mockHttpSession[_loggetInn] = _loggetInn;
-            mockHttpContext.Setup(s => s.Session).Returns(mockHttpSession);
-            ruteController.ControllerContext.HttpContext = mockHttpContext.Object;
-
             var resultat = await ruteController.HentEnRute(It.IsAny<int>());
             Assert.Equal((int)HttpStatusCode.OK, (resultat.Result as ObjectResult)?.StatusCode);
         }
@@ -304,31 +312,10 @@ namespace WebAppExamPart2Test
             mockRuteRepo.Setup(K => K.HentEnRute(It.IsAny<int>())).ReturnsAsync(()=>null);
             var ruteController = new RuteController(mockRuteRepo.Object, mockLog.Object);
 
-            mockHttpSession[_loggetInn] = _loggetInn;
-            mockHttpContext.Setup(s => s.Session).Returns(mockHttpSession);
-            ruteController.ControllerContext.HttpContext = mockHttpContext.Object;
-
             var resultat = await ruteController.HentEnRute(It.IsAny<int>());
             Assert.Equal((int)HttpStatusCode.NotFound, (resultat.Result as ObjectResult)?.StatusCode);
             Assert.Equal("Kunnde ikke finne ruten", (resultat.Result as ObjectResult)?.Value);
-        }        
-        
-         
-        [Fact]
-        public async Task HentEnRuteIkkeLoggetInn()
-        {
-            mockRuteRepo.Setup(K => K.HentEnRute(It.IsAny<int>())).ReturnsAsync(()=>null);
-            var ruteController = new RuteController(mockRuteRepo.Object, mockLog.Object);
-
-            mockHttpSession[_loggetInn] = _ikkeLoggetInn;
-            mockHttpContext.Setup(s => s.Session).Returns(mockHttpSession);
-            ruteController.ControllerContext.HttpContext = mockHttpContext.Object;
-
-            var resultat = await ruteController.HentEnRute(It.IsAny<int>());
-
-            Assert.IsType<UnauthorizedResult>(resultat.Result);
-        }        
-        
+        }               
               
         [Fact]
         public async Task SletteRuteOk()
@@ -419,30 +406,25 @@ namespace WebAppExamPart2Test
             mockRuteRepo.Setup(K => K.HentAlleStrekninger()).ReturnsAsync(StrekningList);
             var ruteController = new RuteController(mockRuteRepo.Object, mockLog.Object);
 
-            mockHttpSession[_loggetInn] = _loggetInn;
-            mockHttpContext.Setup(s => s.Session).Returns(mockHttpSession);
-            ruteController.ControllerContext.HttpContext = mockHttpContext.Object;
-
             var resultat = await ruteController.HentAlleStrekninger();
+
             Assert.Equal((int)HttpStatusCode.OK, (resultat.Result as ObjectResult)?.StatusCode);
             Assert.Equal<List<Strekning>>((resultat.Result as ObjectResult)?.Value as List<Strekning>, StrekningList);
         }   
         
         [Fact]
-        public async Task HentAlleStrekningerIkkOk()
+        public async Task HentAlleStrekningerFeilDB()
         {
             mockRuteRepo.Setup(K => K.HentAlleStrekninger()).ReturnsAsync(() => null);
             var ruteController = new RuteController(mockRuteRepo.Object, mockLog.Object);
 
-            mockHttpSession[_loggetInn] = _ikkeLoggetInn;
-            mockHttpContext.Setup(s => s.Session).Returns(mockHttpSession);
-            ruteController.ControllerContext.HttpContext = mockHttpContext.Object;
-
             var resultat = await ruteController.HentAlleStrekninger();
 
-            Assert.IsType<UnauthorizedResult>(resultat.Result);
+            Assert.Equal((int)HttpStatusCode.OK, (resultat.Result as ObjectResult)?.StatusCode);
+            Assert.Null(resultat.Value);
         }
 
+        [Fact]
         public void SjekkIsLoggetInnLoggetInnOK()
         {
             var ruteController = new RuteController(mockRuteRepo.Object, mockLog.Object);
