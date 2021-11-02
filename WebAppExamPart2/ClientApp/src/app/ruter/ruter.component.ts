@@ -43,7 +43,6 @@ export class RuterComponent implements OnInit {
     ],
     prisPremiumLugar: [
       null, Validators.compose([Validators.required, Validators.pattern("[0-9]+")])
-      // null, Validators.compose([Validators.required, Validators.pattern("[1-9]([0-9]+)?")])
     ],
     avgang: [
       null, Validators.compose([Validators.required, Validators.pattern("[012][0-9][:][0-5][0-9]")])
@@ -60,15 +59,8 @@ export class RuterComponent implements OnInit {
 
   ngOnInit() {
     this.sjekkIsLoggetInn()
-    // this.skjema.patchValue({
-    //   antallDagerEnVei: 0,
-    //   antallDagerToVei: 0
-    // })
   }
 
-  vedAvgangChange() {
-    console.log(this.skjema.value.avgang)
-  }
   vedSubmit() {
     if (this.visFormLagre) {
       this.registrerEnRute()
@@ -121,9 +113,6 @@ export class RuterComponent implements OnInit {
     nyRute.prisEnvei = parseInt(this.skjema.value.prisEnvei);
     nyRute.prisToVei = parseInt(this.skjema.value.prisToVei);
     let rabatt = this.skjema.value.prisRabattBarn.toString();
-    // if (this.skjema.value.prisRabattBarn < 10) {
-    //   rabatt = this.skjema.value.prisRabattBarn.toString().padStart(2, 0);
-    // }
     nyRute.prisRabattBarn = rabatt;
     nyRute.prisStandardLugar = parseInt(this.skjema.value.prisStandardLugar);
     nyRute.prisPremiumLugar = parseInt(this.skjema.value.prisPremiumLugar);
@@ -147,7 +136,6 @@ export class RuterComponent implements OnInit {
     this.laster = true;
     this._http.get<any>("api/Rute")
       .subscribe(ruter => {
-        console.log(ruter)
         this.alleRuter = ruter;
       },
         error => {
@@ -210,12 +198,14 @@ export class RuterComponent implements OnInit {
   }
 
   slettEnRute(ruteId: number) {
-    this._http.delete("api/rute/" + ruteId)
-      .subscribe(retur => {
-        this.hentAlleRuter();
-      },
-        error => console.log(error)
-      );
+    if (window.confirm("Slette rute?")) {
+      this._http.delete("api/rute/" + ruteId)
+        .subscribe(retur => {
+          this.hentAlleRuter();
+        },
+          error => console.log(error)
+        );
+    }
   }
 
   tilbakeTilListe() {

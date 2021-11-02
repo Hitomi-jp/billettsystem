@@ -62,7 +62,6 @@ export class FetchDataComponent {
     this._http.get<Billett[]>("api/billett/hentAlleBilletter")
       .subscribe(billettene => {
         this.alleBilletter = billettene;
-        console.log(billettene)
         if (this.alleKunder && this.alleBilletter) {
           this.joinKundeOgBillett()
         }
@@ -78,19 +77,19 @@ export class FetchDataComponent {
   slettEnBillett(billettId: number) {
     this._http.delete("api/billett?billettId=" + billettId)
       .subscribe(response => {
-        console.log("slettet billett")
         this.alleBillettOgKunder = [];
         this.hentAlleKunder()
       })
   }
 
   slettEnKunde(id: number) {
-    const slettBillett = this.findBillett(id);
-    this._http.delete("api/kunde/slettEnKunde?kundeId=" + slettBillett.kundeId)
-      .subscribe(response => {
-        console.log("slettet kunde")
-        this.slettEnBillett(id);
-      })
+    if (window.confirm("Slette billett?")) {
+      const slettBillett = this.findBillett(id);
+      this._http.delete("api/kunde/slettEnKunde?kundeId=" + slettBillett.kundeId)
+        .subscribe(response => {
+          this.slettEnBillett(id);
+        })
+    }
   }
 
   joinKundeOgBillett() {
@@ -106,9 +105,5 @@ export class FetchDataComponent {
 
   findBillett(billettId) {
     return this.alleBilletter.find(billett => billett.id === billettId)
-  }
-
-  slettAlle() {
-
   }
 }

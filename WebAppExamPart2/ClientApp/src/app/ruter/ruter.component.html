@@ -118,7 +118,7 @@
             </div>
             <div class="form-group inputBox" id="avgang">
                 <label>Avgang</label>
-                <input class="form-control" type="time" min="02:00" max="25:00" formControlName="avgang" (change)="vedAvgangChange()" onkeydown="return false"/>
+                <input class="form-control" type="time" min="02:00" max="25:00" formControlName="avgang" onkeydown="return false"/>
                 <span class="requiredStar" *ngIf="skjema.get('avgang').hasError('required')">*</span>
                 <p class="alert alert-warning" *ngIf="skjema.get('avgang').hasError('pattern')">
                     Ugyldig tid

@@ -12,12 +12,13 @@
         <th>Etternavn</th>
         <th>Fra</th>
         <th>Til</th>
-        <th>DepDato</th>
-        <th>DepDato</th>
+        <th>Avgang</th>
+        <th>Ankomst</th>
         <th>Antall Voksne</th>
         <th>Antall Barn</th>
         <th>Billetttype</th>
         <th>Lugar</th>
+        <th>Pris</th>
         <th>Telefonnr</th>
         <th>E-post</th>
         <th>Addresse</th>
@@ -39,11 +40,12 @@
         <td>{{ billett.antallChild }}</td>
         <td>{{ billett.ticketType }}</td>
         <td>{{ billett.lugarType }}</td>
+        <td>{{ billett.pris }}</td>
         <td>{{ billett.telfonnr }}</td>
         <td>{{ billett.epost }}</td>
         <td>{{ billett.adresse }}</td>
-        <td>{{ billett.postnr }}</td>
         <td>{{ billett.poststed }}</td>
+        <td>{{ billett.postnr }}</td>
 
         <td>
           <button class="btn btn-danger" (click)="slettEnKunde(billett.id)">
