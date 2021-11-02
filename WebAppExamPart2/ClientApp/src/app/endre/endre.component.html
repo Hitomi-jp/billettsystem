@@ -177,7 +177,10 @@
                 </div>
               </div>
               <div class="form-group kundeFormButtons">
-                  <button class="btn btn-primary" [disabled]="!kundeSkjema.valid || !skjema.valid || valgtRute === null" (click)="vedEndre()">Endre</button>
+                  <div>
+                      <span *ngIf="valgtRute == null" class="velgAvgangError">Velg avgang</span>
+                      <button class="btn btn-primary endreButton" [disabled]="!kundeSkjema.valid || !skjema.valid || valgtRute === null" (click)="vedEndre()">Endre</button>
+                  </div>
                   <button class="btn btn-default" (click)="vedEndreTilbake()">Tilbake</button>
               </div>
         </form>

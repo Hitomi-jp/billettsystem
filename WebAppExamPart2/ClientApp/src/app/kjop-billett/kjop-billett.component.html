@@ -1,7 +1,7 @@
 
 <p *ngIf="laster"><em>Loading...</em></p>
 
-<h1 id="tableLabel" class="title">Kjop Billett</h1>
+<h1 id="tableLabel" class="title" *ngIf="!visKvittering">Kjop Billett</h1>
 <div class="container" *ngIf="!visKvittering">
   <div *ngIf="visBillettSkjema" class="billettSkjema">
         <form [formGroup]="skjema" (ngSubmit)="vedSubmit()">

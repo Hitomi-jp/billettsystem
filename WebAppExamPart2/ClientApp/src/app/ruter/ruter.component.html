@@ -1,4 +1,4 @@
-<h1 id="tableLabel">Ruter</h1>
+<h1 id="tableLabel" *ngIf="!visForm">Ruter</h1>
 
 <p *ngIf="laster"><em>Loading...</em></p>
 
@@ -38,89 +38,112 @@
         </tbody>
     </table>
 </div>
-<button class="btn btn-success" *ngIf="visRuterListe" (click)="visRegistrerRuteForm()">Registrer Rute</button>
+<div class="registrerButtonContainer">
+    <button class="btn btn-success registrerButton" *ngIf="visRuterListe" (click)="visRegistrerRuteForm()">Registrer Rute</button>
+</div>
 
 
 <div class="container">
     <div *ngIf="visForm">
+        <h2 class="formTitle" *ngIf="visFormLagre">Registrer Rute</h2>
+        <h2 class="formTitle" *ngIf="visFormEndre">Endre Rute</h2>
         <form [formGroup]="skjema" (ngSubmit)="vedSubmit()">
-            <div class="form-group">
+            <div class="form-group inputBox">
                 <label>Båtnavn</label>
-                <input class="form-control" formControlName="boatNavn" />
-                <p class="alert alert-warning" [hidden]="skjema.controls.boatNavn.valid || (skjema.controls.boatNavn.pristine && !submitted)">
-                    Båtnavn til er obligatorisk.
+                <input class="form-control" formControlName="boatNavn" required/>
+                <span class="requiredStar" *ngIf="skjema.get('boatNavn').hasError('required')">*</span>
+                <p class="alert alert-warning" *ngIf="skjema.get('boatNavn').hasError('pattern')">
+                    2-30 bokstaver
                 </p>
             </div>
-            <div class="form-group">
+            <div class="form-group inputBox">
                 <label>Fra</label>
-                <input class="form-control" formControlName="ruteFra" />
-                <p class="alert alert-warning" [hidden]="skjema.controls.ruteFra.valid || (skjema.controls.ruteFra.pristine && !submitted)">
-                    Rute til er obligatorisk.
+                <input class="form-control" formControlName="ruteFra" required/>
+                <span class="requiredStar" *ngIf="skjema.get('ruteFra').hasError('required')">*</span>
+                <p class="alert alert-warning" *ngIf="skjema.get('ruteFra').hasError('pattern')">
+                    2-30 bokstaver
                 </p>
             </div>
-            <div class="form-group">
+            <div class="form-group inputBox">
                 <label>Til</label>
-                <input class="form-control" formControlName="ruteTil" />
-                <p class="alert alert-warning" [hidden]="skjema.controls.ruteTil.valid || (skjema.controls.ruteTil.pristine && !submitted)">
-                    Rute til er obligatorisk.
+                <input class="form-control" formControlName="ruteTil" required/>
+                <span class="requiredStar" *ngIf="skjema.get('ruteTil').hasError('required')">*</span>
+                <p class="alert alert-warning" *ngIf="skjema.get('ruteTil').hasError('pattern')">
+                    2-30 bokstaver
                 </p>
             </div>
-            <div class="form-group">
+            <div class="form-group inputBox">
                 <label>Pris en-vei (NOK)</label>
-                <input class="form-control" type="number" formControlName="prisEnvei" />
-                <p class="alert alert-warning" [hidden]="skjema.controls.prisEnvei.valid || (skjema.controls.prisEnvei.pristine && !submitted)">
-                    Pris en-vei er obligatorisk.
+                <input class="form-control" type="text" formControlName="prisEnvei" required/>
+                <span class="requiredStar" *ngIf="skjema.get('prisEnvei').hasError('required')">*</span>
+                <p class="alert alert-warning" *ngIf="skjema.get('prisEnvei').hasError('pattern')">
+                    Ugyldig pris/tall
                 </p>
+                <p *ngIf="skjema.controls.prisEnvei.valid">{{valideringNummer('prisEnvei')}}</p>
             </div>
-            <div class="form-group">
+            <div class="form-group inputBox">
                 <label>Pris to-vei (NOK)</label>
-                <input class="form-control" type="number" formControlName="prisToVei" />
-                <p class="alert alert-warning" [hidden]="skjema.controls.prisToVei.valid || (skjema.controls.prisToVei.pristine && !submitted)">
-                    Pris to-vei er obligatorisk
+                <input class="form-control" type="text" formControlName="prisToVei" required/>
+                <span class="requiredStar" *ngIf="skjema.get('prisToVei').hasError('required')">*</span>
+                <p class="alert alert-warning" *ngIf="skjema.get('prisToVei').hasError('pattern')">
+                    Ugyldig pris/tall
                 </p>
+                <p *ngIf="skjema.controls.prisToVei.valid">{{valideringNummer('prisToVei')}}</p>
             </div>
-            <div class="form-group">
+            <div class="form-group inputBox">
                 <label>Rabatt til Barn (%)</label>
-                <input class="form-control" type="number" formControlName="prisRabattBarn" />
-                <p class="alert alert-warning" [hidden]="skjema.controls.prisRabattBarn.valid || (skjema.controls.prisRabattBarn.pristine && !submitted)">
-                    Pris rabatt til barn er obligatorisk.
+                <input class="form-control" type="text" min="0" max="100" formControlName="prisRabattBarn" required/>
+                <span class="requiredStar" *ngIf="skjema.get('prisRabattBarn').hasError('required')">*</span>
+                <p class="alert alert-warning" *ngIf="skjema.get('prisRabattBarn').hasError('pattern')">
+                    Ugyldig tall (kun 0-100)
                 </p>
+                <p *ngIf="skjema.controls.prisRabattBarn.valid">{{valideringNummer('rabatt')}}</p>
             </div>
-            <div class="form-group">
+            <div class="form-group inputBox">
                 <label>Pris Standard Lugar (NOK)</label>
-                <input class="form-control" type="number" formControlName="prisStandardLugar" />
-                <p class="alert alert-warning" [hidden]="skjema.controls.prisStandardLugar.valid || (skjema.controls.prisStandardLugar.pristine && !submitted)">
-                    Pris for standard luger er obligatorisk
+                <input class="form-control" formControlName="prisStandardLugar" />
+                <span class="requiredStar" *ngIf="skjema.get('prisStandardLugar').hasError('required')">*</span>
+                <p class="alert alert-warning" *ngIf="skjema.get('prisStandardLugar').hasError('pattern')">
+                    Ugyldig pris/tall
                 </p>
-            </div><div class="form-group">
+                <p *ngIf="skjema.controls.prisStandardLugar.valid">{{valideringNummer('prisStandardLugar')}}</p>
+            </div><div class="form-group inputBox">
                 <label>Pris Premium Lugar (NOK)</label>
-                <input class="form-control" type="number" formControlName="prisPremiumLugar" />
-                <p class="alert alert-warning" [hidden]="skjema.controls.prisPremiumLugar.valid || (skjema.controls.prisPremiumLugar.pristine && !submitted)">
-                    Pris for premium lugar er obligatorisk
+                <input class="form-control"  formControlName="prisPremiumLugar" />
+                <span class="requiredStar" *ngIf="skjema.get('prisPremiumLugar').hasError('required')">*</span>
+                <p class="alert alert-warning" *ngIf="skjema.get('prisPremiumLugar').hasError('pattern')">
+                    Ugyldig pris/tall
                 </p>
+                <p *ngIf="skjema.controls.prisPremiumLugar.valid">{{valideringNummer('prisPremiumLugar')}}</p>
             </div>
-            <div class="form-group">
+            <div class="form-group inputBox" id="avgang">
                 <label>Avgang</label>
-                <input class="form-control" type="time" min="02:00" max="25:00" formControlName="avgang" (change)="vedAvgangChange()" />
-                <p class="alert alert-warning" [hidden]="skjema.controls.avgang.valid || (skjema.controls.avgang.pristine && !submitted)">
-                    Avgang er obligatorisk.
+                <input class="form-control" type="time" min="02:00" max="25:00" formControlName="avgang" (change)="vedAvgangChange()" onkeydown="return false"/>
+                <span class="requiredStar" *ngIf="skjema.get('avgang').hasError('required')">*</span>
+                <p class="alert alert-warning" *ngIf="skjema.get('avgang').hasError('pattern')">
+                    Ugyldig tid
                 </p>
             </div>
-            <div class="form-group">
-                <label>Antall Dager En-vei</label>
-                <input class="form-control" type="number" min="1" formControlName="antallDagerEnVei" />
-                <p class="alert alert-warning" [hidden]="skjema.controls.antallDagerEnVei.valid || (skjema.controls.antallDagerEnVei.pristine && !submitted)">
-                    Antall dager en-vei er obligatorisk.
-                </p>
+            <div class="form-group antall">
+                <div class="antallDagerEnVei">
+                    <label>Antall Dager En-vei</label>
+                    <div class="antallControlls">
+                      <span (click)="vedAntallDagerEnveiMinus()">-</span>
+                      <input type="number" min="0"  formControlName="antallDagerEnVei" readonly/>
+                      <span (click)="vedAntallDagerEnveiPlus()">+</span>
+                    </div>
+                </div>
+                <div class="antallDagerToVei">
+                    <label>Antall Dager To-vei</label>
+                    <div class="antallControlls">
+                      <span (click)="vedAntallDagerToVeiMinus()">-</span>
+                      <input type="number" min="0"  formControlName="antallDagerToVei" readonly/>
+                      <span (click)="vedAntallDagerToVeiPlus()">+</span>                     
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label>Antall Dager To-vei</label>
-                <input class="form-control" type="number" min="1" formControlName="antallDagerToVei" />
-                <p class="alert alert-warning" [hidden]="skjema.controls.antallDagerToVei.valid || (skjema.controls.antallDagerToVei.pristine && !submitted)">
-                    Antall dager to-vei er obligatorisk.
-                </p>
-            </div>
-            <div class="form-group">
+
+            <div class="form-group buttonBox">
                 <button type="submit" *ngIf="visFormLagre" [disabled]="!skjema.valid" class="btn btn-primary">Registrer</button>
                 <button type="submit" *ngIf="!visFormLagre" [disabled]="!skjema.valid" class="btn btn-primary">Endre</button>
                 <button class="btn btn-default" (click)="tilbakeTilListe()">Tilbake</button>

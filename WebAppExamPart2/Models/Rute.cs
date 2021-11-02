@@ -26,13 +26,13 @@ namespace WebAppExamPart2.Models
         [RegularExpression(@"[a-zA-ZæøåÆØÅ. \-]{2,30}")]
         public String RuteTil { get; set; }
 
-        [RegularExpression(@"[0-9]+")]
+        [RegularExpression(@"[1-9]([0-9]+)?")]
         public int PrisEnvei { get; set; }
 
-        [RegularExpression(@"[0-9]+")]
+        [RegularExpression(@"[1-9]([0-9]+)?")]
         public int PrisToVei { get; set; }
 
-        [RegularExpression(@"[0-9]{1,2}")]
+        [RegularExpression(@"[0-9]{1,2}([0]{1})?")]
         public string PrisRabattBarn { get; set; }
 
         [RegularExpression(@"[0-9]+")]

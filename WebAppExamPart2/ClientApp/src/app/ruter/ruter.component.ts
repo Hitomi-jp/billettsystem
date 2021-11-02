@@ -30,28 +30,27 @@ export class RuterComponent implements OnInit {
       null, Validators.compose([Validators.required, Validators.pattern("[a-zA-ZøæåØÆÅ\\-. ]{2,30}")])
     ],
     prisEnvei: [
-      null, Validators.compose([Validators.required, Validators.pattern("[0-9]+")])
+      null, Validators.compose([Validators.required, Validators.pattern("[1-9]([0-9]+)?")])
     ],
     prisToVei: [
-      null, Validators.compose([Validators.required, Validators.pattern("[0-9]+")])
+      null, Validators.compose([Validators.required, Validators.pattern("[1-9]([0-9]+)?")])
     ],
     prisRabattBarn: [
-      null, Validators.compose([Validators.required, Validators.pattern("[0-9]{1,2}")])
+      null, Validators.compose([Validators.required, Validators.pattern("[0-9]{1,2}([0]{1})?")])
     ],
     prisStandardLugar: [
       null, Validators.compose([Validators.required, Validators.pattern("[0-9]+")])
     ],
     prisPremiumLugar: [
       null, Validators.compose([Validators.required, Validators.pattern("[0-9]+")])
+      // null, Validators.compose([Validators.required, Validators.pattern("[1-9]([0-9]+)?")])
     ],
     avgang: [
       null, Validators.compose([Validators.required, Validators.pattern("[012][0-9][:][0-5][0-9]")])
     ],
     antallDagerEnVei: [
-      null, Validators.compose([Validators.required, Validators.pattern("[0-9]+")])
     ],
     antallDagerToVei: [
-      null, Validators.compose([Validators.required, Validators.pattern("[0-9]+")])
     ],
   }
 
@@ -61,6 +60,10 @@ export class RuterComponent implements OnInit {
 
   ngOnInit() {
     this.sjekkIsLoggetInn()
+    // this.skjema.patchValue({
+    //   antallDagerEnVei: 0,
+    //   antallDagerToVei: 0
+    // })
   }
 
   vedAvgangChange() {
@@ -100,8 +103,8 @@ export class RuterComponent implements OnInit {
       prisStandardLugar: "",
       prisPremiumLugar: "",
       avgang: "",
-      antallDagerEnVei: "",
-      antallDagerToVei: ""
+      antallDagerEnVei: 0,
+      antallDagerToVei: 0
     });
     this.skjema.markAsPristine();
     this.visForm = true;
@@ -115,15 +118,15 @@ export class RuterComponent implements OnInit {
     nyRute.boatNavn = this.skjema.value.boatNavn;
     nyRute.ruteFra = this.skjema.value.ruteFra;
     nyRute.ruteTil = this.skjema.value.ruteTil;
-    nyRute.prisEnvei = this.skjema.value.prisEnvei;
-    nyRute.prisToVei = this.skjema.value.prisToVei;
+    nyRute.prisEnvei = parseInt(this.skjema.value.prisEnvei);
+    nyRute.prisToVei = parseInt(this.skjema.value.prisToVei);
     let rabatt = this.skjema.value.prisRabattBarn.toString();
     // if (this.skjema.value.prisRabattBarn < 10) {
     //   rabatt = this.skjema.value.prisRabattBarn.toString().padStart(2, 0);
     // }
     nyRute.prisRabattBarn = rabatt;
-    nyRute.prisStandardLugar = this.skjema.value.prisStandardLugar;
-    nyRute.prisPremiumLugar = this.skjema.value.prisPremiumLugar;
+    nyRute.prisStandardLugar = parseInt(this.skjema.value.prisStandardLugar);
+    nyRute.prisPremiumLugar = parseInt(this.skjema.value.prisPremiumLugar);
     nyRute.avgang = this.skjema.value.avgang;
     nyRute.antallDagerEnVei = this.skjema.value.antallDagerEnVei;
     nyRute.antallDagerToVei = this.skjema.value.antallDagerToVei;
@@ -186,11 +189,11 @@ export class RuterComponent implements OnInit {
     endretRute.boatNavn = this.skjema.value.boatNavn;
     endretRute.ruteFra = this.skjema.value.ruteFra;
     endretRute.ruteTil = this.skjema.value.ruteTil;
-    endretRute.prisEnvei = this.skjema.value.prisEnvei;
-    endretRute.prisToVei = this.skjema.value.prisToVei;
+    endretRute.prisEnvei = parseInt(this.skjema.value.prisEnvei);
+    endretRute.prisToVei = parseInt(this.skjema.value.prisToVei);
     endretRute.prisRabattBarn = this.skjema.value.prisRabattBarn.toString();
-    endretRute.prisStandardLugar = this.skjema.value.prisStandardLugar;
-    endretRute.prisPremiumLugar = this.skjema.value.prisPremiumLugar;
+    endretRute.prisStandardLugar = parseInt(this.skjema.value.prisStandardLugar);
+    endretRute.prisPremiumLugar = parseInt(this.skjema.value.prisPremiumLugar);
     endretRute.avgang = this.skjema.value.avgang;
     endretRute.antallDagerEnVei = this.skjema.value.antallDagerEnVei;
     endretRute.antallDagerToVei = this.skjema.value.antallDagerToVei;
@@ -218,5 +221,68 @@ export class RuterComponent implements OnInit {
   tilbakeTilListe() {
     this.visForm = false;
     this.visRuterListe = true;
+  }
+
+  vedAntallDagerEnveiPlus() {
+    this.skjema.patchValue({
+      antallDagerEnVei: this.skjema.value.antallDagerEnVei + 1
+    })
+  }
+
+  vedAntallDagerEnveiMinus() {
+    if (this.skjema.value.antallDagerEnVei < 1) {
+      return;
+    }
+    this.skjema.patchValue({
+      antallDagerEnVei: this.skjema.value.antallDagerEnVei - 1
+    })
+  }
+
+  vedAntallDagerToVeiPlus() {
+    this.skjema.patchValue({
+      antallDagerToVei: this.skjema.value.antallDagerToVei + 1
+    })
+  }
+
+  vedAntallDagerToVeiMinus() {
+    if (this.skjema.value.antallDagerToVei < 1) {
+      return;
+    }
+    this.skjema.patchValue({
+      antallDagerToVei: this.skjema.value.antallDagerToVei - 1
+    })
+  }
+
+  valideringNummer(tallInputType) {
+    let pris;
+    switch (tallInputType) {
+      case 'rabatt':
+        pris = this.skjema.value.prisRabattBarn;
+        break;
+      case 'prisEnvei':
+        pris = this.skjema.value.prisEnvei;
+        break;
+      case 'prisToVei':
+        pris = this.skjema.value.prisToVei;
+        break;
+      case 'prisStandardLugar':
+        pris = this.skjema.value.prisStandardLugar;
+        break;
+      case 'prisPremiumLugar':
+        pris = this.skjema.value.prisPremiumLugar;
+        break;
+      case 'antallDagerToVei':
+        pris = this.skjema.value.prisPremiumLugar;
+        break;
+      default:
+        break;
+    }
+    if (typeof pris !== 'number') {
+      const arr = pris.split('');
+      if (arr[0] === '0' && arr.length > 1) {
+        return 'invalid shit'
+      }
+    }
+    return;
   }
 }
