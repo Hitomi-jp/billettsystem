@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace WebAppExamPart2Test
 {
-    [ExcludeFromCodeCoverage]
+   
 
     public class MockHttpSession : ISession
     {

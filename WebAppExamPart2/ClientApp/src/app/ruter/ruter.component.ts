@@ -286,7 +286,7 @@ export class RuterComponent implements OnInit {
     if (typeof pris !== 'number') {
       const arr = pris.split('');
       if (arr[0] === '0' && arr.length > 1) {
-        return 'invalid shit'
+        return 'Ugyldig tall'
       }
     }
     return;

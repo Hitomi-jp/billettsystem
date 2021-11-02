@@ -80,7 +80,7 @@
                 <p class="alert alert-warning" *ngIf="skjema.get('prisEnvei').hasError('pattern')">
                     Ugyldig pris/tall
                 </p>
-                <p *ngIf="skjema.controls.prisEnvei.valid">{{valideringNummer('prisEnvei')}}</p>
+                <p class="smallError" *ngIf="skjema.controls.prisEnvei.valid">{{valideringNummer('prisEnvei')}}</p>
             </div>
             <div class="form-group inputBox">
                 <label>Pris to-vei (NOK)</label>
@@ -89,7 +89,7 @@
                 <p class="alert alert-warning" *ngIf="skjema.get('prisToVei').hasError('pattern')">
                     Ugyldig pris/tall
                 </p>
-                <p *ngIf="skjema.controls.prisToVei.valid">{{valideringNummer('prisToVei')}}</p>
+                <p class="smallError" *ngIf="skjema.controls.prisToVei.valid">{{valideringNummer('prisToVei')}}</p>
             </div>
             <div class="form-group inputBox">
                 <label>Rabatt til Barn (%)</label>
@@ -98,7 +98,7 @@
                 <p class="alert alert-warning" *ngIf="skjema.get('prisRabattBarn').hasError('pattern')">
                     Ugyldig tall (kun 0-100)
                 </p>
-                <p *ngIf="skjema.controls.prisRabattBarn.valid">{{valideringNummer('rabatt')}}</p>
+                <p class="smallError" *ngIf="skjema.controls.prisRabattBarn.valid">{{valideringNummer('rabatt')}}</p>
             </div>
             <div class="form-group inputBox">
                 <label>Pris Standard Lugar (NOK)</label>
@@ -107,7 +107,7 @@
                 <p class="alert alert-warning" *ngIf="skjema.get('prisStandardLugar').hasError('pattern')">
                     Ugyldig pris/tall
                 </p>
-                <p *ngIf="skjema.controls.prisStandardLugar.valid">{{valideringNummer('prisStandardLugar')}}</p>
+                <p class="smallError" *ngIf="skjema.controls.prisStandardLugar.valid">{{valideringNummer('prisStandardLugar')}}</p>
             </div><div class="form-group inputBox">
                 <label>Pris Premium Lugar (NOK)</label>
                 <input class="form-control"  formControlName="prisPremiumLugar" />
@@ -115,7 +115,7 @@
                 <p class="alert alert-warning" *ngIf="skjema.get('prisPremiumLugar').hasError('pattern')">
                     Ugyldig pris/tall
                 </p>
-                <p *ngIf="skjema.controls.prisPremiumLugar.valid">{{valideringNummer('prisPremiumLugar')}}</p>
+                <p class="smallError" *ngIf="skjema.controls.prisPremiumLugar.valid">{{valideringNummer('prisPremiumLugar')}}</p>
             </div>
             <div class="form-group inputBox" id="avgang">
                 <label>Avgang</label>
