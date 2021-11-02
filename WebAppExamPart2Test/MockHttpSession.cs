@@ -9,8 +9,11 @@ using System.Threading.Tasks;
 
 namespace WebAppExamPart2Test
 {
+    [ExcludeFromCodeCoverage]
+
     public class MockHttpSession : ISession
     {
+
 
         Dictionary<string, object> sessionStorage = new Dictionary<string, object>();
 

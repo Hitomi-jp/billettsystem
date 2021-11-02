@@ -113,7 +113,6 @@ namespace WebAppExamPart2.Controllers
         [Route("hentAlleStrekninger")]
         public async Task<ActionResult<Rute>> HentAlleStrekninger()
         {
-            
             List<Strekning> alleStrekninger = await _ruteRepo.HentAlleStrekninger();
             return Ok(alleStrekninger);
         }
