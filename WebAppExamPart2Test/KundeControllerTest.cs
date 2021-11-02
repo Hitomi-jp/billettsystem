@@ -361,6 +361,61 @@ namespace WebAppExamPart2Test
         }
 
         [Fact]
+        public async Task HentAlleKunderLoggetInnOKFeilDB()
+        {
+            // Arrange
+            var kunde1 = new Kunde
+            {
+                Id = 1,
+                Fornavn = "Taro",
+                Etternavn = "Suzuki",
+                Adresse = "Hokkaidoveien 42",
+                Postnr = "0014",
+                Poststed = "Sapporo"
+            };
+            var kunde2 = new Kunde
+            {
+                Id = 2,
+                Fornavn = "Ume",
+                Etternavn = "Tamura",
+                Adresse = "Aomoriveien 41",
+                Postnr = "0024",
+                Poststed = "Aomori"
+            };
+            var kunde3 = new Kunde
+            {
+                Id = 3,
+                Fornavn = "Take",
+                Etternavn = "Hayashi",
+                Adresse = "Akitaveien 40",
+                Postnr = "0034",
+                Poststed = "Akita"
+            };
+
+            var kundeListe = new List<Kunde>();
+            kundeListe.Add(kunde1);
+            kundeListe.Add(kunde2);
+            kundeListe.Add(kunde3);
+
+            mockKundeRepo.Setup(k => k.HentAlleKunder()).ReturnsAsync(() => null);
+
+            var kundeController = new KundeController(mockKundeRepo.Object, mockLog.Object);
+
+            mockHttpSession[_loggetInn] = _loggetInn;
+            mockHttpContext.Setup(s => s.Session).Returns(mockHttpSession);
+            kundeController.ControllerContext.HttpContext = mockHttpContext.Object;
+
+            // Act
+            var resultat = await kundeController.HentAlleKunder();
+
+            // Assert 
+            Assert.Equal((int)HttpStatusCode.OK, (resultat.Result as ObjectResult)?.StatusCode);
+            Assert.Null(resultat.Value);
+
+        }
+
+
+        [Fact]
         public async Task HentAlleIkkeLoggetInn()
         {
             // Arrange
