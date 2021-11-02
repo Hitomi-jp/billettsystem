@@ -26,6 +26,7 @@ export class EndreComponent {
   visKundeSkjema: boolean = true;
   visRuteUtvalg: boolean = true;
   visLugarUtvalg: boolean = false;
+  gyldigEpostKarakter: boolean = true;
   alleStrekninger: Strekning[];
   fraDestinasjoner: string[]
   gyldigTilDestinasjoner: string[];
@@ -417,4 +418,17 @@ export class EndreComponent {
     }
 
   }
+  valideringEpostKarakter() {
+      const epost = this.kundeSkjema.value.epost;
+      if (/[øæåØÆÅ]/.test(epost)) {
+        console.log("yess")
+        this.gyldigEpostKarakter = false;
+        return 'Ugyldig karakter'
+      }else {
+
+        this.gyldigEpostKarakter = true;
+        console.log("no")
+        return ''
+      }
+    }
 }

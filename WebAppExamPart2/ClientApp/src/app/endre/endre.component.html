@@ -142,6 +142,7 @@
                   <p class="alert alert-warning" *ngIf="kundeSkjema.get('epost').hasError('pattern')">
                       Ugyldig epos eks. test@oslomet.no
                   </p>
+                  <p class="smallError" *ngIf="!kundeSkjema.get('epost').hasError('pattern') && kundeSkjema.controls.epost.valid">{{valideringEpostKarakter()}}</p>
                 </div>
               </div>
  
@@ -179,7 +180,7 @@
               <div class="form-group kundeFormButtons">
                   <div>
                       <span *ngIf="valgtRute == null" class="velgAvgangError">Velg avgang</span>
-                      <button class="btn btn-primary endreButton" [disabled]="!kundeSkjema.valid || !skjema.valid || valgtRute === null" (click)="vedEndre()">Endre</button>
+                      <button class="btn btn-primary endreButton" [disabled]="!kundeSkjema.valid || !skjema.valid || valgtRute === null || !gyldigEpostKarakter" (click)="vedEndre()">Endre</button>
                   </div>
                   <button class="btn btn-default" (click)="vedEndreTilbake()">Tilbake</button>
               </div>
