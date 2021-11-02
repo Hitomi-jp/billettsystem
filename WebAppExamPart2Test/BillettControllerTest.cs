@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using System.Net;
 using System.Diagnostics.CodeAnalysis;
+using System.Collections;
 
 namespace WebAppExamPart2Test
 {
@@ -157,6 +158,79 @@ namespace WebAppExamPart2Test
             Assert.Equal<List<Billett>>((resultat.Result as ObjectResult)?.Value as List<Billett>, billettList);
 
         }
+
+        [Fact]
+        public async Task HentAlleBilletterLoggetInnOKFeilDB()
+        {
+            // Arrange
+            var billett1 = new Billett
+            {
+                Id = 1,
+                KundeId = 1,
+                RuteId = 1,
+                DestinationFrom = "Oslo",
+                DestinationTo = "Kiel",
+                TicketType = "En vei",
+                LugarType = "Standard",
+                DepartureDato = "2022-02-22",
+                ReturnDato = "2022-02-26",
+                AntallAdult = 2,
+                AntallChild = 0,
+                Pris = 1300
+            };
+            var billett2 = new Billett
+            {
+                Id = 2,
+                KundeId = 2,
+                RuteId = 2,
+                DestinationFrom = "Danmark",
+                DestinationTo = "Stavanger",
+                TicketType = "Retur",
+                LugarType = "Premium",
+                DepartureDato = "2021-12-24",
+                ReturnDato = "2021-12-30",
+                AntallAdult = 2,
+                AntallChild = 2,
+                Pris = 1300
+            };
+            var billett3 = new Billett
+            {
+                Id = 3,
+                KundeId = 3,
+                RuteId = 3,
+                DestinationFrom = "Oslo",
+                DestinationTo = "Danmark",
+                TicketType = "En vei",
+                LugarType = "Premium",
+                DepartureDato = "2022-01-01",
+                ReturnDato = "2022-01-07",
+                AntallAdult = 1,
+                AntallChild = 2,
+                Pris = 2500
+            };
+
+            var billettList = new List<Billett>();
+            billettList.Add(billett1);
+            billettList.Add(billett2);
+            billettList.Add(billett3);
+
+            mockBillettRepo.Setup(billetter => billetter.HentAlleBilletter()).ReturnsAsync(() => null);
+
+            var billettController = new BillettController(mockBillettRepo.Object, mockLog.Object);
+
+            mockHttpSession[_loggetInn] = _loggetInn;
+            mockHttpContext.Setup(s => s.Session).Returns(mockHttpSession);
+            billettController.ControllerContext.HttpContext = mockHttpContext.Object;
+
+            // Act
+            var resultat = await billettController.HentAlleBilletter();
+
+            // Assert 
+            Assert.Equal((int)HttpStatusCode.OK, (resultat.Result as ObjectResult)?.StatusCode);
+            Assert.Null(resultat.Value);
+
+        }
+
 
         [Fact]
         public async Task HentAlleBilletterIkkeLoggetInn()
@@ -400,6 +474,148 @@ namespace WebAppExamPart2Test
 
             // Assert 
             Assert.IsType<UnauthorizedResult>(resultat.Result);
+        }
+
+        [Fact]
+        public async Task SlettEnBillettLoggetInnOK()
+        {
+            // Arrange
+
+            mockBillettRepo.Setup(billett => billett.SlettEnBillett(It.IsAny<int>())).ReturnsAsync(true);
+
+            var billettController = new BillettController(mockBillettRepo.Object, mockLog.Object);
+
+            mockHttpSession[_loggetInn] = _loggetInn;
+            mockHttpContext.Setup(s => s.Session).Returns(mockHttpSession);
+            billettController.ControllerContext.HttpContext = mockHttpContext.Object;
+
+            // Act
+            var resultat = await billettController.SlettEnBillett(It.IsAny<int>());
+
+            // Assert 
+            Assert.IsType<OkResult>(resultat);
+        }
+
+        [Fact]
+        public async Task SlettLoggetInnIkkeOK()
+        {
+            // Arrange
+
+            mockBillettRepo.Setup(billett => billett.SlettEnBillett(It.IsAny<int>())).ReturnsAsync(false);
+
+            var billettController = new BillettController(mockBillettRepo.Object, mockLog.Object);
+
+            mockHttpSession[_loggetInn] = _loggetInn;
+            mockHttpContext.Setup(s => s.Session).Returns(mockHttpSession);
+            billettController.ControllerContext.HttpContext = mockHttpContext.Object;
+
+            // Act
+            var resultat = await billettController.SlettEnBillett(It.IsAny<int>()) as NotFoundObjectResult;
+
+            // Assert 
+            Assert.Equal((int)HttpStatusCode.NotFound, resultat.StatusCode);
+            Assert.Equal("Kunnde ikke slette billett", resultat.Value);
+        }
+
+        [Fact]
+        public async Task SletteIkkeLoggetInn()
+        {
+           mockBillettRepo.Setup(billett => billett.SlettEnBillett(It.IsAny<int>())).ReturnsAsync(false);
+
+            var billettController = new BillettController(mockBillettRepo.Object, mockLog.Object);
+
+            mockHttpSession[_loggetInn] = _ikkeLoggetInn;
+            mockHttpContext.Setup(s => s.Session).Returns(mockHttpSession);
+            billettController.ControllerContext.HttpContext = mockHttpContext.Object;
+            // Act
+            var resultat = await billettController.SlettEnBillett(It.IsAny<int>());
+
+            // Assert 
+            Assert.IsType<UnauthorizedResult>(resultat);
+        }
+
+        [Fact]
+        public async Task HentAlleDestinasjonerOK()
+        {
+            // Arrange
+            var destinasjon1 = new Destinasjon
+            {
+                Id = 1,
+                Sted = "Tokyo"   
+            };
+
+            var destinasjon2 = new Destinasjon
+            {
+                Id = 2,
+                Sted = "Kyoto"
+            };
+
+            var destinasjon3 = new Destinasjon
+            {
+                Id = 3,
+                Sted = "Okinawa"
+            };
+
+            var destinasjonList = new List<Destinasjon>();
+            destinasjonList.Add(destinasjon1);
+            destinasjonList.Add(destinasjon2);
+            destinasjonList.Add(destinasjon3);
+
+            mockBillettRepo.Setup(destinasjon => destinasjon.HentAlleDestinasjon()).ReturnsAsync(destinasjonList);
+
+            var billettController = new BillettController(mockBillettRepo.Object, mockLog.Object);
+
+            /*mockHttpSession[_loggetInn] = _loggetInn;
+            mockHttpContext.Setup(s => s.Session).Returns(mockHttpSession);
+            billettController.ControllerContext.HttpContext = mockHttpContext.Object;*/
+
+            // Act
+            var resultat = await billettController.HentAlleDestinasjon();
+
+            // Assert 
+            Assert.Equal((int)HttpStatusCode.OK, (resultat.Result as ObjectResult)?.StatusCode);
+            Assert.Equal<List<Destinasjon>>((resultat.Result as ObjectResult)?.Value as List<Destinasjon>, destinasjonList);
+
+        }
+
+        [Fact]
+        public async Task HentAlleDestinasjonerFeilDB()
+        {
+            // Arrange
+            var destinasjon1 = new Destinasjon
+            {
+                Id = 1,
+                Sted = "Tokyo"
+            };
+
+            var destinasjon2 = new Destinasjon
+            {
+                Id = 2,
+                Sted = "Kyoto"
+            };
+
+            var destinasjon3 = new Destinasjon
+            {
+                Id = 3,
+                Sted = "Okinawa"
+            };
+
+            var destinasjonList = new List<Destinasjon>();
+            destinasjonList.Add(destinasjon1);
+            destinasjonList.Add(destinasjon2);
+            destinasjonList.Add(destinasjon3);
+
+            mockBillettRepo.Setup(destinasjon => destinasjon.HentAlleDestinasjon()).ReturnsAsync(() => null);
+
+            var billettController = new BillettController(mockBillettRepo.Object, mockLog.Object);
+
+            // Act
+            var resultat = await billettController.HentAlleDestinasjon();
+
+            // Assert 
+            Assert.Equal((int)HttpStatusCode.OK, (resultat.Result as ObjectResult)?.StatusCode);
+            Assert.Null(resultat.Value);
+
         }
     }
 }

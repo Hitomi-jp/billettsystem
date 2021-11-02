@@ -170,61 +170,6 @@ namespace WebAppExamPart2.DAL
             }
         }
 
-
-        public IEnumerable HentGyldigDestinasjoner(int desintasjonId)
-        {
-            IEnumerable destinasjoner = null;
-            if (desintasjonId == 1)
-            {
-                destinasjoner = _kundeDB.Destinasjoner.Where(d => d.Id > 2 && d.Id < 6);
-            }
-            else if (desintasjonId == 2)
-            {
-                destinasjoner = _kundeDB.Destinasjoner.Where(d => d.Id == 1 || d.Id > 4 && d.Id < 8);
-            }
-            else if (desintasjonId == 3)
-            {
-                destinasjoner = _kundeDB.Destinasjoner.Where(d => d.Id > 0 && d.Id < 3 || d.Id > 7 && d.Id < 9);
-            }
-            else if (desintasjonId == 4)
-            {
-                destinasjoner = _kundeDB.Destinasjoner.Where(d => d.Id > 8 && d.Id <= 11);
-            }
-            else if (desintasjonId == 5)
-            {
-                destinasjoner = _kundeDB.Destinasjoner.Where(d => d.Id > 5 && d.Id < 9);
-            }
-            else if (desintasjonId == 6)
-            {
-                destinasjoner = _kundeDB.Destinasjoner.Where(d => d.Id > 0 && d.Id < 6);
-            }
-            else if (desintasjonId == 7)
-            {
-                destinasjoner = _kundeDB.Destinasjoner.Where(d => d.Id > 4 && d.Id < 7 || d.Id > 0 && d.Id < 3);
-            }
-            else if (desintasjonId == 8)
-            {
-                destinasjoner = _kundeDB.Destinasjoner.Where(d => d.Id > 0 && d.Id < 5 || d.Id > 9 && d.Id <= 11);
-            }
-            else if (desintasjonId == 9)
-            {
-                destinasjoner = _kundeDB.Destinasjoner.Where(d => d.Id > 2 && d.Id < 9);
-            }
-            else if (desintasjonId == 10)
-            {
-                destinasjoner = _kundeDB.Destinasjoner.Where(d => d.Id > 0 && d.Id < 6);
-            }
-            else if (desintasjonId == 11)
-            {
-                destinasjoner = _kundeDB.Destinasjoner.Where(d => d.Id > 2 && d.Id < 9);
-            }
-            else
-            {
-                destinasjoner = _kundeDB.Destinasjoner.Where(d => d.Id < 5);
-            }
-
-            return destinasjoner;
-        }
     }
 }
 

@@ -18,6 +18,5 @@ namespace WebAppExamPart2.DAL
 
         Task<bool> SlettEnBillett(int billettId);
         Task<List<Destinasjon>> HentAlleDestinasjon();
-        IEnumerable HentGyldigDestinasjoner(int destinasjonId);
     }
 }

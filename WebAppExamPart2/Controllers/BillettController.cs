@@ -114,44 +114,9 @@ namespace WebAppExamPart2.Controllers
         [Route("hentAlleDestinasjon")]
         public async Task<ActionResult<Destinasjon>> HentAlleDestinasjon()
         {
-            // if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
-            // {
-            //     return Unauthorized();
-            // }
 
             List<Destinasjon> alleDestinasjon = await _kundeDB.HentAlleDestinasjon();
             return Ok(alleDestinasjon);
-        }
-
-      /* [HttpPut]
-        public async Task<ActionResult> EndreBillett(Billett endreBillett)
-        {
-            if (string.IsNullOrEmpty(HttpContext.Session.GetString(_loggetInn)))
-            {
-                return Unauthorized();
-            }
-
-            if (ModelState.IsValid)
-            {
-                bool returnOk = await _kundeDB.Endre(endreKunde);
-                if (!returnOk)
-                {
-                    _ruteLogger.LogInformation("Kunne ikke endre kunden");
-                    return NotFound("Kunne ikke endre kunden");
-                }
-                return Ok("Kunde ble endret");
-            }
-            _ruteLogger.LogInformation("Feil i inputValidering");
-            return BadRequest("Feil i inputvalidering på server");
-        }*/
-
-
-        [HttpGet]
-        [Route("hentGyldigDestinasjoner")]
-        public IEnumerable HentGyldigDestinasjoner(int destinasjonId)
-        {
-            IEnumerable destinasjoner = _kundeDB.HentGyldigDestinasjoner(destinasjonId);
-            return destinasjoner;
         }
     }
 }
