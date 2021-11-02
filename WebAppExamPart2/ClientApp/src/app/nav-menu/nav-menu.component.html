@@ -13,26 +13,17 @@
       </button>
       <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse"
            [ngClass]="{ show: isExpanded }">
-        <ul class="navbar-nav flex-grow">
-          <li class="nav-item">
-            <a class="nav-link text-dark" routerLink="/kjop">Kjop</a>
-          </li>
+           <ul class="navbar-nav flex-grow">
           <li class="nav-item">
             <a class="nav-link text-dark" routerLink="/home">Home</a>
           </li>
           <li class="nav-item">
+            <a class="nav-link text-dark" routerLink="/kjop">Kjop</a>
+          </li>
+          <li class="nav-item" *ngIf="loggInService.getIsLoggedIn()">
             <a class="nav-link text-dark" routerLink="/billett">Billett</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link text-dark" routerLink="/kvittering">Kvittering</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-dark" routerLink="/kreditt">Kreditt</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-dark" routerLink="/endre">Endre</a>
-          </li>
-          <li class="nav-item">
+          <li class="nav-item" *ngIf="loggInService.getIsLoggedIn()">
             <a class="nav-link text-dark" routerLink="/ruter">Ruter</a>
           </li>
           <li *ngIf="!loggInService.getIsLoggedIn()" class="nav-item">

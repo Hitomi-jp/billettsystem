@@ -26,6 +26,7 @@ export class KjopBillettComponent implements OnInit {
   visBillettSkjema: boolean = true;
   visKundeSkjema: boolean = false;
   visKredittSkjema: boolean = false;
+  gyldigEpostKarakter: boolean = true;
   ugyldigKredittUtlopsdato: boolean = false;
   visRuteUtvalg: boolean = false;
   visLugarUtvalg: boolean = false;
@@ -126,6 +127,7 @@ export class KjopBillettComponent implements OnInit {
     this.kundeSkjema = fb.group(this.kundeValidering);
     this.kredittSkjema = fb.group(this.kredittValidering);
   }
+
 
   ngOnInit() {
     this.hentAlleStrekninger()
@@ -457,6 +459,20 @@ export class KjopBillettComponent implements OnInit {
     } else {
       this.ugyldigKredittUtlopsdato = true;
       return 'Ugyldig år';
+    }
+  }
+
+  valideringEpostKarakter() {
+    const epost = this.kundeSkjema.value.epost;
+    if (/[øæåØÆÅ]/.test(epost)) {
+      console.log("yess")
+      this.gyldigEpostKarakter = false;
+      return 'Ugyldig karakter'
+    }else {
+
+      this.gyldigEpostKarakter = true;
+      console.log("no")
+      return ''
     }
   }
 }
