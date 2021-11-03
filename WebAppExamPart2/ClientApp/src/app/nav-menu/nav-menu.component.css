@@ -2,17 +2,40 @@ a.navbar-brand {
   white-space: normal;
   text-align: center;
   word-break: break-all;
+  color: whitesmoke;
 }
 
-html {
-  font-size: 14px;
+a.navbar-brand:hover {
+  color: darkgray;
 }
-@media (min-width: 768px) {
-  html {
+
+nav a.active {
+  color: whitesmoke;
+}
+
+
+  @media (min-width: 768px) {
+    html {
     font-size: 16px;
   }
 }
 
 .box-shadow {
   box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+header{
+    background-color: #031F38
+}
+li a.nav-link{
+    color: whitesmoke;
+}
+
+li a.nav-link:hover{
+  color: darkgrey;
+}
+
+ul li a.active {
+  color:lightseagreen;
+  text-decoration:underline;
 }
